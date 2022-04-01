@@ -7,7 +7,7 @@ function classNames(...classes) {
 
 export default function TabDemo() {
   let [categories] = useState({
-    参考发芽时间: [
+    牙齿介绍: [
       {
         id: 1,
         title: '一岁零两个月',
@@ -23,10 +23,10 @@ export default function TabDemo() {
         shareCount: 2,
       },
     ],
-    Popular: [
+    牙齿记录: [
       {
         id: 1,
-        title: 'Is tech making coffee better or worse?',
+        title: '萌发于 2 月 4 日',
         date: 'Jan 7',
         commentCount: 29,
         shareCount: 16,
@@ -58,20 +58,20 @@ export default function TabDemo() {
   })
 
   return (
-    <div className="bg-blue-400 px-10">
-      <div className="w-full max-w-md px-2 py-16 sm:px-0">
+    <div className="">
+      <div className="w-full max-w-md sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+          <Tab.List className="flex space-x-1 rounded-xl bg-indigo-100/40 p-1">
             {Object.keys(categories).map((category) => (
               <Tab
                 key={category}
                 className={({ selected }) =>
                   classNames(
-                    'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700',
-                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                    'w-full rounded-lg py-2.5 text-sm font-semibold leading-5',
+                    'ring-white ring-opacity-60 ring-offset-2 ring-offset-indigo-400 focus:outline-none focus:ring-2',
                     selected
-                      ? 'bg-white shadow'
-                      : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                      ? 'bg-white text-indigo-500 shadow'
+                      : 'text-indigo-400 hover:bg-white/[0.12] hover:text-white'
                   )
                 }
               >
