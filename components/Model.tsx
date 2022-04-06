@@ -1,7 +1,13 @@
 // @ts-nocheck
 
 import { useThree } from '@react-three/fiber'
-import { Html, Preload, OrbitControls, Select } from '@react-three/drei'
+import {
+  Html,
+  Preload,
+  OrbitControls,
+  Select,
+  Environment,
+} from '@react-three/drei'
 
 import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef, useState, Suspense, useMemo, useCallback } from 'react'
@@ -61,11 +67,12 @@ export default function Scene() {
 
   return (
     <Canvas
-      className="bg-opacity-30"
+      shadows
+      dpr={[1, 2]}
       style={{ height: '36vh' }}
       camera={{ position: [0, 8, 72], fov: 70, near: 10 }}
     >
-      <OrbitControls />
+      <OrbitControls makeDefault enableDamping />
       <primitive
         object={scene}
         onClick={(e) =>
@@ -73,14 +80,14 @@ export default function Scene() {
         }
       >
         <Html
-          className="w-screen bg-white bg-opacity-30 p-4 text-sm"
+          className="w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter"
           calculatePosition={(el, c, size) => {
-            return [0, 0]
+            return [size.width - 192, 0]
           }}
         >
-          <p className="text-gray-500">
+          <p className="leading-3 text-gray-500">
             花野猫
-            <span className="text-base font-semibold text-indigo-400">
+            <span className="text-base font-semibold text-indigo-400 ">
               一岁零三个月
             </span>
             啦，已经坚韧地长出了{' '}
@@ -91,6 +98,7 @@ export default function Scene() {
           </p>
         </Html>
       </primitive>
+      <Environment path="http://192.168.3.65:3000/" preset="studio" />
     </Canvas>
   )
 }

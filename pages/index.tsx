@@ -24,12 +24,15 @@ const Home: NextPage = () => {
           <sub className="font-medium text-gray-500">&nbsp;的牙齿成长记录</sub>
         </h1>
 
-        <div className="relative" style={{ height: '36vh' }}>
+        <div
+          className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
+          style={{ height: '36vh' }}
+        >
           <Model />
         </div>
         <div className="flex flex-1 flex-col rounded-t-3xl shadow-xl">
           <div
-            className="flex items-center rounded-t-3xl bg-white"
+            className="z-10 -mt-4 flex items-center rounded-t-3xl bg-white"
             style={{ height: '18vh' }}
           >
             <ToothPreview></ToothPreview>
@@ -38,13 +41,13 @@ const Home: NextPage = () => {
                 左中切牙
               </h2>
               <div className="flex flex-wrap items-center justify-start space-x-1">
-                <div className="rounded-3xl border-2 border-gray-300 px-2 py-1 text-sm text-gray-400">
+                <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
                   左上
                 </div>
-                <div className="rounded-3xl border-2 border-gray-300 px-2 py-1 text-sm text-gray-400">
+                <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
                   已萌出
                 </div>
-                <div className="rounded-3xl border-2 border-gray-300 px-2 py-1 text-sm text-gray-400">
+                <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
                   牙齿类型
                 </div>
               </div>

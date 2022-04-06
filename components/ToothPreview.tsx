@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Canvas } from '@react-three/fiber'
 import React, { useMemo } from 'react'
 import { Color, Mesh, MeshBasicMaterial, Vector3 } from 'three'
