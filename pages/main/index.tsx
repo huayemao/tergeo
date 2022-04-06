@@ -5,13 +5,13 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import React, { Fragment, Suspense, useRef, useState } from 'react'
-import RadioGroupDemo from '../components/RadioGroupDemo'
-import TabDemo from '../components/TabDemo'
-import ToothPreview from '../components/ToothPreview'
-import { BottomTab } from '../components/BottomTab'
-import Layout from '../components/Layout'
+import RadioGroupDemo from '../../components/RadioGroupDemo'
+import TabDemo from '../../components/TabDemo'
+import ToothPreview from '../../components/ToothPreview'
+import { BottomTab } from '../../components/BottomTab'
+import Layout from '../../components/Layout'
 
-const Model = dynamic(() => import('../components/Model'), {
+const Model = dynamic(() => import('../../components/Model'), {
   ssr: false,
   loading: () => <p>...</p>,
 })
@@ -33,16 +33,19 @@ const Home: NextPage = () => {
             className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
             style={{ height: '36vh' }}
           >
-            <Model />
+            <Model suppressHydrationWarning />
           </div>
-          <div className="flex flex-1 flex-col rounded-t-3xl shadow-xl">
+          <div
+            suppressHydrationWarning
+            className="flex flex-1 flex-col rounded-t-3xl shadow-xl"
+          >
             <div
               className="z-10 -mt-4 flex items-center rounded-t-3xl bg-white"
               style={{ height: '18vh' }}
             >
               <ToothPreview></ToothPreview>
               <div className="flex-1 space-y-3 px-2">
-                <h2 className="text-center text-xl font-medium text-indigo-700 drop-shadow-sm">
+                <h2 suppressHydrationWarning className="text-center text-xl font-medium text-indigo-700 drop-shadow-sm">
                   左中切牙
                 </h2>
                 <div className="flex flex-wrap items-center justify-start space-x-1">
