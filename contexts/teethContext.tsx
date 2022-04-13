@@ -33,7 +33,17 @@ const reducer = (state, action) => {
 }
 
 const TeethProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialData)
+  const storageData =
+    typeof window !== 'undefined' ? localStorage.getItem('TEETH_STATE') : null
+
+  const [state, dispatch] = useReducer(
+    reducer,
+    JSON.parse(storageData) || initialData
+  )
+
+  useEffect(() => {
+    localStorage.setItem('TEETH_STATE', JSON.stringify(state))
+  }, [state])
 
   return (
     <TeethContext.Provider value={state}>

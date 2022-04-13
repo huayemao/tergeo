@@ -57,7 +57,7 @@ const Home: NextPage = () => {
               style={{ height: '18vh' }}
             >
               <ToothPreview></ToothPreview>
-              <div className="flex-1 space-y-3 p-2">
+              <div className="flex-1 space-y-2 p-2">
                 <h2
                   suppressHydrationWarning
                   className="mt-4 text-center text-xl font-medium text-indigo-700 drop-shadow-sm"
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
                   {toothName || '请选择牙齿'}
                 </h2>
                 {tooth ? (
-                  <div className="flex flex-wrap items-center justify-start space-x-1">
+                  <div className="my-auto flex flex-wrap items-center justify-start space-x-1">
                     {toothLocation.map((e) => (
                       <div
                         key={e}

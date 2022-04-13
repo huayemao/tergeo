@@ -7,6 +7,7 @@ export const numMapping = {
   6: '第一磨牙',
   7: '第二磨牙',
   7: '第三磨牙',
+  8: '第三磨牙',
 }
 
 export const typeMapping = {
@@ -17,7 +18,7 @@ export const typeMapping = {
   5: '前磨牙',
   6: '磨牙',
   7: '磨牙',
-  7: '磨牙',
+  8: '磨牙',
 }
 
 export const locationMapping = {

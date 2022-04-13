@@ -19,11 +19,13 @@ export default function OperationMenu() {
 
   const { toothName } =
     (activeToothName && getToothBaseInfo(activeToothName)) || {}
-  let [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeOption, setActiveOption] = useState('')
 
   const dispatch = useTeethDispatch()
 
-  const handleOnClick = useCallback(() => {
+  const handleOnClick = useCallback((v) => {
+    setActiveOption(v)
     setIsOpen(true)
   }, [])
 
@@ -33,12 +35,12 @@ export default function OperationMenu() {
       payload: {
         toothName: activeToothName,
         patch: {
-          grown: true,
+          grown: activeOption === '撤销萌出' ? false : true,
         },
       },
     })
     setIsOpen(false)
-  }, [activeToothName])
+  }, [activeToothName, activeOption])
 
   return (
     <>
@@ -61,7 +63,7 @@ export default function OperationMenu() {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={handleOnClick}
+                      onClick={handleOnClick.bind(null, e)}
                       className={`${
                         active ? 'bg-violet-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -87,13 +89,17 @@ export default function OperationMenu() {
         </Transition>
       </Menu>
       <OperationModal
-        content={'花野猫今天长出了这颗牙吗？'}
+        content={
+          activeOption === '撤销萌出'
+            ? '要撤销这颗牙齿的萌出状态吗'
+            : `花野猫的这颗牙今天${activeOption}了吗？`
+        }
         isOpen={isOpen}
         closeModal={() => {
           setIsOpen(false)
         }}
         onConfirm={handleOnConfirm}
-        title={'萌出' + toothName}
+        title={toothName + ' ' + activeOption}
       />
     </>
   )
