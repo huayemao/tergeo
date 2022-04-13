@@ -6,10 +6,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import React, { Fragment, Suspense, useRef, useState } from 'react'
 import RadioGroupDemo from '../../components/RadioGroupDemo'
-import TabDemo from '../../components/TabDemo'
+import IllustrationTab from '../../components/IllustrationTab'
 import ToothPreview from '../../components/ToothPreview'
 import { BottomTab } from '../../components/BottomTab'
 import Layout from '../../components/Layout'
+import { useModel } from '../../contexts/modelContext'
 
 const Model = dynamic(() => import('../../components/Model'), {
   ssr: false,
@@ -17,6 +18,7 @@ const Model = dynamic(() => import('../../components/Model'), {
 })
 
 const Home: NextPage = () => {
+  const { activeToothName } = useModel()
   return (
     <Layout>
       <div className="min-h-screen w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 hover:bg-gradient-to-l">
@@ -45,7 +47,11 @@ const Home: NextPage = () => {
             >
               <ToothPreview></ToothPreview>
               <div className="flex-1 space-y-3 px-2">
-                <h2 suppressHydrationWarning className="text-center text-xl font-medium text-indigo-700 drop-shadow-sm">
+                <h2
+                  suppressHydrationWarning
+                  className="text-center text-xl font-medium text-indigo-700 drop-shadow-sm"
+                >
+                  {/* {activeToothName} */}
                   左中切牙
                 </h2>
                 <div className="flex flex-wrap items-center justify-start space-x-1">
@@ -70,7 +76,7 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
-              <TabDemo />
+              <IllustrationTab />
             </div>
           </div>
         </div>

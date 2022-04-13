@@ -11,19 +11,24 @@ import {
 
 import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef, useState, Suspense, useMemo, useCallback } from 'react'
-import { Color, Mesh, MeshBasicMaterial, Vector3 } from 'three'
+import { Color, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
 import { useModel, useModelDispatch } from '../contexts/modelContext'
 import { useFetchModel } from './useFetchModel'
+import { getMaterials4tooth } from '../lib/getMaterials4tooth'
+import { useTeeth } from '../contexts/teethContext'
 
-const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
+export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
+export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
+
+export const GROWN_TEETH = ['bl1', 'br1']
 
 export default function Scene() {
-  const dispatch = useModelDispatch()
   useFetchModel()
-  const {
-    model,
-    activeToothName = 'uploads_files_654350_Indigo+anatomy+upperjaw015',
-  } = useModel()
+
+  const dispatch = useModelDispatch()
+  const { model, activeToothName = 'tl8', standardMaterial } = useModel()
+  const { teeth } = useTeeth()
+  const teethCount = teeth?.filter((e) => e.grown).length
 
   const setactiveToothName = useCallback(
     (toothName) => {
@@ -35,35 +40,20 @@ export default function Scene() {
     [dispatch]
   )
 
-  const oldMaterial =
-    model &&
-    model.nodes[
-      'uploads_files_654350_Indigo+anatomy+upperjaw013'
-    ].material.clone()
-
   const scene = useMemo(() => {
     model?.scene.traverse((e) => {
       if (e.type === 'Mesh') {
-        if (e.name === activeToothName) {
-          tint(e)
-        } else {
-          unTint(e)
-        }
+        e.material = getMaterials4tooth(
+          standardMaterial,
+          e,
+          teeth,
+          activeToothName
+        )
       }
     })
 
-    function tint(tooth) {
-      const newMaterial = oldMaterial.clone()
-      newMaterial.color = indigo
-      tooth.material = newMaterial
-    }
-
-    function unTint(tooth) {
-      tooth.material = oldMaterial
-    }
-
     return model?.scene
-  }, [activeToothName, model])
+  }, [activeToothName, model, teeth])
 
   return (
     <Canvas
@@ -88,11 +78,11 @@ export default function Scene() {
           <p className="leading-3 text-gray-500">
             花野猫
             <span className="text-base font-semibold text-indigo-400 ">
-              一岁零三个月
+              六个月零8天
             </span>
             啦，已经坚韧地长出了{' '}
             <span className="text-base font-semibold text-indigo-400">
-              2 颗
+              {teethCount} 颗
             </span>
             牙
           </p>

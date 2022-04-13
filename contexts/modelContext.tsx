@@ -17,6 +17,10 @@ const reducer = (state, action) => {
       const { toothName } = action.payload
       return Object.assign({}, state, { activeToothName: toothName })
     }
+    case 'SET_STANDARD_MATERIAL': {
+      const { standardMaterial } = action.payload
+      return Object.assign({}, state, { standardMaterial })
+    }
     default: {
       throw new Error('Unhandled action type.')
     }
@@ -24,8 +28,7 @@ const reducer = (state, action) => {
 }
 
 const ModelProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialData);
-  
+  const [state, dispatch] = useReducer(reducer, initialData)
 
   return (
     <ModelContext.Provider value={state}>

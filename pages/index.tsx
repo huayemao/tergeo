@@ -1,22 +1,38 @@
 // @ts-nocheck
-import { Menu, Transition } from '@headlessui/react'
+import { Dialog, Menu, Transition } from '@headlessui/react'
 import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
 import React, { Fragment, Suspense, useRef, useState } from 'react'
 import RadioGroupDemo from '../components/RadioGroupDemo'
-import TabDemo from '../components/TabDemo'
+import IllustrationTab from '../components/IllustrationTab'
 import ToothPreview from '../components/ToothPreview'
 import { BottomTab } from '../components/BottomTab'
 import Layout from '../components/Layout'
+import OperationMenu from '../components/OperationMenu'
+import { useModel } from '../contexts/modelContext'
+import { useTooth } from '../contexts/teethContext'
+import { getToothBaseInfo } from '../lib/getToothBaseInfo'
+// import MyModal from '../components/MyModal'
 
 const Model = dynamic(() => import('../components/Model'), {
   ssr: false,
   loading: () => <p>...</p>,
 })
 
+const MyModal = dynamic(() => import('../components/OperationModal'), {
+  ssr: false,
+  loading: () => <p>...</p>,
+})
+
 const Home: NextPage = () => {
+  const { activeToothName } = useModel()
+  const { toothName, toothType, toothLocation } =
+    (activeToothName && getToothBaseInfo(activeToothName)) || {}
+
+  const tooth = useTooth(activeToothName)
+
   return (
     <Layout>
       <div className="min-h-screen w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 hover:bg-gradient-to-l">
@@ -41,33 +57,40 @@ const Home: NextPage = () => {
               style={{ height: '18vh' }}
             >
               <ToothPreview></ToothPreview>
-              <div className="flex-1 space-y-3 px-2">
-                <h2 className="text-center text-xl font-medium text-indigo-700 drop-shadow-sm">
-                  左中切牙
+              <div className="flex-1 space-y-3 p-2">
+                <h2
+                  suppressHydrationWarning
+                  className="mt-4 text-center text-xl font-medium text-indigo-700 drop-shadow-sm"
+                >
+                  {toothName || '请选择牙齿'}
                 </h2>
-                <div className="flex flex-wrap items-center justify-start space-x-1">
-                  <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
-                    左上
+                {tooth ? (
+                  <div className="flex flex-wrap items-center justify-start space-x-1">
+                    {toothLocation.map((e) => (
+                      <div
+                        key={e}
+                        className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400"
+                      >
+                        {e}
+                      </div>
+                    ))}
+
+                    <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
+                      {toothType}
+                    </div>
+                    <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
+                      {!tooth ? '' : tooth.grown ? '已萌出' : '待萌出'}
+                    </div>
                   </div>
-                  <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
-                    已萌出
-                  </div>
-                  <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
-                    牙齿类型
-                  </div>
-                </div>
+                ) : null}
+
                 <div className="flex items-center justify-center space-x-4  ">
-                  <button
-                    type="button"
-                    className="mr-2 mb-2 w-full rounded-3xl border bg-indigo-400 px-5 py-2 text-center  font-medium text-white hover:bg-indigo-600  hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300  dark:focus:ring-blue-800"
-                  >
-                    操作
-                  </button>
+                  <OperationMenu />
                 </div>
               </div>
             </div>
             <div className="flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
-              <TabDemo />
+              <IllustrationTab />
             </div>
           </div>
         </div>
