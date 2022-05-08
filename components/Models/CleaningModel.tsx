@@ -10,7 +10,7 @@ import {
 } from '@react-three/drei'
 
 import { Canvas, useFrame } from '@react-three/fiber'
-import React, { useRef, Suspense, useMemo, useCallback } from 'react'
+import React, { useRef, Suspense, useMemo, useCallback, memo } from 'react'
 import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
 import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { useFetchModel } from '../useFetchModel'
@@ -20,9 +20,13 @@ import { useTeeth } from '../../contexts/teethContext'
 export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
 
-export const GROWN_TEETH = ['bl1', 'br1']
+const getHighlightedMat = (standardMaterial) => {
+  let material: MeshStandardMaterial = standardMaterial.clone()
+  material.color = indigo
+  return material
+}
 
-export default function Scene() {
+function Scene({ highlightedPrefix }) {
   const dispatch = useModelDispatch()
   const { model, activeToothName = 'tl8', standardMaterial } = useModel()
   const { teeth } = useTeeth()
@@ -46,6 +50,9 @@ export default function Scene() {
     clonedScene?.traverse((e) => {
       if (e.type === 'Mesh') {
         e.material = standardMaterial
+        if (e.name.startsWith(highlightedPrefix)) {
+          e.material = getHighlightedMat(standardMaterial)
+        }
       }
       if (e.name === 'lower') {
         ;(e as Group).rotation.set(
@@ -62,9 +69,7 @@ export default function Scene() {
     })
 
     return clonedScene
-  }, [model])
-
-
+  }, [model, highlightedPrefix])
 
   return (
     model && (
@@ -75,24 +80,12 @@ export default function Scene() {
           style={{ height: '36vh' }}
           camera={{ position: [0, 15, -72], fov: 70, near: 10 }}
         >
-          <primitive object={scene}>
-            <Html
-              className="w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter"
-              calculatePosition={(el, c, size) => {
-                return [size.width - 192, 0]
-              }}
-            >
-              <p className="leading-3 text-gray-500">
-                <span className="text-base font-semibold text-indigo-400 ">
-                  刷牙
-                </span>
-              </p>
-            </Html>
-          </primitive>
+          <primitive object={scene} />
           <Environment path="http://localhost:3000/" preset="studio" />
         </Canvas>
-        
       </div>
     )
   )
 }
+
+export default memo(Scene)

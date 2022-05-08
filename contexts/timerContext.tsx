@@ -5,6 +5,7 @@ export const TimerDispatch = createContext()
 const initialData = {
   seconds: 0,
   isActive: false,
+  message: null,
 }
 
 const reducer = (state, action) => {
@@ -16,6 +17,7 @@ const reducer = (state, action) => {
     }
     case 'START': {
       return Object.assign({}, state, {
+        seconds: 0,
         isActive: true,
       })
     }
@@ -25,8 +27,25 @@ const reducer = (state, action) => {
       })
     }
     case 'TOGGLE_START': {
+      if (!state.isActive) {
+        return Object.assign({}, state, {
+          isActive: !state.isActive,
+          seconds: !state.isActive ? 0 : state.seconds,
+        })
+      }
       return Object.assign({}, state, {
-        isActive: !state.isActive,
+        message: state.isActive ? '确定要结束吗？' : null,
+      })
+    }
+    case 'CONFIRM_END': {
+      return Object.assign({}, state, {
+        isActive: false,
+        message: null,
+      })
+    }
+    case 'CANCEL_END': {
+      return Object.assign({}, state, {
+        message: null,
       })
     }
 

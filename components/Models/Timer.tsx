@@ -3,9 +3,13 @@ import { useTimer, useTimerDispatch } from '../../contexts/timerContext'
 
 export function Timer({ duration = 60, radius = 120, content = 'default' }) {
   const { seconds, isActive } = useTimer()
+
   const dispatch = useTimerDispatch()
 
   useEffect(() => {
+    if (seconds + 1 > duration) {
+      dispatch({ type: 'STOP' })
+    }
     let interval = null
     if (isActive) {
       interval = setInterval(() => {

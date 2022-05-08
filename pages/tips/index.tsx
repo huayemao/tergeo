@@ -1,53 +1,56 @@
 // @ts-nocheck
 import type { NextPage } from 'next'
+import { chain, omit } from 'lodash'
 import Card from '../../components/Card'
-
 import Layout from '../../components/Layout'
 
-const Tips: NextPage = () => {
+const Tips: NextPage = ({ data }) => {
   return (
     <Layout>
-      <div className="p-4">
-        <Card title="糖分和蛀牙"></Card>
-      </div>
-      {/* <div className='prose container'>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Sigourney Weaver</td>
-              <td>Ripley</td>
-            </tr>
-            <tr>
-              <td>Carrie Henn</td>
-              <td>Newt</td>
-            </tr>
-            <tr>
-              <td>Michael Biehn</td>
-              <td>Corporal Hicks</td>
-            </tr>
-            <tr>
-              <td>Paul Reiser</td>
-              <td>Burke</td>
-            </tr>
-            <tr>
-              <td>Lance Henriksen</td>
-              <td>Bishop</td>
-            </tr>
-            <tr>
-              <td>Bill Paxton</td>
-              <td>Private Hudson</td>
-            </tr>
-          </tbody>
-        </table>
-      </div> */}
+      {data.map((e) => (
+        <div className="p-4" key={e.uuid}>
+          <Card title={e.content.name} item={e}></Card>
+        </div>
+      ))}
     </Layout>
   )
 }
 
 export default Tips
+
+export async function getStaticProps(context) {
+  const s = {
+    fields: {
+      hVY42yGwuwDbdH16AX2B4hS9gwRat7lG: 'content',
+      nu4p5o7olxq2y6bvaayky1mt87uq9dkg: 'seq',
+      zk7q9wcd9gqymm54ghmefgvcyr1h6dyc: 'type',
+    },
+    options: {
+      tadvo8: '普通人群',
+    },
+  }
+
+  const { data: raw } = await fetch(
+    'https://www.yuque.com/api/tables/records?doc_id=76550654&doc_type=Doc&limit=2000&offset=0&sheet_id=tcazgmf0969hhul5of50gskc29li5lwn'
+  ).then((e) => e.json())
+
+  const toc = raw.map((e) => ({ ...omit(e, ['data']), ...JSON.parse(e.data) }))
+  const data = toc.map((obj) => {
+    return {
+      ...obj,
+      ...chain(obj)
+        .mapValues((v, k) => (s.fields[k] ? v.value : v))
+        .mapKeys(function (value, key) {
+          return s.fields[key] || key
+        })
+        .value(),
+    }
+  })
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 30,
+  }
+}

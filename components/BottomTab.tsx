@@ -15,7 +15,7 @@ export function BottomTab() {
   const mapping = {
     tips: [AcademicCapIcon],
     '': [HomeIcon],
-    mine: [UserCircleIcon],
+    me: [UserCircleIcon],
     cleaning: [ClockIcon],
   }
 

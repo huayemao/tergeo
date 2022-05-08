@@ -60,7 +60,6 @@ const ModelProvider = ({ children }) => {
 
     return () => {
       if (model) {
-        console.log('xxx')
         dispatch({
           type: 'SET_MODEL',
           payload: {
