@@ -2,4 +2,7 @@
 module.exports = {
   reactStrictMode: false,
   concurrentFeatures: true,
+  images: {
+    domains: ['www.hyperui.dev'],
+  },
 }

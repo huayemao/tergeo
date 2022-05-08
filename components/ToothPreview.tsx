@@ -43,7 +43,7 @@ export default function ToothPreview() {
         {rest.map((e) => (
           <primitive key={e.uuid} object={e.clone()}></primitive>
         ))}
-        <Environment path="http://192.168.3.65:3000/" preset="studio" />
+        <Environment path="http://localhost:3000/" preset="studio" />
       </Canvas>
     </div>
   )

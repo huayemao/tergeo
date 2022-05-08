@@ -1,0 +1,1 @@
+export defualt ORIGIN = 'http://localhost:3000/'

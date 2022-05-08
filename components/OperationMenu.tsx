@@ -8,8 +8,8 @@ import { getToothBaseInfo } from '../lib/getToothBaseInfo'
 
 export default function OperationMenu() {
   const table = [
-    ['萌出新牙', '有萌出迹象', '异常'], // 未萌出
-    ['撤销萌出', '脱落', '异常'], // 已萌出
+    ['萌出新牙', '有萌出迹象', '异常', '其他'], // 未萌出
+    ['撤销萌出', '脱落', '异常', '其他'], // 已萌出
   ]
 
   const { activeToothName } = useModel()

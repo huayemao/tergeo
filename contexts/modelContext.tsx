@@ -1,10 +1,14 @@
+import { useGLTF } from '@react-three/drei'
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
+import { MeshBasicMaterial, Scene } from 'three'
+import { useFetchModel } from '../components/useFetchModel'
 export const ModelContext = createContext()
 export const ModelDispatch = createContext()
 
 const initialData = {
-  scene: false,
+  model: null,
   activeToothName: null,
+  standardMaterial: null,
 }
 
 const reducer = (state, action) => {
@@ -29,6 +33,50 @@ const reducer = (state, action) => {
 
 const ModelProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialData)
+  const gltf = useGLTF(
+    'http://localhost:3000/scene.glb',
+    'http://localhost:3000/draco'
+  )
+
+  useEffect(() => {
+    const { model, standardMaterial } = state
+
+    if (!model) {
+      dispatch({
+        type: 'SET_MODEL',
+        payload: {
+          model: Object.assign({}, gltf),
+        },
+      })
+    }
+    if (!standardMaterial) {
+      dispatch({
+        type: 'SET_STANDARD_MATERIAL',
+        payload: {
+          standardMaterial: gltf.nodes['tl8'].material.clone(),
+        },
+      })
+    }
+
+    return () => {
+      if (model) {
+        console.log('xxx')
+        dispatch({
+          type: 'SET_MODEL',
+          payload: {
+            model: null,
+          },
+        })
+
+        dispatch({
+          type: 'SET_STANDARD_MATERIAL',
+          payload: {
+            standardMaterial: null,
+          },
+        })
+      }
+    }
+  }, [])
 
   return (
     <ModelContext.Provider value={state}>

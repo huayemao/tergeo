@@ -1,12 +1,16 @@
 // @ts-nocheck
 import type { NextPage } from 'next'
+import Card from '../../components/Card'
 
 import Layout from '../../components/Layout'
 
 const Tips: NextPage = () => {
   return (
     <Layout>
-      <div className='prose container'>
+      <div className="p-4">
+        <Card title="糖分和蛀牙"></Card>
+      </div>
+      {/* <div className='prose container'>
         <table>
           <thead>
             <tr>
@@ -41,7 +45,7 @@ const Tips: NextPage = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div> */}
     </Layout>
   )
 }

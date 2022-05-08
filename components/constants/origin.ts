@@ -1,1 +1,0 @@
-export defualt ORIGIN = 'http://192.168.3.65:3000/'

@@ -1,5 +1,5 @@
 import { MeshStandardMaterial } from 'three'
-import { indigo, teal } from '../components/Model'
+import { indigo, teal } from '../components/Models/Model'
 import { filter } from 'lodash'
 
 export function getMaterials4tooth(
