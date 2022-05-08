@@ -42,62 +42,76 @@ const Content = () => {
   const toggleActive = useCallback(() => {
     timerDispatch({ type: 'TOGGLE_START' })
   }, [timerDispatch])
-  const btnText = isActive ? '停止' : '开始'
+  const btnText =
+    isActive && seconds === 120 ? '完成' : isActive ? '停止' : '开始'
 
   return (
-    <div>
-      <h1 className="bg-white py-2 text-center align-middle text-xl font-semibold leading-10 text-indigo-400">
-        花野猫
-        <sub className="font-medium text-gray-500">
-          &nbsp;的牙齿健康习惯挑战——
-          <Menu
-            options={[{ label: '牙线' }]}
-            className={
-              'inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'
-            }
-          >
-            刷牙
-            <ChevronDownIcon
-              className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-              aria-hidden="true"
-            />{' '}
-          </Menu>
-        </sub>
-      </h1>
-
+    <>
       <div
-        className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
+        className="relative bg-indigo-200/60 backdrop-blur-lg backdrop-filter"
         style={{ height: '36vh' }}
       >
+        <div className="absolute top-0 right-0 w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter">
+          <p className="leading-3 text-gray-500">
+            已连续刷牙{' '}
+            <span className="text-base font-semibold text-indigo-400 underline">
+              12{' '}
+            </span>
+            天，上次刷牙 今天 7：40
+          </p>
+        </div>
         <CleaningModel highlightedPrefix={highlightedPrefix} />
       </div>
-      <div className="relative -top-10 mx-10 rounded-lg bg-white shadow-lg">
-        {title}
+      <div className="relative  flex-1  bg-white  text-gray-500">
+        <div className="absolute -top-[60px] bottom-16 flex flex-col items-center  justify-around">
+          <Timer duration={120} />
+
+          <p className="mx-8 border-l-2 border-indigo-300 pl-2">
+            {title}{' '}
+            糖是人类的主要营养要素之一，是人体能量的主要来源，是许多食品及饮料的调味剂，同时也是公认的一种引起龋病发生的危险因素。
+          </p>
+          <section className="text-center">
+            <div className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
+              假装是音乐播放功能
+            </div>
+          </section>
+          {/* <section className="text-center">
+            <div className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
+              <ul className="grid grid-cols-2 gap-4 rounded-xl border-2 border-indigo-600 lg:grid-cols-4">
+                <li className="p-4">
+                  <p className="text-2xl font-extrabold text-indigo-500">12</p>
+                  <p className="mt-1 text-lg font-medium">天连续刷牙</p>
+                </li>
+                <li className="p-4">
+                  <p className="text-2xl font-extrabold text-indigo-500">2</p>
+                  <p className="mt-1 text-lg font-medium">次打卡剩余</p>
+                </li>
+              </ul>
+            </div>
+          </section> */}
+          <button
+            onClick={toggleActive}
+            className="mr-2 mb-2 w-64 rounded-3xl border bg-indigo-400 px-5 py-2 text-center  font-medium text-white hover:bg-indigo-600  hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300  dark:focus:ring-blue-800"
+          >
+            {btnText}
+          </button>
+        </div>
+
+        {message && (
+          <OperationModal
+            content={message}
+            isOpen
+            onConfirm={() => {
+              timerDispatch({ type: 'CONFIRM_END' })
+            }}
+            closeModal={() => {
+              timerDispatch({ type: 'CANCEL_END' })
+            }}
+            title={message}
+          />
+        )}
       </div>
-      <Timer duration={120} />
-      <button
-        onClick={toggleActive}
-        className="mr-2 mb-2 w-64 rounded-3xl border bg-indigo-400 px-5 py-2 text-center  font-medium text-white hover:bg-indigo-600  hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300  dark:focus:ring-blue-800"
-      >
-        {btnText}
-      </button>
-      <Link href={'/'}>
-        <a className="underline">已连续刷牙3天 上次刷牙3:12</a>
-      </Link>
-      {message && (
-        <OperationModal
-          content={message}
-          isOpen
-          onConfirm={() => {
-            timerDispatch({ type: 'CONFIRM_END' })
-          }}
-          closeModal={() => {
-            timerDispatch({ type: 'CANCEL_END' })
-          }}
-          title={message}
-        />
-      )}
-    </div>
+    </>
   )
 }
 
@@ -105,7 +119,28 @@ function CleaningTimer() {
   return (
     <ModelProvider>
       <TimerProvider>
-        <Layout>
+        <Layout
+          title={
+            <>
+              花野猫
+              <sub className="font-medium text-gray-500">
+                &nbsp;的牙齿健康习惯挑战——
+                <Menu
+                  options={[{ label: '牙线' }]}
+                  className={
+                    'inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'
+                  }
+                >
+                  刷牙
+                  <ChevronDownIcon
+                    className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+                    aria-hidden="true"
+                  />{' '}
+                </Menu>
+              </sub>
+            </>
+          }
+        >
           <Content />
         </Layout>
       </TimerProvider>

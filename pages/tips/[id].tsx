@@ -1,7 +1,6 @@
 import Layout from '../../components/Layout'
 
 const Article: NextPage = ({ html }) => {
-  // console.log(html)
   const data = eval(/JSON.parse\(.*"\)\)/.exec(html)[0])
   return (
     <Layout>

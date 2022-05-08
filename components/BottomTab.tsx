@@ -15,8 +15,8 @@ export function BottomTab() {
   const mapping = {
     tips: [AcademicCapIcon],
     '': [HomeIcon],
-    me: [UserCircleIcon],
     cleaning: [ClockIcon],
+    me: [UserCircleIcon],
   }
 
   return (
@@ -28,12 +28,13 @@ export function BottomTab() {
         {map(mapping, (v: Icon, k) => {
           const Icon = mapping[k][0]
           const pathname = `/${k}`
-          const isActive = router.pathname === pathname
+          const isActive = router.pathname.split('/')?.[1] === k
+
           return (
             <Link key={k} shallow href={pathname}>
               <Icon
                 className={
-                  'h-8 w-8 font-light' + (isActive ? ' text-indigo-500' : '')
+                  'h-8 w-8 font-thin' + (isActive ? ' text-indigo-500' : '')
                 }
               />
             </Link>

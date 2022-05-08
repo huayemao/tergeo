@@ -21,17 +21,18 @@ const Model = dynamic(() => import('../components/Models/Model'), {
 const Home: NextPage = () => {
   return (
     <ModelProvider>
-      <Layout>
+      <Layout
+        title={
+          <>
+            花野猫
+            <sub className="font-medium text-gray-500">
+              &nbsp;的牙齿成长记录
+            </sub>
+          </>
+        }
+      >
         <div className="min-h-screen w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 hover:bg-gradient-to-l">
           <div className="flex h-screen flex-col bg-white bg-opacity-80 backdrop-blur-lg backdrop-filter">
-            {/* <RadioGroupDemo></RadioGroupDemo> */}
-            <h1 className="bg-white py-2 text-center align-middle text-xl font-semibold leading-10 text-indigo-400">
-              花野猫
-              <sub className="font-medium text-gray-500">
-                &nbsp;的牙齿成长记录
-              </sub>
-            </h1>
-
             <div
               className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
               style={{ height: '36vh' }}

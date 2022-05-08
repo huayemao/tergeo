@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTimer, useTimerDispatch } from '../../contexts/timerContext'
 
-export function Timer({ duration = 60, radius = 120, content = 'default' }) {
+export function Timer({ duration = 60, radius = 75, content = 'default' }) {
   const { seconds, isActive } = useTimer()
 
   const dispatch = useTimerDispatch()
@@ -14,7 +14,7 @@ export function Timer({ duration = 60, radius = 120, content = 'default' }) {
     if (isActive) {
       interval = setInterval(() => {
         dispatch({ type: 'INCREMENT' })
-      }, 1000)
+      }, 800)
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval)
     }
@@ -25,24 +25,27 @@ export function Timer({ duration = 60, radius = 120, content = 'default' }) {
   const offset = circumference * (1 - seconds / duration)
 
   return (
-    <div className="relative flex items-center justify-center">
-      <svg className="h-72 w-72 -rotate-90">
+    <div
+      className="shadow- relative flex h-[169px] w-[169px] items-center justify-center bg-white "
+      style={{ borderRadius: '85px' }}
+    >
+      <svg className="h-[170px] w-[170px] -rotate-90">
         <circle
-          cx="145"
-          cy="145"
+          cx="85"
+          cy="85"
           r={radius}
           stroke="currentColor"
-          strokeWidth="25"
+          strokeWidth="20"
           fill="transparent"
           className="text-indigo-50 shadow"
         />
 
         <circle
-          cx="145"
-          cy="145"
+          cx="85"
+          cy="85"
           r={radius}
           stroke="currentColor"
-          strokeWidth="25"
+          strokeWidth="20"
           fill="transparent"
           strokeDasharray={circumference}
           // strokeLinecap="round"

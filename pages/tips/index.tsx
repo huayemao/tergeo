@@ -6,7 +6,14 @@ import Layout from '../../components/Layout'
 
 const Tips: NextPage = ({ data }) => {
   return (
-    <Layout>
+    <Layout
+      title={
+        <>
+          牙齿健康指南
+          <sub className="font-medium text-gray-500">&nbsp;</sub>
+        </>
+      }
+    >
       {data.map((e) => (
         <div className="p-4" key={e.uuid}>
           <Card title={e.content.name} item={e}></Card>
