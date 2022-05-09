@@ -10,14 +10,10 @@ module.exports = withPWA({
   images: {
     domains: ['www.hyperui.dev'],
   },
-  trailingSlash: true,
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
     ignoreBuildErrors: true,
   },
+  trailingSlash: true,
   async rewrites() {
     return [
       {

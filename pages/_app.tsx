@@ -5,8 +5,8 @@ import ModelProvider from '../contexts/modelContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <TeethProvider>
-      <ModelProvider>
+    <TeethProvider {...pageProps}>
+      <ModelProvider {...pageProps}>
         <Component {...pageProps} />
       </ModelProvider>
     </TeethProvider>
