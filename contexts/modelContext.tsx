@@ -34,10 +34,7 @@ const reducer = (state, action) => {
 
 const ModelProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialData)
-  const gltf = useGLTF(
-    ORIGIN + 'scene.glb',
-    ORIGIN + 'draco'
-  )
+  const gltf = useGLTF(ORIGIN + 'scene.glb', true)
 
   useEffect(() => {
     const { model, standardMaterial } = state
