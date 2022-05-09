@@ -58,17 +58,17 @@ const Me: NextPage = ({ data }) => {
       </button>
       <button
         onClick={() => {
-          const notifTitle = 'sadfsfsdfs'
-          const notifBody = `Created by xxx.`
-          // const notifImg = `data/img/${games[randomItem].slug}.jpg`
-          const options = {
-            body: notifBody,
-            // icon: notifImg,
-          }
-          new Notification(notifTitle, options)
+          navigator.serviceWorker.register('/sw.js')
+          Notification.requestPermission(function (result) {
+            if (result === 'granted') {
+              navigator.serviceWorker.ready.then(function (registration) {
+                registration.showNotification('Notification with ServiceWorker')
+              })
+            }
+          })
         }}
       >
-        Register new account
+        new
       </button>
     </Layout>
   )
