@@ -1,4 +1,5 @@
 import { useGLTF } from '@react-three/drei'
+import dynamic from 'next/dynamic'
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { MeshBasicMaterial, Scene } from 'three'
 import { ORIGIN } from '../constants/origin'
@@ -33,46 +34,7 @@ const reducer = (state, action) => {
 
 const ModelProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialData)
-  const gltf = useGLTF(ORIGIN + 'scene.glb', true)
 
-  useEffect(() => {
-    const { model, standardMaterial } = state
-
-    if (!model) {
-      dispatch({
-        type: 'SET_MODEL',
-        payload: {
-          model: Object.assign({}, gltf),
-        },
-      })
-    }
-    if (!standardMaterial) {
-      dispatch({
-        type: 'SET_STANDARD_MATERIAL',
-        payload: {
-          standardMaterial: gltf.nodes['tl8'].material.clone(),
-        },
-      })
-    }
-
-    return () => {
-      if (model) {
-        dispatch({
-          type: 'SET_MODEL',
-          payload: {
-            model: null,
-          },
-        })
-
-        dispatch({
-          type: 'SET_STANDARD_MATERIAL',
-          payload: {
-            standardMaterial: null,
-          },
-        })
-      }
-    }
-  }, [])
 
   return (
     <ModelContext.Provider value={state}>

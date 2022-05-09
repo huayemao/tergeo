@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useCallback, useMemo } from 'react'
 import Menu from '../../components/common/Menu'
 import Layout from '../../components/Layout'
-import { Timer } from '../../components/Models/Timer'
+import { Timer } from '../../components/Timer'
 import OperationModal from '../../components/OperationModal'
 import ModelProvider from '../../contexts/modelContext'
 import TimerProvider, {
@@ -115,34 +115,32 @@ const Content = () => {
 
 function CleaningTimer() {
   return (
-    <ModelProvider>
-      <TimerProvider>
-        <Layout
-          title={
-            <>
-              花野猫
-              <sub className="font-medium text-gray-500">
-                &nbsp;的牙齿健康习惯挑战——
-                <Menu
-                  options={[{ label: '牙线' }]}
-                  className={
-                    'inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'
-                  }
-                >
-                  刷牙
-                  <ChevronDownIcon
-                    className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-                    aria-hidden="true"
-                  />{' '}
-                </Menu>
-              </sub>
-            </>
-          }
-        >
-          <Content />
-        </Layout>
-      </TimerProvider>
-    </ModelProvider>
+    <TimerProvider>
+      <Layout
+        title={
+          <>
+            花野猫
+            <sub className="font-medium text-gray-500">
+              &nbsp;的牙齿健康习惯挑战——
+              <Menu
+                options={[{ label: '牙线' }]}
+                className={
+                  'inline-flex w-full justify-center rounded-md px-4 py-2 text-sm font-medium  hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'
+                }
+              >
+                刷牙
+                <ChevronDownIcon
+                  className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+                  aria-hidden="true"
+                />{' '}
+              </Menu>
+            </sub>
+          </>
+        }
+      >
+        <Content />
+      </Layout>
+    </TimerProvider>
   )
 }
 

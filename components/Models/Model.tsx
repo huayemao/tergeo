@@ -15,6 +15,7 @@ import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
 import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
 import { useTeeth } from '../../contexts/teethContext'
+import { useFetchModel } from '../../lib/hooks/useFetchModel'
 
 export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
@@ -22,6 +23,7 @@ export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
 export const GROWN_TEETH = ['bl1', 'br1']
 
 export default function Scene() {
+  useFetchModel()
   const dispatch = useModelDispatch()
   const { model, activeToothName = 'tl8', standardMaterial } = useModel()
   const { teeth } = useTeeth()
@@ -86,7 +88,7 @@ export default function Scene() {
             </p>
           </Html>
         </primitive>
-        <Environment  preset="studio" />
+        <Environment files="studio_small_03_1k.hdr" />
       </Canvas>
     )
   )

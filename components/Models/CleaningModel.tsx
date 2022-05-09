@@ -15,6 +15,7 @@ import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
 import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
 import { useTeeth } from '../../contexts/teethContext'
+import { useFetchModel } from '../../lib/hooks/useFetchModel'
 
 export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
@@ -26,6 +27,7 @@ const getHighlightedMat = (standardMaterial) => {
 }
 
 function Scene({ highlightedPrefix }) {
+  useFetchModel()
   const dispatch = useModelDispatch()
   const { model, activeToothName = 'tl8', standardMaterial } = useModel()
   const { teeth } = useTeeth()
@@ -80,7 +82,7 @@ function Scene({ highlightedPrefix }) {
           camera={{ position: [0, 15, -72], fov: 70, near: 10 }}
         >
           <primitive object={scene} />
-          <Environment  preset="studio" />
+          <Environment files="studio_small_03_1k.hdr" />
         </Canvas>
       </div>
     )

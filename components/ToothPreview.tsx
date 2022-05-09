@@ -43,7 +43,7 @@ export default function ToothPreview() {
         {rest.map((e) => (
           <primitive key={e.uuid} object={e.clone()}></primitive>
         ))}
-        <Environment  preset="studio" />
+        <Environment files="studio_small_03_1k.hdr" />
       </Canvas>
     </div>
   )

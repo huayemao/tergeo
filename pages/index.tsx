@@ -20,41 +20,37 @@ const Model = dynamic(() => import('../components/Models/Model'), {
 
 const Home: NextPage = () => {
   return (
-    <ModelProvider>
-      <Layout
-        title={
-          <>
-            花野猫
-            <sub className="font-medium text-gray-500">
-              &nbsp;的牙齿成长记录
-            </sub>
-          </>
-        }
-      >
-        <div className="min-h-screen w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 hover:bg-gradient-to-l">
-          <div className="flex h-screen flex-col bg-white bg-opacity-80 backdrop-blur-lg backdrop-filter">
+    <Layout
+      title={
+        <>
+          花野猫
+          <sub className="font-medium text-gray-500">&nbsp;的牙齿成长记录</sub>
+        </>
+      }
+    >
+      <div className="min-h-screen w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 hover:bg-gradient-to-l">
+        <div className="flex h-screen flex-col bg-white bg-opacity-80 backdrop-blur-lg backdrop-filter">
+          <div
+            className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
+            style={{ height: '36vh' }}
+          >
+            <Model />
+          </div>
+          <div className="flex flex-1 flex-col rounded-t-3xl shadow-xl">
             <div
-              className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
-              style={{ height: '36vh' }}
+              className="z-10 -mt-4 flex items-center rounded-t-3xl bg-white"
+              style={{ height: '18vh' }}
             >
-              <Model />
+              <ToothPreview />
+              <Info />
             </div>
-            <div className="flex flex-1 flex-col rounded-t-3xl shadow-xl">
-              <div
-                className="z-10 -mt-4 flex items-center rounded-t-3xl bg-white"
-                style={{ height: '18vh' }}
-              >
-                <ToothPreview />
-                <Info />
-              </div>
-              <div className="flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
-                <IllustrationTab />
-              </div>
+            <div className="flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
+              <IllustrationTab />
             </div>
           </div>
         </div>
-      </Layout>
-    </ModelProvider>
+      </div>
+    </Layout>
   )
 }
 
