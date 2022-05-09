@@ -2,7 +2,7 @@ import React from 'react'
 import {
   HomeIcon,
   AcademicCapIcon,
-  UserCircleIcon,
+  UserIcon,
   ClockIcon,
   ChartSquareBarIcon,
 } from '@heroicons/react/outline'
@@ -18,11 +18,14 @@ export function BottomTab() {
     cleaning: [ClockIcon],
     '': [HomeIcon],
     tips: [AcademicCapIcon],
-    me: [UserCircleIcon],
+    me: [UserIcon],
   }
 
   return (
-    <div suppressHydrationWarning className="fixed bottom-4 flex  w-screen ">
+    <div
+      suppressHydrationWarning
+      className="fixed bottom-4 flex w-screen justify-center "
+    >
       <div
         suppressHydrationWarning
         className="mx-12 flex h-12 flex-1 items-center justify-around rounded-3xl  bg-white px-10 text-gray-400 shadow-2xl "
@@ -33,10 +36,11 @@ export function BottomTab() {
           const isActive = router.pathname.split('/')?.[1] === k
 
           return (
-            <Link key={k} shallow href={pathname}>
+            <Link key={k} shallow replace href={pathname}>
               <Icon
+                strokeWidth="1.5"
                 className={
-                  'h-8 w-8 font-thin' + (isActive ? ' text-indigo-500' : '')
+                  'mx-2 h-9 w-9' + (isActive ? ' text-indigo-500' : '')
                 }
               />
             </Link>

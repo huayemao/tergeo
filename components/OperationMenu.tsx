@@ -5,6 +5,7 @@ import { useModel } from '../contexts/modelContext'
 import { useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
 import { getToothBaseInfo } from '../lib/getToothBaseInfo'
+import { TextInput } from './common/FormControls/TextInput'
 
 export default function OperationMenu() {
   const table = [
@@ -90,9 +91,22 @@ export default function OperationMenu() {
       </Menu>
       <OperationModal
         content={
-          activeOption === '撤销萌出'
-            ? '要撤销这颗牙齿的萌出状态吗'
-            : `花野猫的这颗牙今天${activeOption}了吗？`
+          activeOption === '撤销萌出' ? (
+            '要撤销这颗牙齿的萌出状态吗'
+          ) : (
+            <div>
+              花野猫的这颗牙在{' '}
+              <TextInput
+                wrapperClassName="inline-flex"
+                sizing={'sm'}
+                id="party1"
+                type="datetime-local"
+                name="partydate1"
+                defaultValue="2022-06-01T08:30"
+              />{' '}
+              {activeOption}了吗？
+            </div>
+          )
         }
         isOpen={isOpen}
         closeModal={() => {

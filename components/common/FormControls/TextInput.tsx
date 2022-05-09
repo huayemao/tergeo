@@ -5,6 +5,7 @@ type Size = 'sm' | 'md' | 'lg'
 type Color = 'base' | 'green' | 'red'
 
 export type TextInputProps = ComponentProps<'input'> & {
+  wrapperClassName?: string
   sizing?: Size
   shadow?: boolean
   helperText?: ReactNode
@@ -32,6 +33,7 @@ const colorClasses: Record<Color, { input: string; helperText: string }> = {
 }
 
 export const TextInput: FC<TextInputProps> = ({
+  wrapperClassName,
   className,
   sizing = 'md',
   shadow,
@@ -42,7 +44,7 @@ export const TextInput: FC<TextInputProps> = ({
   ...props
 }) => (
   <>
-    <div className="flex">
+    <div className={classNames('flex', wrapperClassName)}>
       {addon && (
         <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-200 px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-400">
           {addon}
