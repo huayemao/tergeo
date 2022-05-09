@@ -1,7 +1,6 @@
 import { useGLTF } from '@react-three/drei'
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { MeshBasicMaterial, Scene } from 'three'
-import { useFetchModel } from '../components/useFetchModel'
 import { ORIGIN } from '../constants/origin'
 export const ModelContext = createContext()
 export const ModelDispatch = createContext()

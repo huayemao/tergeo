@@ -13,7 +13,6 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef, useState, Suspense, useMemo, useCallback } from 'react'
 import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
 import { useModel, useModelDispatch } from '../../contexts/modelContext'
-import { useFetchModel } from '../useFetchModel'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
 import { useTeeth } from '../../contexts/teethContext'
 
