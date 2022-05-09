@@ -4,6 +4,7 @@ import {
   AcademicCapIcon,
   UserCircleIcon,
   ClockIcon,
+  ChartSquareBarIcon,
 } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -13,9 +14,10 @@ export function BottomTab() {
   const router = useRouter()
 
   const mapping = {
-    tips: [AcademicCapIcon],
-    '': [HomeIcon],
+    stats: [ChartSquareBarIcon],
     cleaning: [ClockIcon],
+    '': [HomeIcon],
+    tips: [AcademicCapIcon],
     me: [UserCircleIcon],
   }
 

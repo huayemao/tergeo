@@ -5,6 +5,7 @@ export const TimerDispatch = createContext()
 const initialData = {
   seconds: 0,
   isActive: false,
+  historyRecords: [],
   message: null,
 }
 
@@ -48,6 +49,12 @@ const reducer = (state, action) => {
         message: null,
       })
     }
+    case 'SET_RECORDS': {
+      const { payload } = action
+      return Object.assign({}, state, {
+        historyRecords: payload,
+      })
+    }
 
     default: {
       throw new Error('Unhandled action type.')
@@ -56,7 +63,26 @@ const reducer = (state, action) => {
 }
 
 const TimerProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialData)
+  const storageData =
+    typeof window !== 'undefined'
+      ? localStorage.getItem('HITSTORY_RECORDS')
+      : null
+
+  const [state, dispatch] = useReducer(
+    reducer,
+    Object.assign(initialData, JSON.parse(storageData))
+  )
+
+  useEffect(() => {
+    const payload = getHistoryRecord(state)
+    if (payload) {
+      dispatch({ type: 'SET_RECORDS', payload })
+      localStorage.setItem(
+        'HITSTORY_RECORDS',
+        JSON.stringify({ historyRecords: payload })
+      )
+    }
+  }, [state.isActive])
 
   return (
     <TimerContext.Provider value={state}>
@@ -65,6 +91,21 @@ const TimerProvider = ({ children }) => {
       </TimerDispatch.Provider>
     </TimerContext.Provider>
   )
+}
+
+const getHistoryRecord = (state) => {
+  const timeStamp = new Date().toLocaleString()
+  const lastRecord = [...state.historyRecords].pop()
+  if (!state.isActive) {
+    if (lastRecord?.length !== 1) {
+      return null
+    }
+    return state.historyRecords
+      .slice(0, -1)
+      .concat([lastRecord.concat(timeStamp)])
+  } else {
+    return [...state.historyRecords].concat([[timeStamp]])
+  }
 }
 
 export default TimerProvider

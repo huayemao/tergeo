@@ -20,9 +20,11 @@ const CleaningModel = dynamic(
   }
 )
 
+const getTimeDistance = (a, b) => (new Date(a) - new Date(b)) / 1000
+
 const Content = () => {
   const timerDispatch = useTimerDispatch()
-  const { isActive, message, seconds } = useTimer()
+  const { isActive, message, seconds, historyRecords } = useTimer()
 
   // 从患者视角是反的，需要确定视角
   // 完成后是否还需要继续
@@ -42,8 +44,7 @@ const Content = () => {
   const toggleActive = useCallback(() => {
     timerDispatch({ type: 'TOGGLE_START' })
   }, [timerDispatch])
-  const btnText =
-    isActive && seconds === 120 ? '完成' : isActive ? '停止' : '开始'
+  const btnText = isActive ? '停止' : '开始'
 
   return (
     <>
@@ -66,29 +67,26 @@ const Content = () => {
         <div className="absolute -top-[60px] bottom-16 flex flex-col items-center  justify-around">
           <Timer duration={120} />
 
-          <p className="mx-8 border-l-2 border-indigo-300 pl-2">
+          <p
+            suppressHydrationWarning
+            className="mx-8 border-l-2 border-indigo-300 pl-2"
+          >
             {title}{' '}
             糖是人类的主要营养要素之一，是人体能量的主要来源，是许多食品及饮料的调味剂，同时也是公认的一种引起龋病发生的危险因素。
           </p>
           <section className="text-center">
-            <div className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
-              假装是音乐播放功能
+            <div
+              suppressHydrationWarning
+              className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8"
+            >
+              假装是音乐播放功能 上次刷牙时间：
+              {!isActive &&
+                historyRecords.length &&
+                Math.abs(
+                  getTimeDistance(...historyRecords[historyRecords.length - 1])
+                )}
             </div>
           </section>
-          {/* <section className="text-center">
-            <div className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
-              <ul className="grid grid-cols-2 gap-4 rounded-xl border-2 border-indigo-600 lg:grid-cols-4">
-                <li className="p-4">
-                  <p className="text-2xl font-extrabold text-indigo-500">12</p>
-                  <p className="mt-1 text-lg font-medium">天连续刷牙</p>
-                </li>
-                <li className="p-4">
-                  <p className="text-2xl font-extrabold text-indigo-500">2</p>
-                  <p className="mt-1 text-lg font-medium">次打卡剩余</p>
-                </li>
-              </ul>
-            </div>
-          </section> */}
           <button
             onClick={toggleActive}
             className="mr-2 mb-2 w-64 rounded-3xl border bg-indigo-400 px-5 py-2 text-center  font-medium text-white hover:bg-indigo-600  hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300  dark:focus:ring-blue-800"

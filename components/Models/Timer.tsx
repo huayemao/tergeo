@@ -14,7 +14,7 @@ export function Timer({ duration = 60, radius = 75, content = 'default' }) {
     if (isActive) {
       interval = setInterval(() => {
         dispatch({ type: 'INCREMENT' })
-      }, 800)
+      }, 1000)
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval)
     }

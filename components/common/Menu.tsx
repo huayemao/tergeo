@@ -2,13 +2,11 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
-export default function ({ options, title, children,className }) {
+export default function ({ options, title, children, className }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className={className}>
-          {children}
-        </Menu.Button>
+        <Menu.Button className={className}>{children}</Menu.Button>
       </div>
       <Transition
         as={Fragment}
@@ -21,7 +19,7 @@ export default function ({ options, title, children,className }) {
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {options.map(({ label }) => (
-            <div className="px-1 py-1">
+            <div key={label} className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
