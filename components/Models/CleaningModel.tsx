@@ -16,6 +16,7 @@ import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { useFetchModel } from '../useFetchModel'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
 import { useTeeth } from '../../contexts/teethContext'
+import { ORIGIN } from '../../constants/origin'
 
 export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
@@ -81,7 +82,7 @@ function Scene({ highlightedPrefix }) {
           camera={{ position: [0, 15, -72], fov: 70, near: 10 }}
         >
           <primitive object={scene} />
-          <Environment path="http://localhost:3000/" preset="studio" />
+          <Environment path={ORIGIN} preset="studio" />
         </Canvas>
       </div>
     )

@@ -45,8 +45,46 @@ const Me: NextPage = ({ data }) => {
 
         <button type="submit">Register new account</button>
       </form>
+      <button
+        onClick={() => {
+          Notification.requestPermission().then((result) => {
+            if (result === 'granted') {
+              randomNotification()
+            }
+          })
+        }}
+      >
+        Register new account
+      </button>
+      <button
+        onClick={() => {
+          const notifTitle = 'sadfsfsdfs'
+          const notifBody = `Created by xxx.`
+          // const notifImg = `data/img/${games[randomItem].slug}.jpg`
+          const options = {
+            body: notifBody,
+            // icon: notifImg,
+          }
+          new Notification(notifTitle, options)
+        }}
+      >
+        Register new account
+      </button>
     </Layout>
   )
 }
 
 export default Me
+
+function randomNotification() {
+  // const randomItem = Math.floor(Math.random() * games.length)
+  const notifTitle = 'sadfsfsdfs'
+  const notifBody = `Created by xxx.`
+  // const notifImg = `data/img/${games[randomItem].slug}.jpg`
+  const options = {
+    body: notifBody,
+    // icon: notifImg,
+  }
+  new Notification(notifTitle, options)
+  setTimeout(randomNotification, 3000)
+}

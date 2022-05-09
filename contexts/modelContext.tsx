@@ -2,6 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { MeshBasicMaterial, Scene } from 'three'
 import { useFetchModel } from '../components/useFetchModel'
+import { ORIGIN } from '../constants/origin'
 export const ModelContext = createContext()
 export const ModelDispatch = createContext()
 
@@ -34,8 +35,8 @@ const reducer = (state, action) => {
 const ModelProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialData)
   const gltf = useGLTF(
-    'http://localhost:3000/scene.glb',
-    'http://localhost:3000/draco'
+    ORIGIN + 'scene.glb',
+    ORIGIN + 'draco'
   )
 
   useEffect(() => {

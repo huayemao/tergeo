@@ -1,13 +1,14 @@
 import Layout from '../../components/Layout'
 
 const Article: NextPage = ({ html }) => {
-  const data = eval(/JSON.parse\(.*"\)\)/.exec(html)[0])
+  const matched = /JSON.parse\(.*"\)\)/.exec(html)
+  const data = matched ? eval(matched[0]) : null
   return (
     <Layout>
       <div className="flex w-full justify-center px-8">
         <div
-          className="prose text-left bg-slate-50"
-          dangerouslySetInnerHTML={{ __html: data.note.doclet.body }}
+          className="prose bg-slate-50 text-left"
+          dangerouslySetInnerHTML={{ __html: data?.note?.doclet?.body || '' }}
         />
       </div>
     </Layout>

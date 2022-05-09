@@ -3,6 +3,7 @@ import { Environment, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { useMemo } from 'react'
 import { Color, Mesh, MeshBasicMaterial, Vector3 } from 'three'
+import { ORIGIN } from '../constants/origin'
 import { useModel } from '../contexts/modelContext'
 
 export default function ToothPreview() {
@@ -43,7 +44,7 @@ export default function ToothPreview() {
         {rest.map((e) => (
           <primitive key={e.uuid} object={e.clone()}></primitive>
         ))}
-        <Environment path="http://localhost:3000/" preset="studio" />
+        <Environment path={ORIGIN} preset="studio" />
       </Canvas>
     </div>
   )
