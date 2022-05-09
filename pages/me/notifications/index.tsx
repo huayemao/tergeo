@@ -17,28 +17,7 @@ const items = [
 
 const Me: NextPage = ({ data }) => {
   useEffect(() => {
-    self.addEventListener('notificationclick', function (event) {
-      console.log(event)
-      console.log('On notification click: ', event.notification.tag)
 
-      // This looks to see if the current is already open and
-      // focuses if it is
-
-      event.waitUntil(
-        clients
-          .matchAll({
-            type: 'window',
-          })
-          .then(function (clientList) {
-            console.log(clientList)
-            for (var i = 0; i < clientList.length; i++) {
-              var client = clientList[i]
-              if (client.url == '/' && 'focus' in client) return client.focus()
-            }
-            if (clients.openWindow) return clients.openWindow('/')
-          })
-      )
-    })
 
     navigator.serviceWorker.ready.then(function (registration) {
       registration.getNotifications().then(function (notifications) {
@@ -89,22 +68,23 @@ const Me: NextPage = ({ data }) => {
           Notification.requestPermission(function (result) {
             if (result === 'granted') {
               navigator.serviceWorker.ready.then(function (registration) {
-                registration.showNotification('更换牙刷提醒', {
-                  icon: '/icons/android-chrome-192x192.png',
-                  body: '距离您上次更换牙刷已经过去了两个月，您今天应该更换牙刷了',
-                  timestamp: new Date().getTime(),
-                  requireInteraction: true,
-                  actions: [
-                    {
-                      action: '确认',
-                      title: '好的，已经更换过了',
-                    },
-                    {
-                      action: '推迟',
-                      title: '明天再提醒我',
-                    },
-                  ],
-                })
+                registration
+                  .showNotification('更换牙刷提醒', {
+                    icon: '/icons/android-chrome-192x192.png',
+                    body: '距离您上次更换牙刷已经过去了两个月，您今天应该更换牙刷了',
+                    timestamp: new Date().getTime(),
+                    actions: [
+                      {
+                        action: '确认',
+                        title: '好的，已经更换过了',
+                      },
+                      {
+                        action: '推迟',
+                        title: '明天再提醒我',
+                      },
+                    ],
+                  })
+                  .then((v) => console.log(v), console.log)
               })
             }
           })
@@ -113,31 +93,6 @@ const Me: NextPage = ({ data }) => {
               console.log(notifications)
               // do something with your notifications
             })
-          })
-
-          self.addEventListener('notificationclick', function (event) {
-            alert('123')
-            console.log(event)
-            console.log('On notification click: ', event.notification.tag)
-
-            // This looks to see if the current is already open and
-            // focuses if it is
-
-            event.waitUntil(
-              clients
-                .matchAll({
-                  type: 'window',
-                })
-                .then(function (clientList) {
-                  console.log(clientList)
-                  for (var i = 0; i < clientList.length; i++) {
-                    var client = clientList[i]
-                    if (client.url == '/' && 'focus' in client)
-                      return client.focus()
-                  }
-                  if (clients.openWindow) return clients.openWindow('/')
-                })
-            )
           })
         }}
       >

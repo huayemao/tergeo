@@ -3,7 +3,8 @@ const withPWA = require('next-pwa')
 
 module.exports = withPWA({
   pwa: {
-    dest: 'public'
+    dest: 'public',
+    importScripts: ['/worker.js']
   },
   reactStrictMode: false,
   concurrentFeatures: true,
