@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
-const APP_NAME = '牙齿健康助手'
-const APP_DESCRIPTION = '一个 mOralHealth 应用'
+const APP_NAME = '编贝'
+const APP_DESCRIPTION = '牙齿健康助手 PWA，mOralHealth应用'
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
