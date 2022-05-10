@@ -10,9 +10,9 @@ import { getAvailableAction } from '../lib/getToothGrowStageInfo'
 
 export default function OperationMenu() {
   const { activeToothName } = useModel()
-  const { growthStage } = useTooth(activeToothName) || {}
+  const tooth = useTooth(activeToothName)
 
-  const options = getAvailableAction(growthStage)
+  const options = tooth ? getAvailableAction(tooth) : []
 
   const { toothName } =
     (activeToothName && getToothBaseInfo(activeToothName)) || {}

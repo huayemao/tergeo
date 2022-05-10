@@ -1,5 +1,17 @@
-import React, { createContext, useReducer, useContext, useEffect } from 'react'
-import { ToothGrowthStage } from '../typings/Tooth'
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  useEffect,
+  Reducer,
+  ReducerAction,
+  Dispatch,
+} from 'react'
+import {
+  Tooth,
+  ToothGrowthActionType,
+  ToothGrowthStage,
+} from '../typings/Tooth'
 
 const teeth: Tooth[] = getAllTeeth()
 
@@ -7,16 +19,45 @@ const initialData = {
   teeth,
 }
 
-export const TeethContext = createContext<typeof initialData>()
-export const TeethDispatch = createContext()
+type ToothPayload = {
+  toothName: string
+  patch: Record<keyof Tooth, Object>
+}
 
-const reducer = (state, action) => {
+type ToothGrowthActionPayload = Omit<ToothPayload, 'patch'>
+
+type Action =
+  | { type: ToothGrowthActionType; payload: ToothGrowthActionPayload }
+  | { type: 'SET_TOOTH'; payload: ToothPayload }
+
+export const TeethContext = createContext<typeof initialData>()
+export const TeethDispatch = createContext<Dispatch<Action>>()
+
+const reducer = (state: typeof initialData, action: Action) => {
   switch (action.type) {
     case 'SET_TOOTH': {
       const { toothName, patch } = action.payload
       return Object.assign({}, state, {
         teeth: state.teeth.map((e) =>
           e.name === toothName ? { ...e, ...patch } : e
+        ),
+      })
+    }
+    case ToothGrowthActionType.ADVANCE: {
+      const { toothName } = action.payload
+      return Object.assign({}, state, {
+        teeth: state.teeth.map(
+          (e): Tooth =>
+            e.name === toothName ? { ...e, growthStage: e.growthStage + 1 } : e
+        ),
+      })
+    }
+    case ToothGrowthActionType.REVERT: {
+      const { toothName } = action.payload
+      return Object.assign({}, state, {
+        teeth: state.teeth.map(
+          (e): Tooth =>
+            e.name === toothName ? { ...e, growthStage: e.growthStage - 1 } : e
         ),
       })
     }
@@ -31,7 +72,7 @@ const TeethProvider = ({ children }) => {
   const storageData =
     typeof window !== 'undefined' ? localStorage.getItem('TEETH_STATE') : null
 
-  const [state, dispatch] = useReducer(
+  const [state, dispatch] = useReducer<Reducer<typeof initialData, Action>>(
     reducer,
     JSON.parse(storageData) || initialData
   )

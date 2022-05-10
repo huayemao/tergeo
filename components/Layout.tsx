@@ -8,7 +8,7 @@ export default function Layout({ children, title, className }) {
           {title}
         </h1>
         <main className="flex flex-1 flex-col">{children}</main>
-        <BottomTab></BottomTab>
+        <BottomTab/>
       </div>
     </>
   )

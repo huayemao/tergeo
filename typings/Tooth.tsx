@@ -18,19 +18,24 @@ export type PrimaryToothStage =
   | ToothGrowthStage.permanent_teethed
   | ToothGrowthStage.permanent_lost
 
-export type PermanentToothStage =
-  | ToothGrowthStage.permanent_unteethed
-  | ToothGrowthStage.permanent_teethed
-  | ToothGrowthStage.permanent_lost
+export type PermanentToothStage = Exclude<
+  ToothGrowthStage,
+  ToothGrowthStage.primary_unteethed | ToothGrowthActionType.primary_teethed
+>
 
-export enum ToothGrowthAction {
-  'teeth' = 'teeth',
-  'shed' = 'shed',
-  'abnormal' = 'abnormal',
-  'remark' = 'remark',
+export enum ToothGrowthActionType {
+  'ADVANCE' = 'ADVANCE',
+  'REVERT' = 'REVERT',
+  'TOGGLE_ABNORMAL' = 'TOGGLE_ABNORMAL', // 标注异常
+  'REMARK' = 'REMARK', // 例如标注有萌发迹象、标注牙齿松动，还可以带有备注
 }
 
-export const extraActions = [
-  ToothGrowthAction.abnormal,
-  ToothGrowthAction.remark,
+export type ToothRemarkActionType = Exclude<
+  ToothGrowthActionType,
+  ToothGrowthActionType.ADVANCE | ToothGrowthActionType.REVERT
+>
+
+export const ToothRemarkActionTypes = [
+  ToothGrowthActionType.TOGGLE_ABNORMAL,
+  ToothGrowthActionType.REMARK,
 ]

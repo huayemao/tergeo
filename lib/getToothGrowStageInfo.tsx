@@ -1,7 +1,7 @@
 import {
-  extraActions,
+  ToothRemarkActionTypes,
   Tooth,
-  ToothGrowthAction,
+  ToothGrowthActionType,
   ToothGrowthStage,
 } from '../typings/Tooth'
 
@@ -23,16 +23,29 @@ export const getToothGrowStageDescription = ({ growthStage, name }: Tooth) => {
   return num > 4 ? mapping1[growthStage] : mapping[growthStage]
 }
 
-export const getAvailableAction = (toothGrowthStage: ToothGrowthStage) => {
-  return toothGrowthStage === ToothGrowthStage.permanent_lost
-    ? extraActions
-    : [
-        toothGrowthStage % 2 === 0
-          ? ToothGrowthAction.teeth
-          : ToothGrowthAction.shed,
-      ].concat(extraActions)
+export const getAvailableAction = ({ growthStage, name }: Tooth) => {
+  //是否可以前进
+  const canAdvance = !(growthStage === ToothGrowthStage.permanent_lost)
+
+  // 是否可以撤销
+  const canRevert = !(
+    growthStage === ToothGrowthStage.primary_unteethed ||
+    (name.split('')[2] > 4 &&
+      growthStage === ToothGrowthStage.permanent_unteethed)
+  )
+
+  const actions = []
+
+  if (canAdvance) {
+    actions.push(ToothGrowthActionType.ADVANCE)
+  }
+
+  if (canRevert) {
+    actions.push(ToothGrowthActionType.REVERT)
+  }
+  return actions.concat(ToothRemarkActionTypes)
 }
 
-export const checkIsPresent = (tooth: Tooth) => {
-  return tooth.growthStage % 2 === 1
+export const checkIsPresent = (toothGrowthStage: ToothGrowthStage) => {
+  return toothGrowthStage % 2 === 1
 }

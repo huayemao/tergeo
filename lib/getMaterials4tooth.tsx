@@ -10,7 +10,7 @@ export function getMaterials4tooth(
   activeToothName
 ) {
   if (standardMaterial) {
-    const GROWN_TEETH = filter(teeth, (v) => checkIsPresent(v)).map(
+    const GROWN_TEETH = filter(teeth, (v) => checkIsPresent(v.growthStage)).map(
       (e) => e.name
     )
 

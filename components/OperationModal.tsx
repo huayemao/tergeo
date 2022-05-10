@@ -35,9 +35,7 @@ export default function OperationModal({
             >
               {title}
             </Dialog.Title>
-            <div className="mt-2">
-              <p className="text-sm text-gray-500">{content}</p>
-            </div>
+            <div className="mt-2 text-sm text-gray-500">{content}</div>
 
             <div className="mt-4 space-x-4">
               <button
