@@ -31,7 +31,7 @@ function Scene({ highlightedPrefix }) {
   const dispatch = useModelDispatch()
   const { model, activeToothName = 'tl8', standardMaterial } = useModel()
   const { teeth } = useTeeth()
-  const teethCount = teeth?.filter((e) => e.grown).length
+  const teethCount = teeth?.filter((e) => e.growthStage > 0).length
 
   const setactiveToothName = useCallback(
     (toothName) => {

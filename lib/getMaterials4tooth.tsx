@@ -1,6 +1,7 @@
 import { MeshStandardMaterial } from 'three'
 import { indigo, teal } from '../components/Models/Model'
 import { filter } from 'lodash'
+import { checkIsPresent } from './getToothGrowStageInfo'
 
 export function getMaterials4tooth(
   standardMaterial,
@@ -9,7 +10,7 @@ export function getMaterials4tooth(
   activeToothName
 ) {
   if (standardMaterial) {
-    const GROWN_TEETH = filter(teeth, (v) => v.grown === true).map(
+    const GROWN_TEETH = filter(teeth, (v) => checkIsPresent(v)).map(
       (e) => e.name
     )
 

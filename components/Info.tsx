@@ -1,14 +1,16 @@
-import React from 'react';
-import OperationMenu from './OperationMenu';
-import { useModel } from '../contexts/modelContext';
-import { useTooth } from '../contexts/teethContext';
-import { getToothBaseInfo } from '../lib/getToothBaseInfo';
+import React from 'react'
+import OperationMenu from './OperationMenu'
+import { useModel } from '../contexts/modelContext'
+import { useTooth } from '../contexts/teethContext'
+import { getToothBaseInfo } from '../lib/getToothBaseInfo'
+import { getToothGrowStageDescription } from '../lib/getToothGrowStageInfo'
 
 export function Info() {
-  const { activeToothName } = useModel();
-  const { toothName, toothType, toothLocation } = (activeToothName && getToothBaseInfo(activeToothName)) || {};
-  const tooth = useTooth(activeToothName);
-  
+  const { activeToothName } = useModel()
+  const { toothName, toothType, toothLocation } =
+    (activeToothName && getToothBaseInfo(activeToothName)) || {}
+  const tooth = useTooth(activeToothName)
+
   return (
     <div className="flex-1 space-y-2 p-2">
       <h2
@@ -32,7 +34,7 @@ export function Info() {
             {toothType}
           </div>
           <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
-            {!tooth ? '' : tooth.grown ? '已萌出' : '待萌出'}
+            {!tooth ? '' : getToothGrowStageDescription(tooth)}
           </div>
         </div>
       ) : null}
@@ -41,5 +43,5 @@ export function Info() {
         <OperationMenu />
       </div>
     </div>
-  );
+  )
 }

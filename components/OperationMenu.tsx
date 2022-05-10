@@ -6,17 +6,13 @@ import { useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
 import { getToothBaseInfo } from '../lib/getToothBaseInfo'
 import { TextInput } from './common/FormControls/TextInput'
+import { getAvailableAction } from '../lib/getToothGrowStageInfo'
 
 export default function OperationMenu() {
-  const table = [
-    ['萌出新牙', '有萌出迹象', '异常', '其他'], // 未萌出
-    ['撤销萌出', '脱落', '异常', '其他'], // 已萌出
-  ]
-
   const { activeToothName } = useModel()
-  const { grown } = useTooth(activeToothName) || {}
+  const { growthStage } = useTooth(activeToothName) || {}
 
-  const options = table[grown ? 1 : 0]
+  const options = getAvailableAction(growthStage)
 
   const { toothName } =
     (activeToothName && getToothBaseInfo(activeToothName)) || {}
@@ -32,12 +28,9 @@ export default function OperationMenu() {
 
   const handleOnConfirm = useCallback(() => {
     dispatch({
-      type: 'SET_TOOTH',
+      type: activeOption,
       payload: {
         toothName: activeToothName,
-        patch: {
-          grown: activeOption === '撤销萌出' ? false : true,
-        },
       },
     })
     setIsOpen(false)
