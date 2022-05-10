@@ -75,13 +75,13 @@ export default function Scene() {
               return [size.width - 192, 0]
             }}
           >
-            <p className="leading-3 text-gray-500">
+            <p className="text-gray-500">
               花野猫
-              <span className="text-base font-semibold text-indigo-400 ">
+              <span className="font-semibold text-indigo-400 ">
                 六个月零8天
               </span>
               啦，已经坚韧地长出了{' '}
-              <span className="text-base font-semibold text-indigo-400">
+              <span className="font-semibold text-indigo-400">
                 {teethCount} 颗
               </span>
               牙
