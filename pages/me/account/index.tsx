@@ -59,7 +59,7 @@ const Me: NextPage = ({ data }) => {
         name="partydate1"
         defaultValue="2022-06-01T08:30"
       />
-      用户模式
+      用户模式 成长记录模式
     </Layout>
   )
 }
