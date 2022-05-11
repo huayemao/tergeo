@@ -6,7 +6,7 @@ const initialData = {
   mode: 'normal',
   child: {
     name: null,
-    birthday: null
+    birthday: null,
   },
 }
 
@@ -19,7 +19,7 @@ const reducer = (state, action) => {
     case 'PATCH_CHILD_INFO': {
       const { payload } = action
       return Object.assign({}, state, {
-        child: { ...state.child, ...payload }
+        child: { ...state.child, ...payload },
       })
     }
     default: {
@@ -43,9 +43,7 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider value={state}>
-      <UserDispatch.Provider value={dispatch}>
-        {children}
-      </UserDispatch.Provider>
+      <UserDispatch.Provider value={dispatch}>{children}</UserDispatch.Provider>
     </UserContext.Provider>
   )
 }
