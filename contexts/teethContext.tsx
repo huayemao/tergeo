@@ -10,6 +10,7 @@ import React, {
 import {
   Tooth,
   ToothGrowthActionType,
+  ToothGrowthRecord,
   ToothGrowthStage,
 } from '../typings/Tooth'
 
@@ -24,7 +25,10 @@ type ToothPayload = {
   patch: Record<keyof Tooth, Object>
 }
 
-type ToothGrowthActionPayload = Omit<ToothPayload, 'patch'>
+type ToothGrowthActionPayload = {
+  toothName: string
+  record: ToothGrowthRecord
+}
 
 type Action =
   | { type: ToothGrowthActionType; payload: ToothGrowthActionPayload }
@@ -44,20 +48,34 @@ const reducer = (state: typeof initialData, action: Action) => {
       })
     }
     case ToothGrowthActionType.ADVANCE: {
-      const { toothName } = action.payload
+      const { toothName, record } = action.payload
+
       return Object.assign({}, state, {
         teeth: state.teeth.map(
           (e): Tooth =>
-            e.name === toothName ? { ...e, growthStage: e.growthStage + 1 } : e
+            e.name === toothName
+              ? {
+                  ...e,
+                  growthStage: e.growthStage + 1,
+                  growthRecord: e.growthRecord?.concat(record) || null,
+                }
+              : e
         ),
       })
     }
     case ToothGrowthActionType.REVERT: {
-      const { toothName } = action.payload
+      const { toothName, record } = action.payload
+
       return Object.assign({}, state, {
         teeth: state.teeth.map(
           (e): Tooth =>
-            e.name === toothName ? { ...e, growthStage: e.growthStage - 1 } : e
+            e.name === toothName
+              ? {
+                  ...e,
+                  growthStage: e.growthStage - 1,
+                  growthRecord: e.growthRecord?.concat(record) || null,
+                }
+              : e
         ),
       })
     }
@@ -115,6 +133,8 @@ function getAllTeeth() {
       e.split('')[2] > 4
         ? ToothGrowthStage.permanent_unteethed
         : ToothGrowthStage.primary_unteethed,
+
+    growthRecord: [],
   }))
   return teeth
 }

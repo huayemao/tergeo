@@ -1,5 +1,5 @@
 import React from 'react'
-import OperationMenu from './OperationMenu'
+import OperationMenu from './ActionMenu'
 import { useModel } from '../contexts/modelContext'
 import { useTooth } from '../contexts/teethContext'
 import { getToothBaseInfo } from '../lib/getToothBaseInfo'

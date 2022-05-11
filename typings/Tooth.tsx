@@ -6,9 +6,16 @@ export enum ToothGrowthStage {
   'permanent_lost' = 4,
 }
 
+export type ToothGrowthRecord = {
+  type: ToothGrowthActionType
+  dateTime: string
+  remarkContent?: string
+}
+
 export type Tooth = {
   name: string
   growthStage: ToothGrowthStage
+  growthRecord: ToothGrowthRecord[] | null
 }
 
 export type PrimaryToothStage =
@@ -39,3 +46,10 @@ export const ToothRemarkActionTypes = [
   ToothGrowthActionType.TOGGLE_ABNORMAL,
   ToothGrowthActionType.REMARK,
 ]
+
+export const ToothGrowthActionNameMapping = {
+  [ToothGrowthActionType.TOGGLE_ABNORMAL]: '标注异常',
+  [ToothGrowthActionType.REMARK]: '标注',
+}
+
+// 编辑异常呢？标注后产生一条记录，编辑时找到对应的 key

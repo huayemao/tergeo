@@ -6,31 +6,44 @@ import { useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
 import { getToothBaseInfo } from '../lib/getToothBaseInfo'
 import { TextInput } from './common/FormControls/TextInput'
-import { getAvailableAction } from '../lib/getToothGrowStageInfo'
+import {
+  getAvailableToothAction,
+  ToothGrowAction,
+} from '../lib/getToothGrowStageInfo'
+import { Textarea } from './common/FormControls/Textarea'
 
 export default function OperationMenu() {
   const { activeToothName } = useModel()
   const tooth = useTooth(activeToothName)
+  const form = useRef<HTMLFormElement>()
 
-  const options = tooth ? getAvailableAction(tooth) : []
+  const actionOptions = tooth ? getAvailableToothAction(tooth) : []
 
   const { toothName } =
     (activeToothName && getToothBaseInfo(activeToothName)) || {}
   const [isOpen, setIsOpen] = useState(false)
-  const [activeOption, setActiveOption] = useState('')
+  const [activeOption, setActiveOption] = useState<ToothGrowAction>({})
 
   const dispatch = useTeethDispatch()
 
-  const handleOnClick = useCallback((v) => {
+  const handleOnClick = useCallback((v: ToothGrowAction) => {
     setActiveOption(v)
     setIsOpen(true)
   }, [])
 
   const handleOnConfirm = useCallback(() => {
+    const record = {
+      type: activeOption.type,
+      dateTime:
+        form.current?.elements['dateTime']?.value ||
+        new Date().toISOString().slice(0, -8),
+      remarkContent: form.current?.elements['remarkContent'].value || null,
+    }
     dispatch({
-      type: activeOption,
+      type: activeOption.type,
       payload: {
         toothName: activeToothName,
+        record,
       },
     })
     setIsOpen(false)
@@ -52,8 +65,8 @@ export default function OperationMenu() {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            {options.map((e) => (
-              <div key={e} className="px-1 py-1">
+            {actionOptions.map((e) => (
+              <div key={e.name} className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <button
@@ -62,18 +75,11 @@ export default function OperationMenu() {
                         active ? 'bg-violet-500 text-white' : 'text-gray-900'
                       } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     >
-                      {active ? (
-                        <EditActiveIcon
-                          className="mr-2 h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <EditInactiveIcon
-                          className="mr-2 h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      )}
-                      {e}
+                      <EditActiveIcon
+                        className="mr-2 h-5 w-5"
+                        aria-hidden="true"
+                      />
+                      {e.name}
                     </button>
                   )}
                 </Menu.Item>
@@ -84,49 +90,42 @@ export default function OperationMenu() {
       </Menu>
       <OperationModal
         content={
-          activeOption === '撤销萌出' ? (
-            '要撤销这颗牙齿的萌出状态吗'
-          ) : (
-            <div>
-              花野猫的这颗牙在{' '}
-              <TextInput
-                wrapperClassName="inline-flex"
-                sizing={'sm'}
-                id="party1"
-                type="datetime-local"
-                name="partydate1"
-                defaultValue="2022-06-01T08:30"
-              />{' '}
-              {activeOption}了吗？
-            </div>
-          )
+          <div>
+            <form ref={form}>
+              确定花野猫的这颗牙
+              {activeOption.showTime && (
+                <>
+                  在
+                  <TextInput
+                    wrapperClassName="inline-flex"
+                    sizing={'sm'}
+                    id="dateTime"
+                    type="datetime-local"
+                    name="partydate1"
+                    // defaultValue="2022-06-01T08:30"
+                    defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
+                  />
+                </>
+              )}
+              {activeOption.confirmDescription}
+              <Textarea
+                id="remarkContent"
+                type="textarea"
+                name="remarkContent"
+                // defaultValue="2022-06-01T08:30"
+                // defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
+              />
+            </form>
+          </div>
         }
         isOpen={isOpen}
         closeModal={() => {
           setIsOpen(false)
         }}
-        onConfirm={handleOnConfirm}
-        title={toothName + ' ' + activeOption}
+        onConfirm={handleOnConfirm} // form.value?
+        title={activeOption.name}
       />
     </>
-  )
-}
-
-function EditInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-    </svg>
   )
 }
 
