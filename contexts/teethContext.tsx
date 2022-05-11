@@ -34,7 +34,7 @@ type Action =
   | { type: ToothGrowthActionType; payload: ToothGrowthActionPayload }
   | { type: 'SET_TOOTH'; payload: ToothPayload }
 
-export const TeethContext = createContext<typeof initialData>()
+export const TeethContext = createContext<typeof initialData>({})
 export const TeethDispatch = createContext<Dispatch<Action>>()
 
 const reducer = (state: typeof initialData, action: Action) => {

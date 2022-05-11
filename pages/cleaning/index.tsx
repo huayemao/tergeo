@@ -16,7 +16,6 @@ const CleaningModel = dynamic(
   () => import('../../components/Models/CleaningModel'),
   {
     ssr: false,
-    loading: () => <p>...</p>,
   }
 )
 
@@ -30,16 +29,16 @@ const Content = () => {
   // 完成后是否还需要继续
   // 刷牙统计按钮
   // 切换洁牙方式
-  const timeMapping = {
-    0: ['tr', '左上'],
-    30: ['br', '左下'],
-    60: ['bl', '右下'],
-    90: ['tl', '右上'],
-  }
-  const [highlightedPrefix, title] = useMemo(
-    () => getFromRange(timeMapping, seconds),
-    [seconds]
-  )
+
+  const [highlightedPrefix, title] = useMemo(() => {
+    const timeMapping = {
+      0: ['tr', '左上'],
+      30: ['br', '左下'],
+      60: ['bl', '右下'],
+      90: ['tl', '右上'],
+    }
+    return getFromRange(timeMapping, seconds)
+  }, [seconds])
 
   const toggleActive = useCallback(() => {
     timerDispatch({ type: 'TOGGLE_START' })
@@ -66,7 +65,6 @@ const Content = () => {
       <div className="relative  flex-1  bg-white  text-gray-500">
         <div className="absolute -top-[60px] bottom-16 flex flex-col items-center  justify-around">
           <Timer duration={120} />
-
           <p
             suppressHydrationWarning
             className="mx-8 border-l-2 border-indigo-300 pl-2"

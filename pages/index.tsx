@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
-import React, { Fragment, Suspense, useRef, useState } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import RadioGroupDemo from '../components/RadioGroupDemo'
 import IllustrationTab from '../components/IllustrationTab'
 import ToothPreview from '../components/ToothPreview'
@@ -14,10 +14,11 @@ import { Info } from '../components/ToothInfo'
 import Menu from '../components/common/Menu'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 import { useUser, useUserDispatch } from '../contexts/userContext'
+// import Model from '../components/Models/Model';
 
 const Model = dynamic(() => import('../components/Models/Model'), {
   ssr: false,
-  loading: () => <p>...</p>,
+  // loading: () => <Loader/>,
 })
 
 const Home: NextPage = () => {

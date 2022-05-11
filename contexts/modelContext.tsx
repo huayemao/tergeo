@@ -3,14 +3,15 @@ import dynamic from 'next/dynamic'
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { MeshBasicMaterial, Scene } from 'three'
 import { ORIGIN } from '../constants/origin'
-export const ModelContext = createContext()
-export const ModelDispatch = createContext()
 
 const initialData = {
   model: null,
   activeToothName: null,
   standardMaterial: null,
 }
+
+export const ModelContext = createContext(initialData)
+export const ModelDispatch = createContext()
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -34,7 +35,6 @@ const reducer = (state, action) => {
 
 const ModelProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialData)
-
 
   return (
     <ModelContext.Provider value={state}>

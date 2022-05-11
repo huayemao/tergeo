@@ -11,6 +11,7 @@ import {
   ToothGrowAction,
 } from '../lib/getToothGrowStageInfo'
 import { Textarea } from './common/FormControls/Textarea'
+import { Label } from './common/FormControls/Label'
 
 export default function OperationMenu() {
   const { activeToothName } = useModel()
@@ -91,30 +92,35 @@ export default function OperationMenu() {
       <OperationModal
         content={
           <div>
-            <form ref={form}>
-              确定花野猫的这颗牙
-              {activeOption.showTime && (
-                <>
-                  在
-                  <TextInput
-                    wrapperClassName="inline-flex"
-                    sizing={'sm'}
-                    id="dateTime"
-                    type="datetime-local"
-                    name="partydate1"
-                    // defaultValue="2022-06-01T08:30"
-                    defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
-                  />
-                </>
-              )}
-              {activeOption.confirmDescription}
-              <Textarea
-                id="remarkContent"
-                type="textarea"
-                name="remarkContent"
-                // defaultValue="2022-06-01T08:30"
-                // defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
-              />
+            <form ref={form} className="space-y-4">
+              <div>
+                确定花野猫的这颗牙
+                {activeOption.showTime && (
+                  <>
+                    在{' '}
+                    <TextInput
+                      wrapperClassName="inline-flex"
+                      sizing={'sm'}
+                      id="dateTime"
+                      type="datetime-local"
+                      name="partydate1"
+                      // defaultValue="2022-06-01T08:30"
+                      defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
+                    />{' '}
+                  </>
+                )}
+                {activeOption.confirmDescription}
+              </div>
+              <div>
+                <Label htmlFor="remarkContent">备注</Label>
+                <Textarea
+                  id="remarkContent"
+                  type="textarea"
+                  name="remarkContent"
+                  // defaultValue="2022-06-01T08:30"
+                  // defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
+                />
+              </div>
             </form>
           </div>
         }
