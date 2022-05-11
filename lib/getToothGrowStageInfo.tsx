@@ -16,7 +16,7 @@ export const getToothGrowStageDescription: string = ({
     [ToothGrowthStage.primary_teethed]: '已萌出乳牙',
     [ToothGrowthStage.permanent_unteethed]: '乳牙脱落',
     [ToothGrowthStage.permanent_teethed]: '已萌出恒牙',
-    [ToothGrowthStage.permanent_lost]: '恒牙脱落',
+    [ToothGrowthStage.permanent_lost]: '恒牙已脱落',
   }
 
   const permanentMapping = {
@@ -26,6 +26,8 @@ export const getToothGrowStageDescription: string = ({
 
   return num > 4 ? permanentMapping[growthStage] : ordianrayMapping[growthStage]
 }
+
+const path = ['萌出乳牙', '乳牙脱落', '萌出恒牙', '恒牙脱落']
 
 export const getToothGrowActionDescription = ({ growthStage, name }: Tooth) => {
   const [jaw, leftOrRight, num] = name.split('')
@@ -47,10 +49,9 @@ export const getAvailableToothAction = (tooth: Tooth) => {
   const actions = []
 
   if (canAdvance) {
-
     const actionName = checkIsPresent(tooth.growthStage) ? '脱落' : '萌出'
     actions.push({
-      name: actionName,
+      name: path[tooth.growthStage],
       confirmDescription: `已经${actionName}了吗`,
       type: ToothGrowthActionType.ADVANCE,
       showTime: true,

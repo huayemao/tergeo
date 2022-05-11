@@ -12,6 +12,7 @@ import {
 } from '../lib/getToothGrowStageInfo'
 import { Textarea } from './common/FormControls/Textarea'
 import { Label } from './common/FormControls/Label'
+import { getDefaultLocalDateTime } from '../lib/day'
 
 export default function OperationMenu() {
   const { activeToothName } = useModel()
@@ -35,6 +36,7 @@ export default function OperationMenu() {
   const handleOnConfirm = useCallback(() => {
     const record = {
       type: activeOption.type,
+      name: activeOption.name,
       dateTime:
         form.current?.elements['dateTime']?.value ||
         new Date().toISOString().slice(0, -8),
@@ -48,7 +50,7 @@ export default function OperationMenu() {
       },
     })
     setIsOpen(false)
-  }, [activeOption.type, dispatch, activeToothName])
+  }, [activeOption.type, activeOption.name, dispatch, activeToothName])
 
   return (
     <>
@@ -104,8 +106,9 @@ export default function OperationMenu() {
                       id="dateTime"
                       type="datetime-local"
                       name="partydate1"
-                      // defaultValue="2022-06-01T08:30"
-                      defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
+                      // defaultValue="2022/5/11 22:40:41"
+                      defaultValue={getDefaultLocalDateTime()}
+                      // defaultValue={new Date().toISOString().slice(0, -8)}
                     />{' '}
                   </>
                 )}

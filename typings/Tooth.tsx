@@ -8,6 +8,7 @@ export enum ToothGrowthStage {
 
 export type ToothGrowthRecord = {
   type: ToothGrowthActionType
+  name: string
   dateTime: string
   remarkContent?: string
 }
@@ -15,7 +16,7 @@ export type ToothGrowthRecord = {
 export type Tooth = {
   name: string
   growthStage: ToothGrowthStage
-  growthRecord: ToothGrowthRecord[] | null
+  growthRecord: ToothGrowthRecord[]
 }
 
 export type PrimaryToothStage =

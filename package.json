@@ -13,6 +13,7 @@
     "@react-three/fiber": "^7.0.26",
     "@tailwindcss/typography": "^0.5.2",
     "clsx": "^1.1.1",
+    "dayjs": "^1.11.2",
     "lodash": "^4.17.21",
     "next": "latest",
     "next-pwa": "^5.4.4",

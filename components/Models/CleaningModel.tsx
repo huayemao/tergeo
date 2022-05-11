@@ -28,6 +28,7 @@ const getHighlightedMat = (standardMaterial) => {
 }
 
 function Scene({ highlightedPrefix }) {
+  const { teeth } = useTeeth()
   const dispatch = useModelDispatch()
   const modelContext = useModel() || {}
   return (
@@ -39,17 +40,16 @@ function Scene({ highlightedPrefix }) {
     >
       <Suspense fallback={<Loader />}>
         <OrbitControls makeDefault enableDamping />
-        <Model {...{ dispatch, modelContext, highlightedPrefix }} />
+        <Model {...{ dispatch, modelContext, highlightedPrefix, teeth }} />
         <Environment path="/" files="studio_small_03_1k.hdr" />
       </Suspense>
     </Canvas>
   )
 }
 
-function Model({ dispatch, modelContext, highlightedPrefix }) {
+function Model({ dispatch, modelContext, highlightedPrefix, teeth }) {
   useFetchModel(dispatch, modelContext)
   const { model, activeToothName = 'tl8', standardMaterial } = modelContext
-  const { teeth } = useTeeth()
   const teethCount = teeth?.filter((e) => e.growthStage > 0).length
 
   const setactiveToothName = useCallback(

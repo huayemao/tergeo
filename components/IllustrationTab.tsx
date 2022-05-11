@@ -25,7 +25,7 @@ export default function IllustrationTab() {
     <div className="">
       <div className="w-full max-w-md sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-indigo-100/40 p-1">
+          <Tab.List className="flex h-12 space-x-1 rounded-xl bg-indigo-100/40">
             {Object.keys(categories).map((category) => (
               <Tab
                 key={category}
@@ -43,14 +43,14 @@ export default function IllustrationTab() {
               </Tab>
             ))}
           </Tab.List>
-          <Tab.Panels className="mt-2">
+          <Tab.Panels
+            className="mt-2 overflow-auto"
+            style={{ height: 'calc(42vh - 3.5rem)' }}
+          >
             {Object.values(categories).map((Comp, idx) => (
               <Tab.Panel
                 key={idx}
-                className={classNames(
-                  'rounded-xl bg-white p-3',
-                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-indigo-400 focus:outline-none focus:ring-2'
-                )}
+                className={classNames('rounded-xl bg-white p-3')}
               >
                 <Comp tooth={tooth} />
               </Tab.Panel>
@@ -63,14 +63,14 @@ export default function IllustrationTab() {
 }
 
 const getTimeline = (tooth: Tooth) => {
-  const filterdRecord = tooth.growthRecord?.reduce(
+  const filterdRecord: ToothGrowthRecord[] = tooth.growthRecord.reduce(
     (acc, cur) =>
       cur.type === ToothGrowthActionType.REVERT
         ? acc.slice(0, -1)
         : acc.concat(cur),
     []
   )
-  return filterdRecord
+  return filterdRecord.reverse()
 }
 
 const TimelineItem = ({ record }: { record: ToothGrowthRecord }) => {
@@ -91,16 +91,16 @@ const TimelineItem = ({ record }: { record: ToothGrowthRecord }) => {
         </svg>
       </span>
       <h3 className="mb-1 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-        {record.type}
+        {record.name}
         <span className="mr-2 ml-3 rounded bg-indigo-100 px-2.5 py-0.5 text-sm font-medium text-indigo-800 dark:bg-indigo-200 dark:text-indigo-800">
           最新
         </span>
       </h3>
       <time className="mb-2 block text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
-        {record.dateTime}
+        {new Date(record.dateTime).toLocaleString()}
       </time>
       <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
-        {record.remarkContent}
+        两个月{record.remarkContent}
       </p>
     </li>
   )
@@ -108,18 +108,21 @@ const TimelineItem = ({ record }: { record: ToothGrowthRecord }) => {
 
 const GrowtTimeLine = ({ tooth }: { tooth: Tooth }) => (
   <>
-    <ol className="relative border-l border-gray-200 dark:border-gray-700">
-      {getTimeline(tooth)?.map((e) => (
-        <TimelineItem key={e.dateTime} record={e}></TimelineItem>
-      ))}
+    <ol className="relative border-l border-gray-200">
+      {tooth &&
+        getTimeline(tooth)
+          // .slice(0, 1)
+          .map((e) => (
+            <TimelineItem key={e.dateTime} record={e}></TimelineItem>
+          ))}
     </ol>
-    <a
+    {/* <a
       href="#"
       className="inline-flex items-center rounded-lg border border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:text-indigo-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
     >
       <EyeIcon className="mr-2 h-4 w-4" />
       更多
-    </a>
+    </a> */}
   </>
 )
 

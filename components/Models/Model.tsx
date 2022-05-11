@@ -22,6 +22,7 @@ export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
 
 export default function Scene() {
+  const { teeth } = useTeeth()
   const dispatch = useModelDispatch()
   const modelContext = useModel() || {}
   return (
@@ -33,18 +34,17 @@ export default function Scene() {
     >
       <Suspense fallback={<Loader />}>
         <OrbitControls makeDefault enableDamping />
-        <Model {...{ dispatch, modelContext }} />
+        <Model {...{ dispatch, modelContext, teeth }} />
         <Environment files="studio_small_03_1k.hdr" />
       </Suspense>
     </Canvas>
   )
 }
 
-function Model({ dispatch, modelContext }) {
+function Model({ dispatch, modelContext, teeth }) {
   const { model, activeToothName = 'tl8', standardMaterial } = modelContext
   useFetchModel(dispatch, modelContext)
 
-  const { teeth } = useTeeth()
   const teethCount = teeth?.filter((e) => e.growthStage > 0).length
 
   const setactiveToothName = useCallback(
