@@ -1,12 +1,18 @@
-import { Menu, Transition } from '@headlessui/react'
+import { Menu as BaseMenu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
-export default function ({ options, title, children, className, onChange }) {
+export default function Menu({
+  options,
+  title,
+  children,
+  className,
+  onChange,
+}) {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <BaseMenu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className={className}>{children}</Menu.Button>
+        <BaseMenu.Button className={className}>{children}</BaseMenu.Button>
       </div>
       <Transition
         as={Fragment}
@@ -17,12 +23,12 @@ export default function ({ options, title, children, className, onChange }) {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <BaseMenu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {options.map((e) => {
             const { label } = e
             return (
               <div key={label} className="px-1 py-1">
-                <Menu.Item
+                <BaseMenu.Item
                   onClick={() => {
                     onChange(e)
                   }}
@@ -36,12 +42,12 @@ export default function ({ options, title, children, className, onChange }) {
                       {label}
                     </button>
                   )}
-                </Menu.Item>
+                </BaseMenu.Item>
               </div>
             )
           })}
-        </Menu.Items>
+        </BaseMenu.Items>
       </Transition>
-    </Menu>
+    </BaseMenu>
   )
 }

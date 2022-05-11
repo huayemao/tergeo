@@ -20,7 +20,7 @@ const Me: NextPage = ({ data }) => {
     <Layout className={'bg-indigo-50/40'} title={'我的'}>
       <div className="divide-y border border-gray-200 bg-white text-lg font-medium  text-gray-900">
         {items.map(({ label, icon: Icon, to }) => (
-          <Link href={'me/' + to}>
+          <Link key={label} href={'me/' + to}>
             <a
               key={label}
               aria-current="true"

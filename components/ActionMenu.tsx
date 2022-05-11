@@ -48,7 +48,7 @@ export default function OperationMenu() {
       },
     })
     setIsOpen(false)
-  }, [activeToothName, activeOption])
+  }, [activeOption.type, dispatch, activeToothName])
 
   return (
     <>

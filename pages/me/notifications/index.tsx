@@ -61,7 +61,7 @@ const NotificationSetting: NextPage = ({ data }) => {
     <Layout title={'提醒设置'}>
       <div className="divide-y border border-gray-200 bg-white text-lg  font-medium text-gray-900">
         {items.map((e) => (
-          <SettingItem {...e} />
+          <SettingItem key={e.label} {...e} />
         ))}
       </div>
       <button

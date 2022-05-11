@@ -115,7 +115,7 @@ const Me: NextPage = ({ data }) => {
     <Layout title={'日常任务设置'}>
       <div className="divide-y border border-gray-200 bg-white text-lg  font-medium text-gray-900">
         {list.map((e) => (
-          <SettingItem {...e} />
+          <SettingItem key={e.label} {...e} />
         ))}
       </div>
     </Layout>
@@ -123,5 +123,3 @@ const Me: NextPage = ({ data }) => {
 }
 
 export default Me
-
-
