@@ -23,7 +23,7 @@ const Model = dynamic(() => import('../components/Models/Model'), {
 
 const Home: NextPage = () => {
   const dispatch = useUserDispatch()
-  const { mode } = useUser()
+  const { mode, child } = useUser()
   return (
     <Layout
       className={'max-h-screen'}

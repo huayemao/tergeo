@@ -74,9 +74,9 @@ const Me: NextPage = ({ data }) => {
 export default Me
 
 function ChildForm() {
-  const {
-    child: { name, birthday },
-  } = useUser()
+  const { child } = useUser()
+
+  const { name, birthday } = child || {}
 
   const dispatch = useUserDispatch()
 
@@ -120,7 +120,7 @@ function ChildForm() {
             id="child_birthday"
             type="date"
             name="child_birthday"
-            defaultValue={birthday || '2022-05-11T05:03:37.484Z'.slice(0, 10)}
+            defaultValue={birthday}
           />{' '}
         </Label>
         <div className="text-right">

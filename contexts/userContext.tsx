@@ -4,10 +4,7 @@ export const UserDispatch = createContext()
 
 const initialData = {
   mode: 'normal',
-  child: {
-    name: null,
-    birthday: null,
-  },
+  child: null,
 }
 
 const reducer = (state, action) => {
