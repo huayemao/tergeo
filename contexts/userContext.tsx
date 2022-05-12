@@ -1,15 +1,16 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { Mode } from '../typings/user'
-export const UserContext = createContext()
-export const UserDispatch = createContext()
-
-export const getAvailableModes = (user) => {
-  return user.child ? [Mode.children, Mode.usual] : [Mode.usual]
-}
 
 const initialData = {
   mode: Mode.usual,
   child: null,
+}
+
+export const UserContext = createContext(initialData)
+export const UserDispatch = createContext()
+
+export const getAvailableModes = (user) => {
+  return user.child ? [Mode.children, Mode.usual] : [Mode.usual]
 }
 
 const reducer = (state, action) => {

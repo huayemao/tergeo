@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { EyeIcon } from '@heroicons/react/outline'
 import { InformationCircleIcon } from '@heroicons/react/solid'
@@ -24,18 +24,22 @@ export default function IllustrationTab() {
 
   const { mode } = useUser()
 
-  const categories = compact([
-    {
-      key: 'intro',
-      label: tooth ? '牙齿介绍' : '编贝',
-      component: Intro,
-    },
-    mode !== 'usual' && {
-      key: 'record',
-      label: '成长记录',
-      component: GrowtTimeLine,
-    },
-  ])
+  const categories = useMemo(
+    () =>
+      compact([
+        {
+          key: 'intro',
+          label: tooth ? '牙齿介绍' : '编贝',
+          component: Intro,
+        },
+        mode !== 'usual' && {
+          key: 'record',
+          label: '成长记录',
+          component: GrowtTimeLine,
+        },
+      ]),
+    [mode, tooth]
+  )
 
   return (
     <div className="">

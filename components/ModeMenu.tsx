@@ -1,15 +1,17 @@
-import React from 'react';
-import Menu from './common/Menu';
-import { ChevronDownIcon } from '@heroicons/react/outline';
-import { getAvailableModes } from '../contexts/userContext';
-import { getOptions, Mode } from '../typings/user';
+import React from 'react'
+import Menu from './common/Menu'
+import { ChevronDownIcon } from '@heroicons/react/outline'
+import { getAvailableModes } from '../contexts/userContext'
+import { getOptions, Mode } from '../typings/user'
 
 export function ModeMenu({ dispatch, user }) {
-  const modes = getAvailableModes(user);
+  const modes = getAvailableModes(user)
 
   return (
     <Menu
-      onChange={(e) => dispatch({ type: 'SET_MODE', payload: e.key })}
+      onChange={(e) => {
+        dispatch({ type: 'SET_MODE', payload: e.key })
+      }}
       className={'flex items-center font-bold'}
       options={modes.map(getOptions)}
     >
@@ -30,7 +32,8 @@ export function ModeMenu({ dispatch, user }) {
       </div>
       <ChevronDownIcon
         className="ml-2 -mr-1 h-5 w-5 text-indigo-400"
-        aria-hidden="true" />{' '}
+        aria-hidden="true"
+      />{' '}
     </Menu>
-  );
+  )
 }
