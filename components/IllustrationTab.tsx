@@ -7,6 +7,7 @@ import {
   ToothGrowthActionType,
   ToothGrowthRecord,
 } from '../typings/Tooth'
+import { GrowtTimeLine } from './GrowtTimeLine'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -17,8 +18,7 @@ export default function IllustrationTab() {
 
   let [categories] = useState({
     牙齿介绍: Intro,
-    牙齿记录: GrowtTimeLine,
-    小贴士: Intro,
+    成长记录: GrowtTimeLine,
   })
 
   return (
@@ -62,7 +62,7 @@ export default function IllustrationTab() {
   )
 }
 
-const getTimeline = (tooth: Tooth) => {
+export const getTimeline = (tooth: Tooth) => {
   const filterdRecord: ToothGrowthRecord[] = tooth.growthRecord.reduce(
     (acc, cur) =>
       cur.type === ToothGrowthActionType.REVERT
@@ -73,7 +73,7 @@ const getTimeline = (tooth: Tooth) => {
   return filterdRecord.reverse()
 }
 
-const TimelineItem = ({ record }: { record: ToothGrowthRecord }) => {
+export const TimelineItem = ({ record }: { record: ToothGrowthRecord }) => {
   return (
     <li className="mb-10 ml-6 text-left">
       <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-indigo-200 ring-8 ring-white dark:bg-indigo-900 dark:ring-gray-900">
@@ -105,26 +105,6 @@ const TimelineItem = ({ record }: { record: ToothGrowthRecord }) => {
     </li>
   )
 }
-
-const GrowtTimeLine = ({ tooth }: { tooth: Tooth }) => (
-  <>
-    <ol className="relative border-l border-gray-200">
-      {tooth &&
-        getTimeline(tooth)
-          // .slice(0, 1)
-          .map((e) => (
-            <TimelineItem key={e.dateTime} record={e}></TimelineItem>
-          ))}
-    </ol>
-    {/* <a
-      href="#"
-      className="inline-flex items-center rounded-lg border border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:text-indigo-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-    >
-      <EyeIcon className="mr-2 h-4 w-4" />
-      更多
-    </a> */}
-  </>
-)
 
 const Intro = () => {
   const posts = [

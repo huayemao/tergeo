@@ -9,14 +9,11 @@ import {
   Environment,
 } from '@react-three/drei'
 
-import { Canvas } from '@react-three/fiber'
-import React, { useRef, useMemo, useCallback, memo, Suspense } from 'react'
+import React, { useRef, useMemo, useCallback, memo } from 'react'
 import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
-import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
-import { useTeeth } from '../../contexts/teethContext'
 import { useFetchModel } from '../../lib/hooks/useFetchModel'
-import Loader from './Loader'
+import { SceneWrapper } from './SceneWrapper'
 
 export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
@@ -25,26 +22,6 @@ const getHighlightedMat = (standardMaterial) => {
   let material: MeshStandardMaterial = standardMaterial.clone()
   material.color = indigo
   return material
-}
-
-function Scene({ highlightedPrefix }) {
-  const { teeth } = useTeeth()
-  const dispatch = useModelDispatch()
-  const modelContext = useModel() || {}
-  return (
-    <Canvas
-      shadows
-      dpr={[1, 2]}
-      style={{ height: '36vh' }}
-      camera={{ position: [0, 15, -72], fov: 70, near: 10 }}
-    >
-      <Suspense fallback={<Loader />}>
-        <OrbitControls makeDefault enableDamping />
-        <Model {...{ dispatch, modelContext, highlightedPrefix, teeth }} />
-        <Environment path="/" files="studio_small_03_1k.hdr" />
-      </Suspense>
-    </Canvas>
-  )
 }
 
 function Model({ dispatch, modelContext, highlightedPrefix, teeth }) {
@@ -91,11 +68,17 @@ function Model({ dispatch, modelContext, highlightedPrefix, teeth }) {
     return clonedScene
   }, [highlightedPrefix, model?.scene, standardMaterial])
 
+  return <primitive object={scene || {}} />
+}
+
+function Scene({ ...props }) {
+  const canvasProps = {
+    style: { height: '36vh' },
+  }
   return (
-    <>
-      <primitive object={scene || {}} />
-      <Environment files="studio_small_03_1k.hdr" />
-    </>
+    <SceneWrapper {...props} canvasProps={canvasProps} modelComponent={Model}>
+      <Environment path="/" files="studio_small_03_1k.hdr" />
+    </SceneWrapper>
   )
 }
 

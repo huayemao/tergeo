@@ -12,34 +12,12 @@ import {
 import { Canvas, useFrame } from '@react-three/fiber'
 import React, { useRef, useState, useMemo, useCallback, Suspense } from 'react'
 import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
-import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
-import { useTeeth } from '../../contexts/teethContext'
 import { useFetchModel } from '../../lib/hooks/useFetchModel'
-import Loader from './Loader'
+import { SceneWrapper } from './SceneWrapper'
 
 export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
 export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
-
-export default function Scene() {
-  const { teeth } = useTeeth()
-  const dispatch = useModelDispatch()
-  const modelContext = useModel() || {}
-  return (
-    <Canvas
-      shadows
-      dpr={[1, 2]}
-      style={{ height: '36vh' }}
-      camera={{ position: [0, 8, 72], fov: 70, near: 10 }}
-    >
-      <Suspense fallback={<Loader />}>
-        <OrbitControls makeDefault enableDamping />
-        <Model {...{ dispatch, modelContext, teeth }} />
-        <Environment files="studio_small_03_1k.hdr" />
-      </Suspense>
-    </Canvas>
-  )
-}
 
 function Model({ dispatch, modelContext, teeth }) {
   const { model, activeToothName = 'tl8', standardMaterial } = modelContext
@@ -96,3 +74,20 @@ function Model({ dispatch, modelContext, teeth }) {
     </primitive>
   )
 }
+
+function Scene({ ...props }) {
+  const canvasProps = {
+    shadows: true,
+    dpr: [1, 2],
+    style: { height: '36vh' },
+    camera: { position: [0, 8, 72], fov: 70, near: 10 },
+  }
+  return (
+    <SceneWrapper canvasProps={canvasProps} {...props} modelComponent={Model}>
+      <OrbitControls makeDefault enableDamping />
+      <Environment path="/" files="studio_small_03_1k.hdr" />
+    </SceneWrapper>
+  )
+}
+
+export default Scene
