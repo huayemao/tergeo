@@ -1,3 +1,4 @@
+import { BadgeColor } from '../components/common/Badge'
 import {
   ToothRemarkActionTypes,
   Tooth,
@@ -5,23 +6,46 @@ import {
   ToothGrowthStage,
 } from '../typings/Tooth'
 
-export const getToothGrowStageDescription: string = ({
+export type GrowStageDescription = {
+  label: string
+  color: BadgeColor
+}
+
+export const getToothGrowStageDescription: GrowStageDescription = ({
   growthStage,
   name,
 }: Tooth) => {
   const [jaw, leftOrRight, num] = name.split('')
 
   const ordianrayMapping = {
-    [ToothGrowthStage.primary_unteethed]: '未萌出',
-    [ToothGrowthStage.primary_teethed]: '已萌出乳牙',
-    [ToothGrowthStage.permanent_unteethed]: '乳牙脱落',
-    [ToothGrowthStage.permanent_teethed]: '已萌出恒牙',
-    [ToothGrowthStage.permanent_lost]: '恒牙已脱落',
+    [ToothGrowthStage.primary_unteethed]: {
+      label: '未萌出',
+      color: 'blue',
+    },
+    [ToothGrowthStage.primary_teethed]: {
+      label: '已萌出乳牙',
+      color: 'green',
+    },
+    [ToothGrowthStage.permanent_unteethed]: {
+      label: '乳牙脱落',
+      color: 'pink',
+    },
+    [ToothGrowthStage.permanent_teethed]: {
+      label: '已萌出恒牙',
+      color: 'indigo',
+    },
+    [ToothGrowthStage.permanent_lost]: {
+      label: '恒牙已脱落',
+      color: 'gray',
+    },
   }
 
   const permanentMapping = {
     ...ordianrayMapping,
-    [ToothGrowthStage.permanent_unteethed]: '未萌出',
+    [ToothGrowthStage.permanent_unteethed]: {
+      label: '未萌出',
+      color: 'blue',
+    },
   }
 
   return num > 4 ? permanentMapping[growthStage] : ordianrayMapping[growthStage]
