@@ -21,8 +21,9 @@ function classNames(...classes) {
 
 export default function IllustrationTab() {
   const tooth = useSelectedTooth()
+  const user = useUser()
 
-  const { mode } = useUser()
+  const { mode } = user
 
   const categories = useMemo(
     () =>
@@ -32,11 +33,12 @@ export default function IllustrationTab() {
           label: tooth ? '牙齿介绍' : '编贝',
           component: Intro,
         },
-        mode !== 'usual' && {
-          key: 'record',
-          label: '成长记录',
-          component: GrowtTimeLine,
-        },
+        mode !== 'usual' &&
+          tooth && {
+            key: 'record',
+            label: '成长记录',
+            component: GrowtTimeLine,
+          },
       ]),
     [mode, tooth]
   )
@@ -77,7 +79,7 @@ export default function IllustrationTab() {
                 </Tab.Panel>
               ))
             ) : (
-              <Tip></Tip>
+              <Tip user={user} />
             )}
           </Tab.Panels>
         </Tab.Group>
@@ -92,26 +94,42 @@ export default function IllustrationTab() {
   )
 }
 
-const Tip = () => (
-  <div className="space-y-2">
-    <Alert color="indigo">
-      <div className="text-left">
-        您正在以【普通模式】访问，选中每一颗牙齿可以模型观察和了解每颗牙齿的形态。
-        <br />
-      </div>
-    </Alert>
-    <Alert Icon={InformationCircleIcon} color="blue">
-      <div className="text-left">
-        如果您是一名正在长牙或换牙的孩子的家长，
-        <Link href={'/me/account'}>
-          <a className="underline">完善您孩子的信息</a>
-        </Link>
-        之后，可以切换为【牙齿成长模式】
-        <br />
-      </div>
-    </Alert>
-  </div>
-)
+function Extra({ user }) {
+  return (
+    <div className="w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter">
+      <p className="text-gray-500">
+        {user.name}
+        <span className="font-semibold text-indigo-400 ">六个月零8天</span>
+        啦，已经坚韧地长出了{' '}
+        <span className="font-semibold text-indigo-400">1 颗</span>牙
+      </p>
+    </div>
+  )
+}
+
+const Tip = ({ user }) =>
+  user.mode === Mode.children ? (
+    <Extra user={user} />
+  ) : (
+    <div className="space-y-2">
+      <Alert color="indigo">
+        <div className="text-left">
+          您正在以【普通模式】访问，选中每一颗牙齿可以模型观察和了解每颗牙齿的形态。
+          <br />
+        </div>
+      </Alert>
+      <Alert Icon={InformationCircleIcon} color="blue">
+        <div className="text-left">
+          如果您是一名正在长牙或换牙的孩子的家长，
+          <Link href={'/me/account'}>
+            <a className="underline">完善您孩子的信息</a>
+          </Link>
+          之后，可以切换为【牙齿成长模式】
+          <br />
+        </div>
+      </Alert>
+    </div>
+  )
 
 const Intro = () => {
   const posts = [
