@@ -10,6 +10,7 @@ import {
 import { GrowtTimeLine } from './GrowtTimeLine'
 import { useUser } from '../contexts/userContext'
 import { compact } from 'lodash'
+import Link from 'next/link'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -26,8 +27,8 @@ export default function IllustrationTab() {
       label: '牙齿介绍',
       component: Intro,
     },
-    mode !== 'normal' && {
-      key: 'intro',
+    mode !== 'usual' && {
+      key: 'record',
       label: '成长记录',
       component: GrowtTimeLine,
     },
@@ -35,7 +36,7 @@ export default function IllustrationTab() {
 
   return (
     <div className="">
-      <div className="w-full max-w-md sm:px-0">
+      <div className="relative w-full max-w-md sm:px-0">
         <Tab.Group>
           <Tab.List className="flex h-12 space-x-1 rounded-xl bg-indigo-100/40">
             {categories.map((category) => (
@@ -70,6 +71,12 @@ export default function IllustrationTab() {
               ))}
           </Tab.Panels>
         </Tab.Group>
+        <Link href={'toothDetail'} shallow>
+          <a className="absolute bottom-20 right-4 inline-flex items-center rounded-lg border border-gray-200 bg-white py-2 px-4 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-indigo-700 focus:z-10 focus:text-indigo-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">
+            <EyeIcon className="mr-2 h-4 w-4" />
+            详情
+          </a>
+        </Link>
       </div>
     </div>
   )
