@@ -5,7 +5,7 @@ import { useTooth } from '../contexts/teethContext'
 import { getToothBaseInfo } from '../lib/getToothBaseInfo'
 import { getToothGrowStageDescription } from '../lib/getToothGrowStageInfo'
 import { Badge } from '../components/common/Badge'
-import ToothPreview from '../components/Models/ToothPreview'
+import ToothPreview from '../components/Scenes/ToothPreview'
 import Layout from '../components/Layout'
 import { GrowtTimeLine } from '../components/GrowtTimeLine'
 

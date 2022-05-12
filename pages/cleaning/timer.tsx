@@ -13,7 +13,7 @@ import TimerProvider, {
 } from '../../contexts/timerContext'
 
 const CleaningModel = dynamic(
-  () => import('../../components/Models/CleaningModel'),
+  () => import('../../components/Scenes/CleaningModel'),
   {
     ssr: false,
   }
@@ -117,9 +117,10 @@ function CleaningTimer() {
       <Layout
         title={
           <>
-            花野猫
-            <sub className="font-medium text-gray-500">
-              &nbsp;的牙齿健康习惯挑战——
+            健康习惯计时器
+            <span className="font-medium text-gray-500">
+              {' '}
+              ——
               <Menu
                 options={[{ label: '牙线' }]}
                 className={
@@ -130,9 +131,9 @@ function CleaningTimer() {
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"
-                />{' '}
+                />
               </Menu>
-            </sub>
+            </span>
           </>
         }
       >

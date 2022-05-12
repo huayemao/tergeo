@@ -6,7 +6,7 @@ import Image from 'next/image'
 import React, { Fragment, useRef, useState } from 'react'
 import RadioGroupDemo from '../components/RadioGroupDemo'
 import IllustrationTab from '../components/IllustrationTab'
-import ToothPreview from '../components/Models/ToothPreview'
+import ToothPreview from '../components/Scenes/ToothPreview'
 import { BottomTab } from '../components/BottomTab'
 import Layout from '../components/Layout'
 import ModelProvider from '../contexts/modelContext'
@@ -14,7 +14,7 @@ import { Info } from '../components/ToothInfo'
 import { useUser, useUserDispatch } from '../contexts/userContext'
 import { ModeMenu } from '../components/ModeMenu'
 
-const Model = dynamic(() => import('../components/Models/Model'), {
+const Model = dynamic(() => import('../components/Scenes/Main'), {
   ssr: false,
 })
 
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
         style={{ height: '36vh' }}
       >
-        <Model />
+        <Model mode={user.mode} />
       </div>
       <div className="flex h-[60vh] flex-col rounded-t-3xl">
         <div

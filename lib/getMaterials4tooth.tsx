@@ -1,14 +1,17 @@
 import { MeshStandardMaterial } from 'three'
-import { indigo, teal } from '../components/Models/Model'
+import { INDIGO, TEAL } from '../constants/colors'
 import { filter } from 'lodash'
 import { checkIsPresent } from './getToothGrowStageInfo'
+import { Mode } from '../typings/user'
 
 export function getMaterials4tooth(
-  standardMaterial,
   tooth,
-  teeth,
-  activeToothName
+  modelContext,
+  teethContext,
+  mode = Mode.usual
 ) {
+  const { standardMaterial, activeToothName } = modelContext
+  const { teeth } = teethContext
   if (standardMaterial) {
     const GROWN_TEETH = filter(teeth, (v) => checkIsPresent(v.growthStage)).map(
       (e) => e.name
@@ -25,15 +28,15 @@ export function getMaterials4tooth(
 
     let material: MeshStandardMaterial = standardMaterial.clone()
 
-    if (isUnGrown) {
+    if (isUnGrown && mode === Mode.children) {
       material.opacity = 0.35
       material.transparent = true
     }
     if (isActive) {
-      material.color = indigo
+      material.color = INDIGO
       if (isUnGrown) {
         material.opacity = 0.6
-        material.color = teal
+        material.color = TEAL
       }
     }
 

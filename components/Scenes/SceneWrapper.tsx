@@ -10,7 +10,7 @@ export function SceneWrapper({
   modelComponent: Model,
   ...props
 }) {
-  const { teeth } = useTeeth()
+  const teethContext = useTeeth()
   const dispatch = useModelDispatch()
   const modelContext = useModel() || {}
   return (
@@ -22,7 +22,7 @@ export function SceneWrapper({
     >
       <Suspense fallback={<Loader />}>
         {children}
-        <Model {...props} {...{ teeth, dispatch, modelContext }} />
+        <Model {...props} {...{ dispatch, modelContext, teethContext }} />
       </Suspense>
     </Canvas>
   )

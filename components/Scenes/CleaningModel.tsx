@@ -14,20 +14,17 @@ import { Color, Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
 import { getMaterials4tooth } from '../../lib/getMaterials4tooth'
 import { useFetchModel } from '../../lib/hooks/useFetchModel'
 import { SceneWrapper } from './SceneWrapper'
-
-export const indigo = new Color(99 / 256, 102 / 256, 241 / 256)
-export const teal = new Color(13 / 256, 148 / 256, 136 / 256)
+import { INDIGO } from '../../constants/colors'
 
 const getHighlightedMat = (standardMaterial) => {
   let material: MeshStandardMaterial = standardMaterial.clone()
-  material.color = indigo
+  material.color = INDIGO
   return material
 }
 
-function Model({ dispatch, modelContext, highlightedPrefix, teeth }) {
+function Model({ dispatch, modelContext, highlightedPrefix, teethContext }) {
   useFetchModel(dispatch, modelContext)
-  const { model, activeToothName = 'tl8', standardMaterial } = modelContext
-  const teethCount = teeth?.filter((e) => e.growthStage > 0).length
+  const { model, standardMaterial } = modelContext
 
   const setactiveToothName = useCallback(
     (toothName) => {
