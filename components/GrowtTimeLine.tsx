@@ -4,7 +4,7 @@ import {
   ToothGrowthActionType,
   ToothGrowthRecord,
 } from '../typings/Tooth'
-import { gitDistanceFromBirth } from '../lib/day'
+import { getAgeDetails, gitDistanceFromBirth } from '../lib/day'
 import { useUser } from '../contexts/userContext'
 import { Child } from '../typings/child'
 
@@ -19,7 +19,7 @@ export const getTimeline: ToothGrowthRecord[] = (tooth: Tooth) => {
   return filterdRecord.reverse()
 }
 interface DisplayRecord extends ToothGrowthRecord {
-  diff: any[]
+  ageDetail: any
 }
 
 export const TimelineItem = ({
@@ -56,7 +56,7 @@ export const TimelineItem = ({
       </time>
       <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
         {child.name}
-        {record.diff}
+        {record.ageDetail.label}
         {record.remarkContent}
       </p>
     </li>
@@ -68,11 +68,11 @@ export const GrowtTimeLine = ({ tooth }: { tooth: Tooth }) => {
 
   const { name, birthday } = child || {}
 
-  const records = useMemo((): (ToothGrowthRecord | { diff: any[] })[] => {
+  const records = useMemo((): DisplayRecord[] => {
     const rawRecords: ToothGrowthRecord = getTimeline(tooth)
     return rawRecords.map((e) => ({
       ...e,
-      diff: birthday ? gitDistanceFromBirth(e.dateTime, birthday) : [0, 0, 0],
+      ageDetail: getAgeDetails(e.dateTime, birthday),
     }))
   }, [birthday, tooth])
 

@@ -9,13 +9,26 @@ export const getDefaultLocalDateTime = () => {
   return dayjs(new Date()).format('YYYY-MM-DDTHH:mm')
 }
 
-export const gitDistanceFromBirth = (eventDate, birthDate) => {
-  const end = dayjs(eventDate, 'YYYY-MM-DDTHH:mm')
-  const start = dayjs(birthDate, 'YYYY-MM-DDTHH:mm')
+export const getAgeDetails = (eventDate, birthDate) => {
+  const newDate = dayjs(eventDate, 'YYYY-MM-DDTHH:mm')
+  const oldDate = dayjs(birthDate, 'YYYY-MM-DDTHH:mm')
+  const years = newDate.diff(oldDate, 'year')
+  const months = newDate.diff(oldDate, 'month') - years * 12
+  const days = newDate.diff(
+    oldDate.add(years, 'year').add(months, 'month'),
+    'day'
+  )
 
-  const yearDiff = end.diff(start, 'year')
-  const monthDiff = end.diff(start, 'month')
-  const dayDiff = end.diff(start, 'day')
+  const arr = ['岁', '个月', '天']
+  const label = [years, months, days]
+    .map((e, i) => (Number(e) !== 0 ? e + arr[i] : ''))
+    .join('')
 
-  return [yearDiff, monthDiff, dayDiff]
+  return {
+    years,
+    months,
+    days,
+    allDays: newDate.diff(oldDate, 'day'),
+    label,
+  }
 }

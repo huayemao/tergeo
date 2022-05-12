@@ -117,7 +117,7 @@ export default function OperationMenu() {
               </div>
               <div>
                 <Label htmlFor="remarkContent">
-                  <PencilIcon className="h-5 w-5 inline" /> 备注
+                  <PencilIcon className="inline h-5 w-5" /> 备注
                 </Label>
                 <Textarea
                   id="remarkContent"
@@ -126,8 +126,6 @@ export default function OperationMenu() {
                   className="p-2"
                   rows={5}
                   placeholder="花野猫 4 个月了，XXX"
-                  // defaultValue="2022-06-01T08:30"
-                  // defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
                 />
               </div>
             </form>
