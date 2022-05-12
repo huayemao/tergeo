@@ -31,11 +31,11 @@ export default function OperationModal({
           <div className="my-8 inline-block w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
             <Dialog.Title
               as="h3"
-              className="text-lg font-medium leading-6 text-gray-900"
+              className="text-lg font-semibold leading-6 text-indigo-700"
             >
               {title}
             </Dialog.Title>
-            <div className="mt-2 text-sm text-gray-500">{content}</div>
+            <div className="mt-2 text-sm">{content}</div>
 
             <div className="mt-4 space-x-4">
               <button

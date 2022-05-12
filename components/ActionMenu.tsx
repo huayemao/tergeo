@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { ChevronDownIcon, PencilIcon } from '@heroicons/react/solid'
 import { useModel } from '../contexts/modelContext'
 import { useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
@@ -94,14 +94,15 @@ export default function OperationMenu() {
       <OperationModal
         content={
           <div>
-            <form ref={form} className="space-y-4">
-              <div>
+            <form ref={form} className="space-y-6 pt-6">
+              <div className="align-bottom">
                 确定花野猫的这颗牙
                 {activeOption.showTime && (
                   <>
                     在{' '}
                     <TextInput
                       wrapperClassName="inline-flex"
+                      className="p-0.5"
                       sizing={'sm'}
                       id="dateTime"
                       type="datetime-local"
@@ -112,14 +113,19 @@ export default function OperationMenu() {
                     />{' '}
                   </>
                 )}
-                {activeOption.confirmDescription}
+                {activeOption.confirmDescription}？
               </div>
               <div>
-                <Label htmlFor="remarkContent">备注</Label>
+                <Label htmlFor="remarkContent">
+                  <PencilIcon className="h-5 w-5 inline" /> 备注
+                </Label>
                 <Textarea
                   id="remarkContent"
                   type="textarea"
                   name="remarkContent"
+                  className="p-2"
+                  rows={5}
+                  placeholder="花野猫 4 个月了，XXX"
                   // defaultValue="2022-06-01T08:30"
                   // defaultValue={'2022-05-11T05:03:37.484Z'.slice(0, -8)}
                 />
