@@ -1,25 +1,40 @@
 // @ts-nocheck
+import { ArrowNarrowRightIcon } from '@heroicons/react/solid'
 import type { NextPage } from 'next'
+import Link from 'next/link'
+import { UrlObject } from 'url'
 import { Label } from '../../components/common/FormControls/Label'
 import { TextInput } from '../../components/common/FormControls/TextInput'
 import Layout from '../../components/Layout'
 
-const categories = [
+type CleaningCategory = {
+  label: 'string'
+  color: 'string'
+  to: UrlObject
+}
+
+const categories: CleaningCategory[] = [
   {
     label: '刷牙',
+    key: 'brush',
     color: 'text-indigo-600',
+    to: { pathname: 'cleaning/timer', query: { type: 'brush' } },
   },
   {
     label: '使用牙线',
     color: 'text-blue-600',
+    key: 'floss',
+    to: { pathname: 'cleaning/timer', query: { type: 'floss' } },
   },
   {
     label: '漱口',
     color: 'text-green-600',
+    key: 'rinse ',
+    to: { pathname: 'cleaning/timer', query: { type: 'rinse' } },
   },
 ]
 
-const Card = ({ color, label }) => (
+const Card = ({ color, label, to, key }: CleaningCategory) => (
   <a
     href=""
     className={
@@ -34,25 +49,12 @@ const Card = ({ color, label }) => (
         </p>
       </div>
     </div>
-
-    <div className={'mt-8 inline-flex items-center text-indigo-600 ' + color}>
-      <p className="text-lg font-medium">去完成</p>
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="ml-3 h-6 w-6 transform transition-transform group-hover:translate-x-3"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="2"
-          d="M17 8l4 4m0 0l-4 4m4-4H3"
-        />
-      </svg>
-    </div>
+    <Link href={to}>
+      <a className={'mt-8 inline-flex items-center text-indigo-600 ' + color}>
+        <span className="text-lg font-medium">去完成</span>
+        <ArrowNarrowRightIcon className="ml-3 h-6 w-6 transform transition-transform group-hover:translate-x-3"></ArrowNarrowRightIcon>
+      </a>
+    </Link>
   </a>
 )
 

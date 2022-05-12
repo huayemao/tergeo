@@ -36,7 +36,7 @@ export function BottomTab() {
           const isActive = router.pathname.split('/')?.[1] === k
 
           return (
-            <Link key={k} shallow replace href={pathname}>
+            <Link key={k} shallow replace href={pathname} >
               <Icon
                 strokeWidth="1.5"
                 className={
