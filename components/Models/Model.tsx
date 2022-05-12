@@ -25,15 +25,23 @@ function Model({ dispatch, modelContext, teeth }) {
 
   const teethCount = teeth?.filter((e) => e.growthStage > 0).length
 
-  const setactiveToothName = useCallback(
-    (toothName) => {
+  const handleSceneClick = useCallback(
+    (e) => {
       dispatch({
         type: 'SET_ACTIVE_TOOTH',
-        payload: { toothName },
+        payload: { toothName: e.object.name },
       })
     },
     [dispatch]
   )
+
+  const handleResetActiveTooth = () => {
+    dispatch({
+      type: 'RESET_ACTIVE_TOOTH',
+    })
+  }
+
+  // 似乎没有办法取消选中，点击模型之外没办法捕获事件
 
   const scene = useMemo(() => {
     const clonedScene = model && model.scene.clone()
@@ -51,27 +59,30 @@ function Model({ dispatch, modelContext, teeth }) {
   }, [activeToothName, model, standardMaterial, teeth])
 
   return (
-    <primitive
-      object={scene || {}}
-      onClick={(e) =>
-        e.object.type === 'Mesh' && setactiveToothName(e.object.name)
-      }
-    >
-      <Html
-        className="w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter"
-        calculatePosition={(el, c, size) => {
-          return [size.width - 192, 0]
-        }}
+    <scene>
+      <primitive
+        object={scene || {}}
+        onClick={handleSceneClick}
+        onPointerMissed={handleResetActiveTooth}
       >
-        <p className="text-gray-500">
-          花野猫
-          <span className="font-semibold text-indigo-400 ">六个月零8天</span>
-          啦，已经坚韧地长出了{' '}
-          <span className="font-semibold text-indigo-400">{teethCount} 颗</span>
-          牙
-        </p>
-      </Html>
-    </primitive>
+        <Html
+          className="w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter"
+          calculatePosition={(el, c, size) => {
+            return [size.width - 192, 0]
+          }}
+        >
+          <p className="text-gray-500">
+            花野猫
+            <span className="font-semibold text-indigo-400 ">六个月零8天</span>
+            啦，已经坚韧地长出了{' '}
+            <span className="font-semibold text-indigo-400">
+              {teethCount} 颗
+            </span>
+            牙
+          </p>
+        </Html>
+      </primitive>
+    </scene>
   )
 }
 

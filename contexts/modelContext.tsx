@@ -23,6 +23,9 @@ const reducer = (state, action) => {
       const { toothName } = action.payload
       return Object.assign({}, state, { activeToothName: toothName })
     }
+    case 'RESET_ACTIVE_TOOTH': {
+      return Object.assign({}, state, { activeToothName: null })
+    }
     case 'SET_STANDARD_MATERIAL': {
       const { standardMaterial } = action.payload
       return Object.assign({}, state, { standardMaterial })
