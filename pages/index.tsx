@@ -11,14 +11,8 @@ import { BottomTab } from '../components/BottomTab'
 import Layout from '../components/Layout'
 import ModelProvider from '../contexts/modelContext'
 import { Info } from '../components/ToothInfo'
-import Menu from '../components/common/Menu'
-import { ChevronDownIcon } from '@heroicons/react/outline'
-import {
-  getAvailableModes,
-  useUser,
-  useUserDispatch,
-} from '../contexts/userContext'
-import { getOptions, Mode } from '../typings/user'
+import { useUser, useUserDispatch } from '../contexts/userContext'
+import { ModeMenu } from '../components/ModeMenu'
 
 const Model = dynamic(() => import('../components/Models/Model'), {
   ssr: false,
@@ -32,8 +26,6 @@ const Home: NextPage = () => {
       className={'max-h-screen'}
       title={<ModeMenu {...{ dispatch, user }} />}
     >
-      {/* <div className="w-full bg-gradient-to-r from-purple-200 via-pink-200 to-blue-200 hover:bg-gradient-to-l"> */}
-      {/* <div className="flex flex-col bg-white bg-opacity-80 backdrop-blur-lg backdrop-filter"> */}
       <div
         className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
         style={{ height: '36vh' }}
@@ -52,41 +44,8 @@ const Home: NextPage = () => {
           <IllustrationTab />
         </div>
       </div>
-      {/* </div> */}
-      {/* </div> */}
     </Layout>
   )
 }
 
 export default Home
-function ModeMenu({ dispatch, user }) {
-  const modes = getAvailableModes(user)
-
-  return (
-    <Menu
-      onChange={(e) => dispatch({ type: 'SET_MODE', payload: e.key })}
-      className={'flex items-center font-bold'}
-      options={modes.map(getOptions)}
-    >
-      <div suppressHydrationWarning>
-        {user.mode === Mode.children ? (
-          <>
-            花野猫的牙齿成长记录
-            <sub className="font-medium text-gray-500">
-              （{'成长记录模式'}）
-            </sub>
-          </>
-        ) : (
-          <>
-            主页
-            <sub className="font-medium text-gray-500">（{'普通模式'}）</sub>
-          </>
-        )}
-      </div>
-      <ChevronDownIcon
-        className="ml-2 -mr-1 h-5 w-5 text-indigo-400"
-        aria-hidden="true"
-      />{' '}
-    </Menu>
-  )
-}

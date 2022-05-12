@@ -12,7 +12,9 @@ const Me: NextPage = ({ data }) => {
           <ul className="grid grid-cols-2 gap-4 rounded-xl border-2 border-indigo-600 lg:grid-cols-4">
             <li className="p-4">
               <p className="text-2xl font-extrabold text-indigo-500">12</p>
-              <p suppressHydrationWarning className="mt-1 text-lg font-medium">天连续刷牙</p>
+              <p suppressHydrationWarning className="mt-1 text-lg font-medium">
+                天连续刷牙
+              </p>
             </li>
             <li className="p-4">
               <p className="text-2xl font-extrabold text-indigo-500">2</p>

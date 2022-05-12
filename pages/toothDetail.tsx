@@ -21,19 +21,24 @@ export default function ToothDetail() {
     <Layout title={toothName}>
       <div className="flex-1 space-y-2 p-2">
         <ToothPreview />
-        {tooth ? (
-          <div className="my-auto flex flex-wrap items-center justify-start space-x-1">
-            {/* <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
-            {toothType}
-          </div> */}
-            <Badge color={color} size="sm">
-              {label}
-            </Badge>
-          </div>
-        ) : null}
-
-        <GrowtTimeLine tooth={tooth} />
+        {tooth ? <Content tooth={tooth}></Content> : null}
       </div>
     </Layout>
+  )
+}
+
+function Content({ tooth }) {
+  return (
+    <>
+      <div className="my-auto flex flex-wrap items-center justify-start space-x-1">
+        {/* <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
+            {toothType}
+          </div> */}
+        <Badge color={color} size="sm">
+          {label}
+        </Badge>
+      </div>
+      <GrowtTimeLine tooth={tooth} />
+    </>
   )
 }

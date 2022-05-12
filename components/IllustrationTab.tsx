@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Tab } from '@headlessui/react'
 import { EyeIcon } from '@heroicons/react/outline'
+import { InformationCircleIcon } from '@heroicons/react/solid'
 import { useSelectedTooth } from '../lib/hooks/useSelectedTooth'
 import {
   Tooth,
@@ -11,6 +12,8 @@ import { GrowtTimeLine } from './GrowtTimeLine'
 import { useUser } from '../contexts/userContext'
 import { compact } from 'lodash'
 import Link from 'next/link'
+import { Alert } from './common/Alert'
+import { Mode } from '../typings/user'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -24,7 +27,7 @@ export default function IllustrationTab() {
   const categories = compact([
     {
       key: 'intro',
-      label: '牙齿介绍',
+      label: tooth ? '牙齿介绍' : '编贝',
       component: Intro,
     },
     mode !== 'usual' && {
@@ -60,7 +63,7 @@ export default function IllustrationTab() {
             className="mt-2 overflow-auto"
             style={{ height: 'calc(42vh - 3.5rem)' }}
           >
-            {tooth &&
+            {tooth ? (
               categories.map(({ component: Comp, key, label }) => (
                 <Tab.Panel
                   key={key}
@@ -68,7 +71,10 @@ export default function IllustrationTab() {
                 >
                   <Comp tooth={tooth} />
                 </Tab.Panel>
-              ))}
+              ))
+            ) : (
+              <Tip></Tip>
+            )}
           </Tab.Panels>
         </Tab.Group>
         <Link href={'toothDetail'} shallow>
@@ -81,6 +87,27 @@ export default function IllustrationTab() {
     </div>
   )
 }
+
+const Tip = () => (
+  <div className="space-y-2">
+    <Alert color="indigo">
+      <div className="text-left">
+        您正在以【普通模式】访问，选中每一颗牙齿可以模型观察和了解每颗牙齿的形态。
+        <br />
+      </div>
+    </Alert>
+    <Alert Icon={InformationCircleIcon} color="blue">
+      <div className="text-left">
+        如果您是一名正在长牙或换牙的孩子的家长，
+        <Link href={'/me/account'}>
+          <a className="underline">完善您孩子的信息</a>
+        </Link>
+        之后，可以切换为【牙齿成长模式】
+        <br />
+      </div>
+    </Alert>
+  </div>
+)
 
 const Intro = () => {
   const posts = [

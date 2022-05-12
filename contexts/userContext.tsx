@@ -4,7 +4,7 @@ export const UserContext = createContext()
 export const UserDispatch = createContext()
 
 export const getAvailableModes = (user) => {
-  return user.child ? [Mode.usual, Mode.usual] : [Mode.usual]
+  return user.child ? [Mode.children, Mode.usual] : [Mode.usual]
 }
 
 const initialData = {

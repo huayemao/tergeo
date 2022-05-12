@@ -77,7 +77,7 @@ const Content = () => {
               suppressHydrationWarning
               className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8"
             >
-              假装是音乐播放功能 上次刷牙时间：
+              todo:音乐功能 上次刷牙时间：
               {!isActive &&
                 historyRecords.length &&
                 Math.abs(

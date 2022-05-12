@@ -57,7 +57,7 @@ export default function Scene() {
     <div className="m-2 mb-10 w-32 rounded-tl-3xl border-8 border-white bg-indigo-50  p-2 shadow-lg">
       <SceneWrapper canvasProps={canvasProps} modelComponent={Model}>
         <OrbitControls />
-        <Environment files="studio_small_03_1k.hdr" />
+        <Environment files="/studio_small_03_1k.hdr" />
       </SceneWrapper>
     </div>
   )

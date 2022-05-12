@@ -7,12 +7,15 @@ import { getToothGrowStageDescription } from '../lib/getToothGrowStageInfo'
 import { Badge } from './common/Badge'
 import { EyeIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
+import { useUser } from '../contexts/userContext'
+import { Mode } from '../typings/user'
 
 export function Info() {
   const { activeToothName } = useModel()
   const { toothName, toothType, toothLocation } =
     (activeToothName && getToothBaseInfo(activeToothName)) || {}
   const tooth = useTooth(activeToothName)
+  const { mode } = useUser()
 
   const { color, label } = (tooth && getToothGrowStageDescription(tooth)) || {}
 
@@ -35,9 +38,11 @@ export function Info() {
         </div>
       ) : null}
 
-      <div className="flex items-center justify-center space-x-4  ">
-        <OperationMenu />
-      </div>
+      {mode === Mode.children && (
+        <div className="flex items-center justify-center space-x-4  ">
+          <OperationMenu />
+        </div>
+      )}
     </div>
   )
 }

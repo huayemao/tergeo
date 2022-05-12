@@ -41,8 +41,6 @@ function Model({ dispatch, modelContext, teeth }) {
     })
   }
 
-  // 似乎没有办法取消选中，点击模型之外没办法捕获事件
-
   const scene = useMemo(() => {
     const clonedScene = model && model.scene.clone()
     clonedScene?.traverse((e) => {
