@@ -16,4 +16,4 @@ export function getAllTeeth() {
   return teeth
 }
 
-export const isOnlyPermanent = (name: string) => name.split('')[2] > 4
+export const isOnlyPermanent = (name: string) => name.split('')[2] > 5

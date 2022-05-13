@@ -3,6 +3,7 @@ import { checkIsPresent } from './getToothGrowStageInfo'
 import { INDIGO, TEAL } from '../constants/colors'
 import { TeethScene } from '../components/Scenes/Main'
 import { Mode } from '../typings/user'
+import { isOnlyPermanent } from './teeth'
 
 export function getScene4Home(
   mode,
@@ -22,13 +23,14 @@ export function getScene4Home(
     const { standardMaterial, activeToothName } = modelContext
     const { teeth } = teethContext
     if (standardMaterial) {
-      const GROWN_TEETH = teeth
+      const presentTeeth = teeth
         .filter((v) => checkIsPresent(v.growthStage))
         .map((e) => e.name)
 
-      const [isUnGrown, isActive] = [
-        !GROWN_TEETH.includes(tooth.name),
+      const [isUnGrown, isActive, onlyPermanent] = [
+        !presentTeeth.includes(tooth.name),
         tooth.name === activeToothName,
+        isOnlyPermanent(tooth.name),
       ]
 
       if ([isUnGrown, isActive].every((e) => !e)) {
@@ -39,6 +41,11 @@ export function getScene4Home(
 
       if (isUnGrown && mode === Mode.children) {
         material.opacity = 0.35
+        material.transparent = true
+      }
+
+      if (mode === Mode.primary && onlyPermanent) {
+        material.opacity = 0
         material.transparent = true
       }
       if (isActive) {

@@ -40,3 +40,13 @@ export const getToothBaseInfo = (str) => {
 }
 
 export const allToothTypes = Object.values(PermanentToothType)
+export const getToothTyoeInfo = (type: PermanentToothType) => {
+  const mapping = {
+    [PermanentToothType.canines]: { name: '尖牙' },
+    [PermanentToothType.incisors]: { name: '切牙' },
+    [PermanentToothType.molars]: { name: '磨牙' },
+    [PermanentToothType.premolars]: { name: '前磨牙' },
+  }
+
+  return mapping[type]
+}

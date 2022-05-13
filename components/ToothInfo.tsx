@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import ActionMenu from './ActionMenu'
 import { useModel } from '../contexts/modelContext'
 import { useTooth } from '../contexts/teethContext'
@@ -14,7 +14,7 @@ import { useUser } from '../contexts/userContext'
 import { Mode } from '../typings/user'
 import FilterMenu from './FilterMenu'
 
-export default function Info() {
+function Info() {
   const { activeToothName } = useModel()
   const { toothName, toothType, toothLocation } =
     (activeToothName && getToothBaseInfo(activeToothName)) || {}
@@ -52,3 +52,5 @@ export default function Info() {
     </div>
   )
 }
+
+export default memo(Info)
