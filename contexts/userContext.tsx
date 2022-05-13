@@ -2,7 +2,7 @@ import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { Mode } from '../typings/user'
 
 const initialData = {
-  mode: Mode.usual,
+  mode: Mode.permanent,
   child: null,
 }
 
@@ -10,7 +10,9 @@ export const UserContext = createContext(initialData)
 export const UserDispatch = createContext()
 
 export const getAvailableModes = (user) => {
-  return user.child ? [Mode.children, Mode.usual] : [Mode.usual]
+  return user.child
+    ? [Mode.children, Mode.permanent, Mode.primary]
+    : [Mode.permanent, Mode.primary]
 }
 
 const reducer = (state, action) => {

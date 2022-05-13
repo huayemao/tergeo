@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Menu from './common/Menu'
 import { ChevronDownIcon } from '@heroicons/react/outline'
 import { getAvailableModes } from '../contexts/userContext'
 import { getOptions, Mode } from '../typings/user'
 
 export default function ModeMenu({ dispatch, user }) {
-  const modes = getAvailableModes(user)
+  const options = useMemo(() => getAvailableModes(user).map(getOptions), [user])
 
   return (
     <Menu
@@ -13,7 +13,7 @@ export default function ModeMenu({ dispatch, user }) {
         dispatch({ type: 'SET_MODE', payload: e.key })
       }}
       className={'flex items-center font-bold'}
-      options={modes.map(getOptions)}
+      options={options}
     >
       <div suppressHydrationWarning>
         {user.mode === Mode.children ? (
@@ -26,7 +26,9 @@ export default function ModeMenu({ dispatch, user }) {
         ) : (
           <>
             主页
-            <sub className="font-medium text-gray-500">（{'普通模式'}）</sub>
+            <sub className="font-medium text-gray-500">
+              （{options.find((e) => e.key === user.mode).label}）
+            </sub>
           </>
         )}
       </div>

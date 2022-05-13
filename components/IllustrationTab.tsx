@@ -3,10 +3,7 @@ import { Tab } from '@headlessui/react'
 import { EyeIcon } from '@heroicons/react/outline'
 import { InformationCircleIcon } from '@heroicons/react/solid'
 import { useSelectedTooth } from '../lib/hooks/useSelectedTooth'
-import {
-  ToothGrowthActionType,
-  ToothGrowthRecord,
-} from '../typings/Tooth'
+import { ToothGrowthActionType, ToothGrowthRecord } from '../typings/Tooth'
 import { GrowtTimeLine } from './GrowtTimeLine'
 import { useUser } from '../contexts/userContext'
 import { compact } from 'lodash'
@@ -34,7 +31,7 @@ export default function IllustrationTab() {
           label: tooth ? '牙齿介绍' : '编贝',
           component: Intro,
         },
-        mode !== 'usual' &&
+        mode === Mode.children &&
           tooth && {
             key: 'record',
             label: '成长记录',
@@ -129,5 +126,3 @@ const Tip = ({ user }) =>
       </Alert>
     </div>
   )
-
-
