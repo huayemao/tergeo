@@ -1,10 +1,16 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from 'next/document'
 
 const APP_NAME = '编贝'
-const APP_DESCRIPTION = '牙齿健康助手 PWA，mOralHealth应用'
+const APP_DESCRIPTION = '一个 3D 牙齿健康助手 PWA，mOralHealth 应用'
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     return await Document.getInitialProps(ctx)
   }
 
