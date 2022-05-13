@@ -11,6 +11,7 @@ import TimerProvider, {
   useTimerDispatch,
   useTimer,
 } from '../../contexts/timerContext'
+import { getFromRange } from '../../lib/getFromRange'
 
 const CleaningModel = dynamic(
   () => import('../../components/Scenes/CleaningModel'),
@@ -145,16 +146,4 @@ function CleaningTimer() {
 
 export default CleaningTimer
 
-const getFromRange = (timeMapping, current) => {
-  const entries = Object.entries(timeMapping)
-  for (let i = 0; i < entries.length; i++) {
-    const [k, v] = entries[i]
-    if (
-      current >= parseInt(k, 10) &&
-      (!entries[i + 1] || current < parseInt(entries[i + 1][0], 10))
-    ) {
-      return v
-    }
-  }
-  return entries[0][1]
-}
+

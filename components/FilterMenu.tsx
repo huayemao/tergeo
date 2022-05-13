@@ -4,7 +4,7 @@ import { ChevronDownIcon, PencilIcon } from '@heroicons/react/solid'
 import { useModel } from '../contexts/modelContext'
 import { useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
-import { getToothBaseInfo } from '../lib/getToothBaseInfo'
+import { getToothBaseInfo } from '../lib/tooth'
 import { TextInput } from './common/FormControls/TextInput'
 import {
   getAvailableToothAction,

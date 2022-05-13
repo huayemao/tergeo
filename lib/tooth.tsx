@@ -1,3 +1,5 @@
+import { getFromRange } from './getFromRange'
+
 export const numMapping = {
   1: '中切牙',
   2: '侧切牙',
@@ -12,13 +14,9 @@ export const numMapping = {
 
 export const typeMapping = {
   1: '切牙',
-  2: '切牙',
   3: '尖牙',
   4: '前磨牙',
-  5: '前磨牙',
   6: '磨牙',
-  7: '磨牙',
-  8: '磨牙',
 }
 
 export const locationMapping = {
@@ -32,7 +30,7 @@ export const getToothBaseInfo = (str) => {
   const [jaw, leftOrRight, num] = str.split('')
   const toothName = `${locationMapping[jaw]}${numMapping[num]}（${locationMapping[leftOrRight]}）`
   const toothLocation = [locationMapping[jaw], locationMapping[leftOrRight]]
-  const toothType = typeMapping[num]
+  const toothType = getFromRange(typeMapping, num)
   return {
     toothName,
     toothLocation,

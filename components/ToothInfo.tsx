@@ -2,7 +2,7 @@ import React from 'react'
 import ActionMenu from './ActionMenu'
 import { useModel } from '../contexts/modelContext'
 import { useTooth } from '../contexts/teethContext'
-import { getToothBaseInfo } from '../lib/getToothBaseInfo'
+import { getToothBaseInfo } from '../lib/tooth'
 import {
   getFinishedStages,
   getToothGrowStageDescription,
@@ -34,9 +34,9 @@ export default function Info() {
       </h2>
       {isChildrenMode && tooth ? (
         <div className="my-auto flex flex-wrap items-center justify-start space-x-1">
-          {/* <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
+          <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
             {toothType}
-          </div> */}
+          </div>
 
           {stages.map(({ label, color }) => (
             <Badge key={label} color={color} size="sm">

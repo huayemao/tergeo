@@ -4,7 +4,6 @@ import { EyeIcon } from '@heroicons/react/outline'
 import { InformationCircleIcon } from '@heroicons/react/solid'
 import { useSelectedTooth } from '../lib/hooks/useSelectedTooth'
 import {
-  Tooth,
   ToothGrowthActionType,
   ToothGrowthRecord,
 } from '../typings/Tooth'
@@ -14,6 +13,7 @@ import { compact } from 'lodash'
 import Link from 'next/link'
 import { Alert } from './common/Alert'
 import { Mode } from '../typings/user'
+import { Intro } from './Intro'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -130,49 +130,4 @@ const Tip = ({ user }) =>
     </div>
   )
 
-const Intro = () => {
-  const posts = [
-    {
-      id: 1,
-      title: '一岁零两个月',
-      date: '5h ago',
-      commentCount: 5,
-      shareCount: 2,
-    },
-    {
-      id: 2,
-      title: '别忘了给孩子刷牙哦',
-      date: '2h ago',
-      commentCount: 3,
-      shareCount: 2,
-    },
-  ]
-  return (
-    <ul>
-      {posts.map((post) => (
-        <li
-          key={post.id}
-          className="hover:bg-coolGray-100 relative rounded-md p-3"
-        >
-          <h3 className="text-sm font-medium leading-5">{post.title}</h3>
 
-          <ul className="text-coolGray-500 mt-1 flex space-x-1 text-xs font-normal leading-4">
-            <li>{post.date}</li>
-            <li>&middot;</li>
-            <li>{post.commentCount} comments</li>
-            <li>&middot;</li>
-            <li>{post.shareCount} shares</li>
-          </ul>
-
-          <a
-            href="#"
-            className={classNames(
-              'absolute inset-0 rounded-md',
-              'ring-indigo-400 focus:z-10 focus:outline-none focus:ring-2'
-            )}
-          />
-        </li>
-      ))}
-    </ul>
-  )
-}

@@ -1,13 +1,13 @@
 import React from 'react'
-import ActionMenu from '../components/ActionMenu'
-import { useModel } from '../contexts/modelContext'
-import { useTooth } from '../contexts/teethContext'
-import { getToothBaseInfo } from '../lib/getToothBaseInfo'
-import { getToothGrowStageDescription } from '../lib/getToothGrowStageInfo'
-import { Badge } from '../components/common/Badge'
-import ToothPreview from '../components/Scenes/ToothPreview'
-import Layout from '../components/Layout'
-import { GrowtTimeLine } from '../components/GrowtTimeLine'
+import ActionMenu from '../../components/ActionMenu'
+import { useModel } from '../../contexts/modelContext'
+import { useTooth } from '../../contexts/teethContext'
+import { getToothBaseInfo } from '../../lib/tooth'
+import { getToothGrowStageDescription } from '../../lib/getToothGrowStageInfo'
+import { Badge } from '../../components/common/Badge'
+import ToothPreview from '../../components/Scenes/ToothPreview'
+import Layout from '../../components/Layout'
+import { GrowtTimeLine } from '../../components/GrowtTimeLine'
 
 export default function ToothDetail() {
   const { activeToothName } = useModel()
