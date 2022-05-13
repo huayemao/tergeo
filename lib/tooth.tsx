@@ -38,3 +38,5 @@ export const getToothBaseInfo = (str) => {
     toothType,
   }
 }
+
+export const allToothTypes = Object.values(PermanentToothType)

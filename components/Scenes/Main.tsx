@@ -25,8 +25,14 @@ import { useUser } from '../../contexts/userContext'
 import { Mode } from '../../typings/user'
 import { Tooth } from '../../typings/Tooth'
 import { getScene4Home } from '../../lib/getScene'
+import { Props as CanvasProps } from '@react-three/fiber/dist/declarations/src/'
 
-export function TeethScene({ canvasProps, getScene }) {
+export function TeethScene({
+  canvasProps,
+  getScene,
+}: {
+  canvasProps: CanvasProps
+}) {
   return (
     <SceneWrapper
       canvasProps={canvasProps}

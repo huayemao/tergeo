@@ -20,6 +20,7 @@ import { getMaterials4tooth } from '../lib/getMaterials4tooth'
 import { getScene4Home } from '../lib/getScene'
 import { partial } from 'lodash'
 import ToothPreview from '../components/Scenes/ToothPreview'
+import { allToothTypes } from '../lib/tooth'
 
 const Scene = dynamic(() => import('../components/Scenes/Main'), {
   ssr: false,
@@ -41,13 +42,6 @@ const Home: NextPage = () => {
   const dispatch = useUserDispatch()
   const user = useUser()
 
-  const canvasProps = {
-    shadows: true,
-    dpr: [1, 2],
-    style: { height: '36vh' },
-    camera: { position: [0, 8, 72], fov: 70, near: 10 },
-  }
-
   const getScene = useMemo(() => partial(getScene4Home, user.mode), [user.mode])
 
   return (
@@ -59,7 +53,15 @@ const Home: NextPage = () => {
         className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
         style={{ height: '36vh' }}
       >
-        <Scene canvasProps={canvasProps} getScene={getScene} />
+        <Scene
+          canvasProps={{
+            shadows: true,
+            dpr: [1, 2],
+            style: { height: '36vh' },
+            camera: { position: [0, 8, 72], fov: 70, near: 10 },
+          }}
+          getScene={getScene}
+        />
       </div>
       <div className="flex h-[60vh] flex-col rounded-t-3xl">
         <div

@@ -1,4 +1,5 @@
 import Layout from '../../components/Layout'
+import { allToothTypes } from '../../lib/tooth'
 
 export default function ToothDetail({ content, title }) {
   return (
@@ -60,11 +61,6 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const paths = [
-    {
-      id: '切牙',
-    },
-  ].map((e) => ({ params: e }))
-
+  const paths = allToothTypes.map((e) => ({ params: { id: e } }))
   return { paths, fallback: true }
 }
