@@ -89,7 +89,7 @@ function ChildForm() {
         type: 'PATCH_CHILD_INFO',
         payload: {
           name: e.target.childName.value,
-          birthday: e.target.child_birthday.value + 'T00:00',
+          birthday: e.target.child_birthday.value,
         },
       })
       showMessage('保存成功', 2000)

@@ -11,7 +11,7 @@ export const getDefaultLocalDateTime = () => {
 
 export const getAgeDetails = (eventDate, birthDate) => {
   const newDate = dayjs(eventDate, 'YYYY-MM-DDTHH:mm')
-  const oldDate = dayjs(birthDate, 'YYYY-MM-DDTHH:mm')
+  const oldDate = dayjs(birthDate, 'YYYY-MM-DD')
   const years = newDate.diff(oldDate, 'year')
   const months = newDate.diff(oldDate, 'month') - years * 12
   const days = newDate.diff(
