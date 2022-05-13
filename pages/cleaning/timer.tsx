@@ -12,13 +12,12 @@ import TimerProvider, {
   useTimer,
 } from '../../contexts/timerContext'
 import { getFromRange } from '../../lib/getFromRange'
+import { partial } from 'lodash'
+import { getScene4HabitTimer } from '../../lib/getScene'
 
-const CleaningModel = dynamic(
-  () => import('../../components/Scenes/CleaningModel'),
-  {
-    ssr: false,
-  }
-)
+const Scene = dynamic(() => import('../../components/Scenes/Main'), {
+  ssr: false,
+})
 
 const getTimeDistance = (a, b) => (new Date(a) - new Date(b)) / 1000
 
@@ -46,6 +45,11 @@ const Content = () => {
   }, [timerDispatch])
   const btnText = isActive ? '停止' : '开始'
 
+  const getScene = useMemo(
+    () => partial(getScene4HabitTimer, highlightedPrefix),
+    [highlightedPrefix]
+  )
+
   return (
     <>
       <div
@@ -61,7 +65,7 @@ const Content = () => {
             天，上次刷牙 今天 7：40
           </p>
         </div>
-        <CleaningModel highlightedPrefix={highlightedPrefix} />
+        <Scene getScene={getScene} />
       </div>
       <div className="relative  flex-1  bg-white  text-gray-500">
         <div className="absolute -top-[60px] bottom-16 flex flex-col items-center  justify-around">
@@ -145,5 +149,3 @@ function CleaningTimer() {
 }
 
 export default CleaningTimer
-
-

@@ -3,14 +3,25 @@ import type { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Image from 'next/image'
-import React, { Fragment, useRef, useState } from 'react'
+import React, {
+  Fragment,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import RadioGroupDemo from '../components/RadioGroupDemo'
 import { BottomTab } from '../components/BottomTab'
 import Layout from '../components/Layout'
 import ModelProvider from '../contexts/modelContext'
 import { useUser, useUserDispatch } from '../contexts/userContext'
+import { getMaterials4tooth } from '../lib/getMaterials4tooth'
+import { getScene4Home } from '../lib/getScene'
+import { partial } from 'lodash'
+import ToothPreview from '../components/Scenes/ToothPreview'
 
-const Model = dynamic(() => import('../components/Scenes/Main'), {
+const Scene = dynamic(() => import('../components/Scenes/Main'), {
   ssr: false,
 })
 
@@ -22,13 +33,6 @@ const Info = dynamic(() => import('../components/ToothInfo'), {
   ssr: false,
 })
 
-const ToothPreview = dynamic(
-  () => import('../components/Scenes/ToothPreview'),
-  {
-    ssr: false,
-  }
-)
-
 const IllustrationTab = dynamic(() => import('../components/IllustrationTab'), {
   ssr: false,
 })
@@ -36,6 +40,16 @@ const IllustrationTab = dynamic(() => import('../components/IllustrationTab'), {
 const Home: NextPage = () => {
   const dispatch = useUserDispatch()
   const user = useUser()
+
+  const canvasProps = {
+    shadows: true,
+    dpr: [1, 2],
+    style: { height: '36vh' },
+    camera: { position: [0, 8, 72], fov: 70, near: 10 },
+  }
+
+  const getScene = useMemo(() => partial(getScene4Home, user.mode), [user.mode])
+
   return (
     <Layout
       className={'max-h-screen'}
@@ -45,7 +59,7 @@ const Home: NextPage = () => {
         className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
         style={{ height: '36vh' }}
       >
-        <Model mode={user.mode} />
+        <Scene canvasProps={canvasProps} getScene={getScene} />
       </div>
       <div className="flex h-[60vh] flex-col rounded-t-3xl">
         <div
