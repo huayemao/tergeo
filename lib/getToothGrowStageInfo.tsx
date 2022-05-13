@@ -109,3 +109,25 @@ export type ToothGrowAction = {
 }
 // 动作详情还需要时间输入框、文本输入框等！还有后续的状态变化，
 // 所有的状态变化都可以有备注，备注可以折叠或打开，直接在 action 里加一个 Payload 好了
+
+const allStages = toArray(ToothGrowthStage)
+
+export const getFinishedStages = (tooth: Tooth): GrowStageDescription[] => {
+  if (
+    tooth.growthStage === ToothGrowthStage.primary_unteethed ||
+    (tooth.growthStage === ToothGrowthStage.permanent_unteethed &&
+      tooth.name.split('')[2] > 4)
+  ) {
+    return [getToothGrowStageDescription(tooth)]
+  }
+  const filteredStages = allStages.filter(
+    (e, i) => i !== 0 && i <= allStages.indexOf(tooth.growthStage)
+  )
+  return filteredStages.map((e) =>
+    getToothGrowStageDescription({ ...tooth, growthStage: e })
+  )
+}
+
+function toArray(enumme) {
+  return Object.values(enumme).filter((v) => Number.isInteger(v))
+}

@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@heroicons/react/outline'
 import { getAvailableModes } from '../contexts/userContext'
 import { getOptions, Mode } from '../typings/user'
 
-export function ModeMenu({ dispatch, user }) {
+export default function ModeMenu({ dispatch, user }) {
   const modes = getAvailableModes(user)
 
   return (
@@ -19,7 +19,7 @@ export function ModeMenu({ dispatch, user }) {
         {user.mode === Mode.children ? (
           <>
             {user.child.name}的牙齿成长记录
-            <sub className="font-medium text-gray-500">
+            <sub suppressHydrationWarning className="font-medium text-gray-500">
               （{'成长记录模式'}）
             </sub>
           </>

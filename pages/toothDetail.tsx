@@ -34,9 +34,9 @@ function Content({ tooth }) {
         {/* <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
             {toothType}
           </div> */}
-        <Badge color={color} size="sm">
+        {/* <Badge color={color} size="sm">
           {label}
-        </Badge>
+        </Badge> */}
       </div>
       <GrowtTimeLine tooth={tooth} />
     </>

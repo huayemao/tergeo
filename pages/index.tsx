@@ -5,16 +5,31 @@ import Head from 'next/head'
 import Image from 'next/image'
 import React, { Fragment, useRef, useState } from 'react'
 import RadioGroupDemo from '../components/RadioGroupDemo'
-import IllustrationTab from '../components/IllustrationTab'
-import ToothPreview from '../components/Scenes/ToothPreview'
 import { BottomTab } from '../components/BottomTab'
 import Layout from '../components/Layout'
 import ModelProvider from '../contexts/modelContext'
-import { Info } from '../components/ToothInfo'
 import { useUser, useUserDispatch } from '../contexts/userContext'
-import { ModeMenu } from '../components/ModeMenu'
 
 const Model = dynamic(() => import('../components/Scenes/Main'), {
+  ssr: false,
+})
+
+const ModeMenu = dynamic(() => import('../components/ModeMenu'), {
+  ssr: false,
+})
+
+const Info = dynamic(() => import('../components/ToothInfo'), {
+  ssr: false,
+})
+
+const ToothPreview = dynamic(
+  () => import('../components/Scenes/ToothPreview'),
+  {
+    ssr: false,
+  }
+)
+
+const IllustrationTab = dynamic(() => import('../components/IllustrationTab'), {
   ssr: false,
 })
 
