@@ -42,7 +42,7 @@ export const getToothGrowStageDescription: GrowStageDescription = ({
   const permanentMapping = {
     ...ordianrayMapping,
     [ToothGrowthStage.permanent_unteethed]: {
-      label: '未萌出',
+      label: '恒牙未萌出',
       color: 'blue',
     },
   }
