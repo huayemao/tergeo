@@ -4,14 +4,16 @@ import TeethProvider from '../contexts/teethContext'
 import ModelProvider from '../contexts/modelContext'
 import UserProvider from '../contexts/userContext'
 import MessageProvider from '../contexts/messageContext'
+import Layout from '../components/layout'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const getLayout = Component.getLayout || ((page) => page)
   return (
-    <MessageProvider {...pageProps}>
-      <UserProvider {...pageProps}>
-        <TeethProvider {...pageProps}>
-          <ModelProvider {...pageProps}>
-            <Component {...pageProps} />
+    <MessageProvider>
+      <UserProvider>
+        <TeethProvider>
+          <ModelProvider>
+            {getLayout(<Component {...pageProps} />)}
           </ModelProvider>
         </TeethProvider>
       </UserProvider>

@@ -46,9 +46,6 @@ export default class MyDocument extends Document {
             #__next {
               margin: 0 auto;
             }
-            h1 {
-              text-align: center;
-            }
             `}</style>
         </Head>
         <body>

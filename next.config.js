@@ -20,6 +20,11 @@ module.exports = withPWA({
       {
         source: '/doc/:path*',
         destination: 'https://www.yuque.com/r/notes/share/:path*',
+
+      },
+      {
+        source: '/toothDetail',
+        destination: '/',
       },
     ]
   },

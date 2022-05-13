@@ -1,32 +1,41 @@
 import { ArrowNarrowLeftIcon, CheckIcon } from '@heroicons/react/solid'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useMemo } from 'react'
 import { useMessage } from '../contexts/messageContext'
 import { BottomTab } from './BottomTab'
 import { Toast } from './common/Toast'
 
-export default function Layout({ children, title, className }) {
+export default function Layout({ children, title = '编贝', className }) {
   const { message, duration } = useMessage()
   const router = useRouter()
-  // router.isReady
-  const levelCount = router.pathname.split('/').length
+  const levels = router.pathname.split('/')
+  const levelCount = levels.length
 
-  const BackLink = () => (
-    <button
-      className="align-middle"
-      onClick={() => {
-        router.back()
-      }}
-    >
-      <ArrowNarrowLeftIcon className="h-6 w-6" />
-    </button>
+  const backLink = useMemo(
+    () => (
+      <button
+        className="align-middle"
+        onClick={() => {
+          router.replace({ pathname: levels.slice(0, -1).join('/') })
+        }}
+      >
+        <ArrowNarrowLeftIcon className="h-6 w-6" />
+      </button>
+    ),
+    [levels, router]
   )
 
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <div className={'flex min-h-screen flex-col ' + className}>
-        <h1 className="sticky top-0 z-20 bg-white py-2 text-center align-middle text-xl font-bold leading-10 text-indigo-400 shadow">
-          {levelCount > 2 && <BackLink />} {title}
-        </h1>
+        <header className="sticky top-0 z-20 bg-white py-2 text-center align-middle text-xl font-bold leading-10 text-indigo-400 shadow">
+          {levelCount > 2 && backLink} {title}
+        </header>
+
         {message && (
           <div className="relative w-full text-center">
             <Toast
