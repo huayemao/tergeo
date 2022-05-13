@@ -7,6 +7,7 @@ import React, {
   ReducerAction,
   Dispatch,
 } from 'react'
+import { getAllTeeth } from '../lib/teeth'
 import {
   Tooth,
   ToothGrowthActionType,
@@ -122,19 +123,4 @@ export function useTeethDispatch() {
   return useContext(TeethDispatch)
 }
 
-function getAllTeeth() {
-  const locations = ['tr', 'tl', 'bl', 'br']
-  const nums = Array.from({ length: 8 }, (e, i) => i + 1)
-  const teethNames = locations.flatMap((e) => nums.map((el) => e + el))
 
-  const teeth: Tooth[] = teethNames.map((e) => ({
-    name: e,
-    growthStage:
-      e.split('')[2] > 4
-        ? ToothGrowthStage.permanent_unteethed
-        : ToothGrowthStage.primary_unteethed,
-
-    growthRecord: [],
-  }))
-  return teeth
-}

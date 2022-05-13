@@ -5,6 +5,7 @@ import {
   ToothGrowthActionType,
   ToothGrowthStage,
 } from '../typings/Tooth'
+import { isOnlyPermanent } from './teeth'
 
 export type GrowStageDescription = {
   label: string
@@ -15,12 +16,10 @@ export const getToothGrowStageDescription: GrowStageDescription = ({
   growthStage,
   name,
 }: Tooth) => {
-  const [jaw, leftOrRight, num] = name.split('')
-
   const ordianrayMapping = {
     [ToothGrowthStage.primary_unteethed]: {
       label: '未萌出',
-      color: 'blue',
+      color: 'gray',
     },
     [ToothGrowthStage.primary_teethed]: {
       label: '已萌出乳牙',
@@ -48,14 +47,12 @@ export const getToothGrowStageDescription: GrowStageDescription = ({
     },
   }
 
-  return num > 4 ? permanentMapping[growthStage] : ordianrayMapping[growthStage]
+  return isOnlyPermanent(name)
+    ? permanentMapping[growthStage]
+    : ordianrayMapping[growthStage]
 }
 
 const path = ['萌出乳牙', '乳牙脱落', '萌出恒牙', '恒牙脱落']
-
-export const getToothGrowActionDescription = ({ growthStage, name }: Tooth) => {
-  const [jaw, leftOrRight, num] = name.split('')
-}
 
 export const getAvailableToothAction = (tooth: Tooth) => {
   const { growthStage, name } = tooth
@@ -66,7 +63,7 @@ export const getAvailableToothAction = (tooth: Tooth) => {
   // 是否可以撤销
   const canRevert = !(
     growthStage === ToothGrowthStage.primary_unteethed ||
-    (name.split('')[2] > 4 &&
+    (isOnlyPermanent(name) &&
       growthStage === ToothGrowthStage.permanent_unteethed)
   )
 
@@ -113,15 +110,19 @@ export type ToothGrowAction = {
 const allStages = toArray(ToothGrowthStage)
 
 export const getFinishedStages = (tooth: Tooth): GrowStageDescription[] => {
+  const onlyPermanent = isOnlyPermanent(tooth.name)
   if (
     tooth.growthStage === ToothGrowthStage.primary_unteethed ||
     (tooth.growthStage === ToothGrowthStage.permanent_unteethed &&
-      tooth.name.split('')[2] > 4)
+      onlyPermanent)
   ) {
     return [getToothGrowStageDescription(tooth)]
   }
+
+  const offset = onlyPermanent ? 2 : 0
+
   const filteredStages = allStages.filter(
-    (e, i) => i !== 0 && i <= allStages.indexOf(tooth.growthStage)
+    (e, i) => i > offset && i <= allStages.indexOf(tooth.growthStage)
   )
   return filteredStages.map((e) =>
     getToothGrowStageDescription({ ...tooth, growthStage: e })
