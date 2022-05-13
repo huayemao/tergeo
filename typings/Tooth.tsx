@@ -53,4 +53,16 @@ export const ToothGrowthActionNameMapping = {
   [ToothGrowthActionType.REMARK]: '标注',
 }
 
-// 编辑异常呢？标注后产生一条记录，编辑时找到对应的 key
+export enum PermanentToothType {
+  'premolars' = 'premolars',
+  'molars' = 'molars',
+  'incisors' = 'incisors',
+  'canines' = 'canines',
+}
+
+export const toothTypeMapping = {
+  [PermanentToothType.premolars]: '前磨牙',
+  [PermanentToothType.molars]: '磨牙',
+  [PermanentToothType.incisors]: '切牙',
+  [PermanentToothType.canines]: '尖牙',
+}

@@ -17,7 +17,7 @@ export async function getStaticProps(context) {
   const { id } = context.params
 
   const res = await fetch(
-    'https://www.yuque.com/api/docs/xe8z07?book_id=24659353',
+    `https://www.yuque.com/api/docs/${id}?book_id=24659353`,
     {
       headers: {
         accept: 'application/json',

@@ -1,3 +1,4 @@
+import { PermanentToothType } from '../typings/Tooth'
 import { getFromRange } from './getFromRange'
 
 export const numMapping = {
@@ -13,10 +14,10 @@ export const numMapping = {
 }
 
 export const typeMapping = {
-  1: '切牙',
-  3: '尖牙',
-  4: '前磨牙',
-  6: '磨牙',
+  1: PermanentToothType.incisors,
+  3: PermanentToothType.canines,
+  4: PermanentToothType.premolars,
+  6: PermanentToothType.molars,
 }
 
 export const locationMapping = {
