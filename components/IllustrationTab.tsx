@@ -25,6 +25,7 @@ export default function IllustrationTab() {
 
   const { mode } = user
 
+  const isChildrenMode = mode === Mode.children
   const categories = useMemo(
     () =>
       compact([
@@ -43,7 +44,9 @@ export default function IllustrationTab() {
     [mode, tooth]
   )
 
-  return (
+  return !tooth ? (
+    <Tip user={user} />
+  ) : (
     <div className="">
       <div className="relative w-full max-w-md sm:px-0">
         <Tab.Group>
@@ -69,18 +72,14 @@ export default function IllustrationTab() {
             className="mt-2 overflow-auto"
             style={{ height: 'calc(42vh - 3.5rem)' }}
           >
-            {tooth ? (
-              categories.map(({ component: Comp, key, label }) => (
-                <Tab.Panel
-                  key={key}
-                  className={classNames('rounded-xl bg-white p-3')}
-                >
-                  <Comp tooth={tooth} />
-                </Tab.Panel>
-              ))
-            ) : (
-              <Tip user={user} />
-            )}
+            {categories.map(({ component: Comp, key, label }) => (
+              <Tab.Panel
+                key={key}
+                className={classNames('rounded-xl bg-white p-3')}
+              >
+                <Comp tooth={tooth} />
+              </Tab.Panel>
+            ))}
           </Tab.Panels>
         </Tab.Group>
         <Link href={'toothDetail'} shallow>

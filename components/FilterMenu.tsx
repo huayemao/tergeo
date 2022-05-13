@@ -15,7 +15,7 @@ import { Label } from './common/FormControls/Label'
 import { getDefaultLocalDateTime } from '../lib/day'
 import { useShowMessage } from '../contexts/messageContext'
 
-export default function ActionMenu() {
+export default function FilterMenu() {
   const { activeToothName } = useModel()
   const tooth = useTooth(activeToothName)
   const form = useRef<HTMLFormElement>()
@@ -60,7 +60,7 @@ export default function ActionMenu() {
     <>
       <Menu as="div" className="relative w-full">
         <Menu.Button className="mr-2 mb-2 w-full rounded-3xl border bg-indigo-400 px-5 py-2 text-center  font-medium text-white hover:bg-indigo-600  hover:text-white focus:outline-none focus:ring-4 focus:ring-blue-300  dark:focus:ring-blue-800">
-          操作
+          筛选
         </Menu.Button>
         <Transition
           as={Fragment}
