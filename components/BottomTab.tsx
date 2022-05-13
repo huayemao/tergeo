@@ -15,10 +15,10 @@ export function BottomTab() {
 
   const mapping = {
     stats: [ChartSquareBarIcon],
-    cleaning: [ClockIcon],
+    habits: [ClockIcon],
     '': [HomeIcon],
-    tips: [AcademicCapIcon],
-    me: [UserIcon],
+    articles: [AcademicCapIcon],
+    settings: [UserIcon],
   }
 
   return (
@@ -36,7 +36,7 @@ export function BottomTab() {
           const isActive = router.pathname.split('/')?.[1] === k
 
           return (
-            <Link key={k} shallow replace href={pathname} >
+            <Link key={k} shallow replace href={pathname}>
               <Icon
                 strokeWidth="1.5"
                 className={
