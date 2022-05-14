@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { Alert } from './common/Alert'
 import { Mode } from '../typings/user'
 import { Intro } from './Intro'
+import FilterMenu from './FilterMenu'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -108,12 +109,14 @@ const Tip = ({ user }) =>
     <Extra user={user} />
   ) : (
     <div className="space-y-2">
-      <Alert color="indigo">
-        <div className="text-left">
-          选中一颗牙齿或者一个标签可以模型观察和了解每颗牙齿的形态。
+      <div className="p-4 text-left">
+        <p>
+          选中上面模型中的一颗牙齿可以了解它的信息。
           <br />
-        </div>
-      </Alert>
+          点击下面的按钮可以为你高亮一组牙齿
+        </p>
+      </div>
+      <FilterMenu></FilterMenu>
       <Alert Icon={InformationCircleIcon} color="blue">
         <div className="text-left">
           如果您是正在长牙或换牙的孩子的家长，

@@ -1,5 +1,6 @@
 import { PermanentToothType } from '../typings/Tooth'
 import { getFromRange } from './getFromRange'
+import { inRange } from './inRange'
 
 export const numMapping = {
   1: '中切牙',
@@ -40,12 +41,29 @@ export const getToothBaseInfo = (str) => {
 }
 
 export const allToothTypes = Object.values(PermanentToothType)
-export const getToothTyoeInfo = (type: PermanentToothType) => {
+
+export const getToothTypeInfo = (type: PermanentToothType) => {
   const mapping = {
-    [PermanentToothType.canines]: { name: '尖牙' },
-    [PermanentToothType.incisors]: { name: '切牙' },
-    [PermanentToothType.molars]: { name: '磨牙' },
-    [PermanentToothType.premolars]: { name: '前磨牙' },
+    [PermanentToothType.incisors]: {
+      name: '切牙',
+      filterFn: (e: string) =>
+        inRange(String.prototype.split.call(e, '')[2], [0, 3]),
+    },
+
+    [PermanentToothType.canines]: {
+      name: '尖牙',
+      filterFn: (e: string) => String.prototype.split.call(e, '')[2] === '3',
+    },
+    [PermanentToothType.premolars]: {
+      name: '前磨牙',
+      filterFn: (e: string) =>
+        inRange(String.prototype.split.call(e, '')[2], [3, 6]),
+    },
+    [PermanentToothType.molars]: {
+      name: '磨牙',
+      filterFn: (e: string) =>
+        inRange(String.prototype.split.call(e, '')[2], [6, 9]),
+    },
   }
 
   return mapping[type]

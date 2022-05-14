@@ -1,11 +1,10 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { ChevronDownIcon, PencilIcon } from '@heroicons/react/solid'
 import { useModel } from '../contexts/modelContext'
-import { useTeethDispatch, useTooth } from '../contexts/teethContext'
+import { useTeeth, useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
-import { allToothTypes, getToothBaseInfo, getToothTyoeInfo } from '../lib/tooth'
-import { TextInput } from './common/FormControls/TextInput'
+import { allToothTypes, getToothBaseInfo, getToothTypeInfo } from '../lib/tooth'
+import classnames from 'clsx'
 import {
   getAvailableToothAction,
   ToothGrowAction,
@@ -14,11 +13,14 @@ import { Textarea } from './common/FormControls/Textarea'
 import { Label } from './common/FormControls/Label'
 import { getDefaultLocalDateTime } from '../lib/day'
 import { useShowMessage } from '../contexts/messageContext'
+import useClickOutside from '../lib/hooks/useClickOutSide'
 
 export default function FilterMenu() {
   const { activeToothName } = useModel()
+  const { filters } = useTeeth()
   const tooth = useTooth(activeToothName)
   const form = useRef<HTMLFormElement>()
+  const wrapperRef = useRef()
 
   const actionOptions = tooth ? getAvailableToothAction(tooth) : []
 
@@ -36,36 +38,31 @@ export default function FilterMenu() {
 
   const show = useShowMessage()
 
-  const handleOnConfirm = useCallback(() => {
-    const record = {
-      type: activeOption.type,
-      name: activeOption.name,
-      dateTime:
-        form.current?.elements['dateTime']?.value ||
-        new Date().toISOString().slice(0, -8),
-      remarkContent: form.current?.elements['remarkContent'].value || null,
-    }
-    dispatch({
-      type: activeOption.type,
-      payload: {
-        toothName: activeToothName,
-        record,
-      },
-    })
-    show('操作成功')
-    setIsOpen(false)
-  }, [activeOption.type, activeOption.name, dispatch, activeToothName])
+  const handleSelect = (e) => {
+    dispatch({ type: 'FILTER_BY_TYPE', payload: e })
+  }
+
+  useClickOutside(wrapperRef, () => {
+    dispatch({ type: 'RESET_FILTER_BY_TYPE' })
+  })
 
   return (
     <>
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 gap-2" ref={wrapperRef}>
         {allToothTypes.map((e) => (
           <button
+            onClick={handleSelect.bind(null, e)}
             key={e}
             type="button"
-            className="mr-2 mb-2 rounded-lg border border-indigo-700 px-4 py-1.5 text-center text-sm font-medium text-indigo-700 hover:bg-indigo-800 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300 "
+            className={classnames(
+              '"mr-2 " mb-2 rounded-lg border border-indigo-700 px-4 py-1.5 text-center text-sm font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300',
+              {
+                'bg-indigo-600 !text-white outline-none ring-4 ring-indigo-300':
+                  filters.type === e,
+              }
+            )}
           >
-            {getToothTyoeInfo(e).name}
+            {getToothTypeInfo(e).name}
           </button>
         ))}
       </div>

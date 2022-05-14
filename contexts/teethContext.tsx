@@ -9,6 +9,7 @@ import React, {
 } from 'react'
 import { getAllTeeth } from '../lib/teeth'
 import {
+  PermanentToothType,
   Tooth,
   ToothGrowthActionType,
   ToothGrowthRecord,
@@ -19,6 +20,9 @@ const teeth: Tooth[] = getAllTeeth()
 
 const initialData = {
   teeth,
+  filters: {
+    type: null,
+  },
 }
 
 type ToothPayload = {
@@ -34,6 +38,8 @@ type ToothGrowthActionPayload = {
 type Action =
   | { type: ToothGrowthActionType; payload: ToothGrowthActionPayload }
   | { type: 'SET_TOOTH'; payload: ToothPayload }
+  | { type: 'FILTER_BY_TYPE'; payload: PermanentToothType }
+  | { type: 'RESET_FILTER_BY_TYPE' }
 
 export const TeethContext = createContext<typeof initialData>({})
 export const TeethDispatch = createContext<Dispatch<Action>>()
@@ -46,6 +52,20 @@ const reducer = (state: typeof initialData, action: Action) => {
         teeth: state.teeth.map((e) =>
           e.name === toothName ? { ...e, ...patch } : e
         ),
+      })
+    }
+    case 'FILTER_BY_TYPE': {
+      return Object.assign({}, state, {
+        filters: {
+          type: action.payload,
+        },
+      })
+    }
+    case 'RESET_FILTER_BY_TYPE': {
+      return Object.assign({}, state, {
+        filters: {
+          type: null,
+        },
       })
     }
     case ToothGrowthActionType.ADVANCE: {
@@ -122,5 +142,3 @@ export function useTooth(toothName) {
 export function useTeethDispatch() {
   return useContext(TeethDispatch)
 }
-
-

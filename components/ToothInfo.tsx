@@ -12,7 +12,6 @@ import { EyeIcon } from '@heroicons/react/solid'
 import Link from 'next/link'
 import { useUser } from '../contexts/userContext'
 import { Mode } from '../typings/user'
-import FilterMenu from './FilterMenu'
 
 function Info() {
   const { activeToothName } = useModel()
@@ -47,7 +46,6 @@ function Info() {
       ) : null}
       <div className="flex items-center justify-center space-x-4  ">
         {isChildrenMode && <ActionMenu />}
-        <FilterMenu />
       </div>
     </div>
   )

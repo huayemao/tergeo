@@ -24,12 +24,7 @@ export default function ModeMenu({ dispatch, user }) {
             </sub>
           </>
         ) : (
-          <>
-            主页
-            <sub className="font-medium text-gray-500">
-              （{options.find((e) => e.key === user.mode).label}）
-            </sub>
-          </>
+          <>{options.find((e) => e.key === user.mode).label}</>
         )}
       </div>
       <ChevronDownIcon

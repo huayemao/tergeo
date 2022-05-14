@@ -20,7 +20,7 @@ export function TeethScene({
       getScene={getScene}
       modelComponent={Model}
     >
-      <OrbitControls makeDefault enableDamping />
+      <OrbitControls makeDefault />
       <Environment path="/" files="studio_small_03_1k.hdr" />
     </SceneWrapper>
   )

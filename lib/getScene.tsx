@@ -1,9 +1,10 @@
 import { Group, Scene, Vector3 } from 'three'
 import { checkIsPresent } from './getToothGrowStageInfo'
-import { INDIGO, TEAL } from '../constants/colors'
+import { BLUE, INDIGO, TEAL } from '../constants/colors'
 import { TeethScene } from '../components/Scenes/Main'
 import { Mode } from '../typings/user'
 import { isOnlyPermanent } from './teeth'
+import { getToothTypeInfo } from './tooth'
 
 export function getScene4Home(
   mode,
@@ -23,16 +24,19 @@ export function getScene4Home(
 
   function getMaterials4tooth(tooth) {
     const { standardMaterial, activeToothName } = modelContext
-    const { teeth } = teethContext
+    const { teeth, filters } = teethContext
 
     const presentTeeth = teeth
       .filter((v) => checkIsPresent(v.growthStage))
       .map((e) => e.name)
 
-    const [isUnGrown, isActive, onlyPermanent] = [
+    const filterFn = filters.type && getToothTypeInfo(filters.type).filterFn
+
+    const [isUnGrown, isActive, onlyPermanent, isHighlighted] = [
       !presentTeeth.includes(tooth.name),
       tooth.name === activeToothName,
       isOnlyPermanent(tooth.name),
+      (filterFn && filterFn(tooth.name)) || false,
     ]
 
     if ([isUnGrown, isActive].every((e) => !e)) {
@@ -40,6 +44,10 @@ export function getScene4Home(
     }
 
     let material: MeshStandardMaterial = standardMaterial.clone()
+
+    if (isHighlighted) {
+      material.color = BLUE
+    }
 
     if (isUnGrown && mode === Mode.children) {
       material.opacity = 0.35
@@ -52,7 +60,7 @@ export function getScene4Home(
     }
     if (isActive) {
       material.color = INDIGO
-      if (isUnGrown) {
+      if (isUnGrown && mode === Mode.children) {
         material.opacity = 0.6
         material.color = TEAL
       }
