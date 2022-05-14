@@ -11,8 +11,10 @@ export function getScene4Home(
   teethContext: any
 ): Scene {
   const { model } = modelContext
-  const clonedScene = model && model.scene.clone()
-  clonedScene?.traverse((e) => {
+  if (!model) return null
+
+  const clonedScene = model.scene.clone()
+  clonedScene.traverse((e) => {
     if (e.type === 'Mesh') {
       e.material = getMaterials4tooth(e, modelContext, teethContext)
     }
@@ -22,42 +24,41 @@ export function getScene4Home(
   function getMaterials4tooth(tooth) {
     const { standardMaterial, activeToothName } = modelContext
     const { teeth } = teethContext
-    if (standardMaterial) {
-      const presentTeeth = teeth
-        .filter((v) => checkIsPresent(v.growthStage))
-        .map((e) => e.name)
 
-      const [isUnGrown, isActive, onlyPermanent] = [
-        !presentTeeth.includes(tooth.name),
-        tooth.name === activeToothName,
-        isOnlyPermanent(tooth.name),
-      ]
+    const presentTeeth = teeth
+      .filter((v) => checkIsPresent(v.growthStage))
+      .map((e) => e.name)
 
-      if ([isUnGrown, isActive].every((e) => !e)) {
-        return standardMaterial
-      }
+    const [isUnGrown, isActive, onlyPermanent] = [
+      !presentTeeth.includes(tooth.name),
+      tooth.name === activeToothName,
+      isOnlyPermanent(tooth.name),
+    ]
 
-      let material: MeshStandardMaterial = standardMaterial.clone()
-
-      if (isUnGrown && mode === Mode.children) {
-        material.opacity = 0.35
-        material.transparent = true
-      }
-
-      if (mode === Mode.primary && onlyPermanent) {
-        material.opacity = 0
-        material.transparent = true
-      }
-      if (isActive) {
-        material.color = INDIGO
-        if (isUnGrown) {
-          material.opacity = 0.6
-          material.color = TEAL
-        }
-      }
-
-      return material
+    if ([isUnGrown, isActive].every((e) => !e)) {
+      return standardMaterial
     }
+
+    let material: MeshStandardMaterial = standardMaterial.clone()
+
+    if (isUnGrown && mode === Mode.children) {
+      material.opacity = 0.35
+      material.transparent = true
+    }
+
+    if (mode === Mode.primary && onlyPermanent) {
+      material.opacity = 0
+      material.transparent = true
+    }
+    if (isActive) {
+      material.color = INDIGO
+      if (isUnGrown) {
+        material.opacity = 0.6
+        material.color = TEAL
+      }
+    }
+
+    return material
   }
 }
 

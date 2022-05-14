@@ -6,10 +6,7 @@ import { useModel, useModelDispatch } from '../../contexts/modelContext'
 export function useFetchModel(dispatch, modelContext) {
   const { model, standardMaterial } = modelContext
 
-  const gltf = useGLTF(
-    ORIGIN + 'scene.glb',
-    'https://www.gstatic.com/draco/v1/decoders/'
-  )
+  const gltf = useGLTF(ORIGIN + 'scene.glb', true)
 
   useEffect(() => {
     if (!model) {

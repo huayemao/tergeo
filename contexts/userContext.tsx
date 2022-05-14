@@ -3,6 +3,7 @@ import { Mode } from '../typings/user'
 
 const initialData = {
   mode: Mode.permanent,
+  filters: [],
   child: null,
 }
 

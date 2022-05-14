@@ -10,9 +10,8 @@ export default function Layout({ children, title = '编贝', className }) {
   const { message, duration } = useMessage()
   const router = useRouter()
   const levels = router.pathname.split('/')
-  const levelCount = levels.length
 
-  const backLink = useMemo(
+  const gobackButton = useMemo(
     () => (
       <button
         className="align-middle"
@@ -33,7 +32,7 @@ export default function Layout({ children, title = '编贝', className }) {
       </Head>
       <div className={'flex min-h-screen flex-col ' + className}>
         <header className="sticky top-0 z-20 bg-white py-2 text-center align-middle text-xl font-bold leading-10 text-indigo-400 shadow">
-          {levelCount > 2 && backLink} {title}
+          {levels.length > 2 && gobackButton} {title}
         </header>
 
         {message && (
@@ -43,7 +42,7 @@ export default function Layout({ children, title = '编贝', className }) {
               autoClose
               className="absolute top-0 z-10 !max-w-full"
             >
-              <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+              <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500">
                 <CheckIcon className="h-5 w-5" />
               </div>
               <div className="ml-3 text-sm font-normal">{message}</div>

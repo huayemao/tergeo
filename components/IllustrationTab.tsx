@@ -110,13 +110,13 @@ const Tip = ({ user }) =>
     <div className="space-y-2">
       <Alert color="indigo">
         <div className="text-left">
-          您正在以【普通模式】访问，选中每一颗牙齿可以模型观察和了解每颗牙齿的形态。
+          选中一颗牙齿或者一个标签可以模型观察和了解每颗牙齿的形态。
           <br />
         </div>
       </Alert>
       <Alert Icon={InformationCircleIcon} color="blue">
         <div className="text-left">
-          如果您是一名正在长牙或换牙的孩子的家长，
+          如果您是正在长牙或换牙的孩子的家长，
           <Link href={'/me/account'}>
             <a className="underline">完善您孩子的信息</a>
           </Link>

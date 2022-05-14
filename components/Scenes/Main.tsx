@@ -1,30 +1,11 @@
 // @ts-nocheck
 
-import { useThree } from '@react-three/fiber'
-import {
-  Html,
-  Preload,
-  OrbitControls,
-  Select,
-  Environment,
-} from '@react-three/drei'
-
-import { Canvas, useFrame } from '@react-three/fiber'
-import React, {
-  useRef,
-  useState,
-  useMemo,
-  useCallback,
-  Suspense,
-  memo,
-} from 'react'
-import { Group, Material, Mesh, MeshBasicMaterial, Vector3 } from 'three'
+import { OrbitControls, Environment } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import React, { useMemo, useCallback, Suspense, memo } from 'react'
 import { useFetchModel } from '../../lib/hooks/useFetchModel'
 import { SceneWrapper } from './SceneWrapper'
-import { useUser } from '../../contexts/userContext'
-import { Mode } from '../../typings/user'
 import { Tooth } from '../../typings/Tooth'
-import { getScene4Home } from '../../lib/getScene'
 import { Props as CanvasProps } from '@react-three/fiber/dist/declarations/src/'
 
 export function TeethScene({
@@ -47,9 +28,6 @@ export function TeethScene({
 
 function Model({ dispatch, modelContext, teethContext, getScene }) {
   useFetchModel(dispatch, modelContext)
-
-  const { model } = modelContext
-  const { teeth } = teethContext
 
   const handleSceneClick = useCallback(
     (e) => {
