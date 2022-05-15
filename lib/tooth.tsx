@@ -24,8 +24,8 @@ export const typeMapping = {
 export const locationMapping = {
   t: '上颌',
   b: '下颌',
-  l: '左',
-  r: '右',
+  l: '右',
+  r: '左',
 }
 
 export const getToothBaseInfo = (str) => {
