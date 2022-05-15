@@ -1,10 +1,66 @@
+import dynamic from 'next/dynamic'
+import { useEffect, useMemo } from 'react'
+import FilterMenu from '../../components/FilterMenu'
 import Layout from '../../components/Layout'
-import { allToothTypes } from '../../lib/tooth'
+import { getScene4Home } from '../../lib/getScene'
+import { allToothTypes, getToothTypeInfo } from '../../lib/tooth'
+import { Mode } from '../../typings/user'
+import { partial } from 'lodash'
+import { useTeethDispatch } from '../../contexts/teethContext'
+import Link from 'next/link'
+import classnames from 'clsx'
 
-export default function ToothDetail({ content, title }) {
+const Scene = dynamic(() => import('../../components/Scenes/Main'), {
+  ssr: false,
+})
+
+export default function ToothDetail({ content, title, type }) {
+  const dispatch = useTeethDispatch()
+
+  const getScene = useMemo(() => partial(getScene4Home, Mode.permanent), [])
+
+  useEffect(() => {
+    dispatch({ type: 'FILTER_BY_TYPE', payload: type })
+  }, [dispatch, type])
+
   return (
     <Layout title={title}>
-      <div className="flex w-full justify-center px-8">
+      <div
+        className="flex rounded-3xl rounded-t-none  bg-indigo-200/60 pr-4 align-middle shadow shadow-indigo-200"
+        style={{ height: '25vh' }}
+      >
+        <div className="flex-[2]">
+          <Scene
+            canvasProps={{
+              shadows: true,
+              className: ' ',
+              dpr: [1, 2],
+              style: { height: '25vh' },
+              camera: { position: [0, 8, 72], fov: 55, near: 10 },
+            }}
+            getScene={getScene}
+          />
+        </div>
+        <div className="flex flex-1 flex-col justify-center py-4">
+          {allToothTypes.map((e) => (
+            <Link key={e} type="button" href={'/toothDetail/' + e}>
+              <a
+                className={classnames(
+                  '"mr-2 " mb-2 rounded-lg border border-indigo-700 px-4 py-1.5 text-center text-sm font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300',
+                  {
+                    'bg-indigo-600 !text-white outline-none ring-4 ring-indigo-300':
+                      type === e,
+                  }
+                )}
+              >
+                {' '}
+                {getToothTypeInfo(e).name}
+              </a>
+            </Link>
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-col items-center px-8 py-4">
         <div
           className="prose bg-slate-50 text-left"
           dangerouslySetInnerHTML={{ __html: content || '' }}
@@ -55,6 +111,7 @@ export async function getStaticProps(context) {
     props: {
       title,
       content,
+      type: id,
     },
     revalidate: 60 * 60 * 48,
   }

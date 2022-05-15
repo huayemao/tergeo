@@ -62,7 +62,7 @@ export const getToothTypeInfo = (type: PermanentToothType) => {
     [PermanentToothType.molars]: {
       name: '磨牙',
       filterFn: (e: string) =>
-        inRange(String.prototype.split.call(e, '')[2], [6, 9]),
+        inRange(String.prototype.split.call(e, '')[2], [5, 9]),
     },
   }
 

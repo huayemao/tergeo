@@ -54,10 +54,10 @@ export const ToothGrowthActionNameMapping = {
 }
 
 export enum PermanentToothType {
-  'premolars' = 'premolars',
-  'molars' = 'molars',
   'incisors' = 'incisors',
   'canines' = 'canines',
+  'premolars' = 'premolars',
+  'molars' = 'molars',
 }
 
 export const toothTypeMapping = {

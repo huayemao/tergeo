@@ -2,7 +2,7 @@ import { BLUE, INDIGO, TEAL } from './colors';
 
 export const TINT_MAPPING = {
   isHighlighted: (material: MeshdefaultMaterial, cases) => {
-    material.color = BLUE;
+    material.color = INDIGO;
   },
   isAbsent: (material: MeshdefaultMaterial, cases) => {
     material.opacity = 0.35;
@@ -13,7 +13,7 @@ export const TINT_MAPPING = {
     material.transparent = true;
   },
   isSelected: (material: MeshdefaultMaterial, cases) => {
-    material.color = INDIGO;
+    material.color = BLUE;
     if (cases.isAbsent) {
       material.color = TEAL;
     }

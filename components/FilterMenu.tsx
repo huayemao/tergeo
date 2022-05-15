@@ -15,19 +15,10 @@ import { getDefaultLocalDateTime } from '../lib/day'
 import { useShowMessage } from '../contexts/messageContext'
 import useClickOutside from '../lib/hooks/useClickOutSide'
 
-export default function FilterMenu() {
+export default function FilterMenu({ className }) {
   const { activeToothName } = useModel()
   const { filters } = useTeeth()
-  const tooth = useTooth(activeToothName)
-  const form = useRef<HTMLFormElement>()
   const wrapperRef = useRef()
-
-  const actionOptions = tooth ? getAvailableToothAction(tooth) : []
-
-  const { toothName } =
-    (activeToothName && getToothBaseInfo(activeToothName)) || {}
-  const [isOpen, setIsOpen] = useState(false)
-  const [activeOption, setActiveOption] = useState<ToothGrowAction>({})
 
   const dispatch = useTeethDispatch()
 
@@ -42,13 +33,13 @@ export default function FilterMenu() {
     dispatch({ type: 'FILTER_BY_TYPE', payload: e })
   }
 
-  useClickOutside(wrapperRef, () => {
-    dispatch({ type: 'RESET_FILTER_BY_TYPE' })
-  })
+  // useClickOutside(wrapperRef, () => {
+  //   dispatch({ type: 'RESET_FILTER_BY_TYPE' })
+  // })
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2" ref={wrapperRef}>
+      <div className={'grid grid-cols-2 gap-2 ' + className} ref={wrapperRef}>
         {allToothTypes.map((e) => (
           <button
             onClick={handleSelect.bind(null, e)}
@@ -67,23 +58,5 @@ export default function FilterMenu() {
         ))}
       </div>
     </>
-  )
-}
-
-function EditActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 13V16H7L16 7L13 4L4 13Z"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-    </svg>
   )
 }

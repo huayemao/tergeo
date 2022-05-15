@@ -116,7 +116,7 @@ const Tip = ({ user }) =>
           点击下面的按钮可以为你高亮一组牙齿
         </p>
       </div>
-      <FilterMenu></FilterMenu>
+
       <Alert Icon={InformationCircleIcon} color="blue">
         <div className="text-left">
           如果您是正在长牙或换牙的孩子的家长，
