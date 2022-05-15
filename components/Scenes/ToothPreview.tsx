@@ -6,7 +6,7 @@ const Scene = dynamic(() => import('../Scenes/Main'), {
 })
 
 function getScene(modelContext: any, teethContext: any) {
-  const { model, standardMaterial, activeToothName } = modelContext
+  const { model, defaultMaterial, activeToothName } = modelContext
   const [group, ...rest] = (model && model.scene.children) || []
 
   const rawTooth = model && model.nodes[activeToothName]
@@ -25,7 +25,7 @@ function getScene(modelContext: any, teethContext: any) {
       clonedTooth.position.add(new Vector3(0, 14, 0))
     }
 
-    clonedTooth.material = standardMaterial
+    clonedTooth.material = defaultMaterial
 
     return clonedTooth
   } else {

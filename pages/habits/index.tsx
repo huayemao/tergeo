@@ -7,35 +7,35 @@ import { Label } from '../../components/common/FormControls/Label'
 import { TextInput } from '../../components/common/FormControls/TextInput'
 import Layout from '../../components/Layout'
 
-type CleaningCategory = {
+type HabitCategory = {
   label: string
   color: string
   value: string
   to: UrlObject
 }
 
-const categories: CleaningCategory[] = [
+const categories: HabitCategory[] = [
   {
     label: '刷牙',
     value: 'brush',
     color: 'text-indigo-600',
-    to: { pathname: 'cleaning/timer', query: { type: 'brush' } },
+    to: { pathname: 'habits/timer', query: { type: 'brush' } },
   },
   {
     label: '使用牙线',
     color: 'text-blue-600',
     value: 'floss',
-    to: { pathname: 'cleaning/timer', query: { type: 'floss' } },
+    to: { pathname: 'habits/timer', query: { type: 'floss' } },
   },
   {
     label: '漱口',
     color: 'text-green-600',
     value: 'rinse',
-    to: { pathname: 'cleaning/timer', query: { type: 'rinse' } },
+    to: { pathname: 'habits/timer', query: { type: 'rinse' } },
   },
 ]
 
-const Card = ({ color, label, to, value }: CleaningCategory) => (
+const Card = ({ color, label, to, value }: HabitCategory) => (
   <Link href={to}>
     <a
       className={

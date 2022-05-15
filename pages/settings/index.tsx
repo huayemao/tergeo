@@ -9,10 +9,15 @@ import { TextInput } from '../../components/common/FormControls/TextInput'
 import Layout from '../../components/Layout'
 
 const items = [
-  { label: '账户设置', icon: UserIcon, to: 'account' },
-  { label: '日常任务', icon: ClockIcon, to: 'routine', subtitle: '开启' }, // 洁牙方式、是否提醒
-  { label: '提醒设置', icon: BellIcon, to: 'notifications' },
-  { label: '音乐曲目', icon: MusicNoteIcon, to: 'notifications' },
+  { label: '账户设置', icon: UserIcon, to: '/settings/account' },
+  {
+    label: '日常任务',
+    icon: ClockIcon,
+    to: '/settings/routine',
+    subtitle: '开启',
+  }, // 洁牙方式、是否提醒
+  { label: '提醒设置', icon: BellIcon, to: '/settings/notifications' },
+  { label: '音乐曲目', icon: MusicNoteIcon, to: '/settings/notifications' },
 ]
 
 const Me: NextPage = ({ data }) => {
@@ -20,7 +25,7 @@ const Me: NextPage = ({ data }) => {
     <Layout className={'bg-indigo-50/40'} title={'我的'}>
       <div className="divide-y border border-gray-200 bg-white text-lg font-medium  text-gray-900">
         {items.map(({ label, icon: Icon, to }) => (
-          <Link key={label} href={'me/' + to}>
+          <Link key={label} href={to}>
             <a
               key={label}
               aria-current="true"

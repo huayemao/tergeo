@@ -7,7 +7,7 @@ import { ORIGIN } from '../constants/origin'
 const initialData = {
   model: null,
   activeToothName: null,
-  standardMaterial: null,
+  defaultMaterial: null,
 }
 
 export const ModelContext = createContext(initialData)
@@ -26,9 +26,9 @@ const reducer = (state, action) => {
     case 'RESET_ACTIVE_TOOTH': {
       return Object.assign({}, state, { activeToothName: null })
     }
-    case 'SET_STANDARD_MATERIAL': {
-      const { standardMaterial } = action.payload
-      return Object.assign({}, state, { standardMaterial })
+    case 'SET_DEFAULT_MATERIAL': {
+      const { defaultMaterial } = action.payload
+      return Object.assign({}, state, { defaultMaterial })
     }
     default: {
       throw new Error('Unhandled action type.')

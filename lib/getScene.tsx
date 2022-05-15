@@ -23,7 +23,7 @@ export function getScene4Home(
   return clonedScene
 
   function getMaterials4tooth(tooth) {
-    const { standardMaterial, activeToothName } = modelContext
+    const { defaultMaterial, activeToothName } = modelContext
     const { teeth, filters } = teethContext
 
     const presentTeeth = teeth
@@ -40,10 +40,10 @@ export function getScene4Home(
     ]
 
     if ([isUnGrown, isActive].every((e) => !e)) {
-      return standardMaterial
+      return defaultMaterial
     }
 
-    let material: MeshStandardMaterial = standardMaterial.clone()
+    let material: MeshdefaultMaterial = defaultMaterial.clone()
 
     if (isHighlighted) {
       material.color = BLUE
@@ -70,8 +70,8 @@ export function getScene4Home(
   }
 }
 
-const getHighlightedMat = (standardMaterial) => {
-  let material: MeshStandardMaterial = standardMaterial.clone()
+const getHighlightedMat = (defaultMaterial) => {
+  let material: MeshdefaultMaterial = defaultMaterial.clone()
   material.color = INDIGO
   return material
 }
@@ -81,13 +81,13 @@ export function getScene4HabitTimer(
   modelContext: any,
   teethContext: any
 ): Scene {
-  const { model, standardMaterial } = modelContext
+  const { model, defaultMaterial } = modelContext
   const clonedScene = model && model.scene.clone()
   clonedScene?.traverse((e) => {
     if (e.type === 'Mesh') {
-      e.material = standardMaterial
+      e.material = defaultMaterial
       if (e.name.startsWith(highlightedPrefix)) {
-        e.material = getHighlightedMat(standardMaterial)
+        e.material = getHighlightedMat(defaultMaterial)
       }
     }
     if (e.name === 'lower') {
