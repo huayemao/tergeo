@@ -2,7 +2,6 @@ import { useGLTF } from '@react-three/drei'
 import dynamic from 'next/dynamic'
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
 import { MeshBasicMaterial, Scene } from 'three'
-import { ORIGIN } from '../constants/origin'
 
 const initialData = {
   model: null,

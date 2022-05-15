@@ -1,10 +1,11 @@
 import { Group, Scene, Vector3 } from 'three'
 import { checkIsPresent } from './getToothGrowStageInfo'
-import { BLUE, INDIGO, TEAL } from '../constants/colors'
-import { TeethScene } from '../components/Scenes/Main'
+import { INDIGO } from '../constants/colors'
 import { Mode } from '../typings/user'
 import { isOnlyPermanent } from './teeth'
 import { getToothTypeInfo } from './tooth'
+import { isFunction } from 'lodash'
+import { TINT_MAPPING } from '../constants/tintMapping'
 
 export function getScene4Home(
   mode,
@@ -32,38 +33,26 @@ export function getScene4Home(
 
     const filterFn = filters.type && getToothTypeInfo(filters.type).filterFn
 
-    const [isUnGrown, isActive, onlyPermanent, isHighlighted] = [
-      !presentTeeth.includes(tooth.name),
-      tooth.name === activeToothName,
-      isOnlyPermanent(tooth.name),
-      (filterFn && filterFn(tooth.name)) || false,
-    ]
-
-    if ([isUnGrown, isActive].every((e) => !e)) {
-      return defaultMaterial
+    const cases = {
+      isAbsent: !presentTeeth.includes(tooth.name) && mode === Mode.children,
+      isSelected: tooth.name === activeToothName,
+      isHidden: mode === Mode.primary && isOnlyPermanent(tooth.name),
+      isHighlighted: (filterFn && filterFn(tooth.name)) || false,
     }
 
     let material: MeshdefaultMaterial = defaultMaterial.clone()
 
-    if (isHighlighted) {
-      material.color = BLUE
-    }
+    tint(cases)
 
-    if (isUnGrown && mode === Mode.children) {
-      material.opacity = 0.35
-      material.transparent = true
-    }
-
-    if (mode === Mode.primary && onlyPermanent) {
-      material.opacity = 0
-      material.transparent = true
-    }
-    if (isActive) {
-      material.color = INDIGO
-      if (isUnGrown && mode === Mode.children) {
-        material.opacity = 0.6
-        material.color = TEAL
-      }
+    function tint(cases) {
+      Object.entries(cases).forEach(([k, v]) => {
+        if (v) {
+          const fn = TINT_MAPPING[k]
+          if (isFunction(fn)) {
+            fn(material, cases)
+          }
+        }
+      })
     }
 
     return material
