@@ -1,5 +1,6 @@
 import { ArrowNarrowLeftIcon, CheckIcon } from '@heroicons/react/solid'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useMessage } from '../contexts/messageContext'
@@ -13,16 +14,19 @@ export default function Layout({ children, title = '编贝', className }) {
 
   const gobackButton = useMemo(
     () => (
-      <button
-        className="align-middle"
-        onClick={() => {
-          router.replace({ pathname: levels.slice(0, -1).join('/') })
-        }}
-      >
-        <ArrowNarrowLeftIcon className="h-6 w-6" />
-      </button>
+      <div className="absolute left-4">
+        <Link
+          href={{ pathname: levels.slice(0, -1).join('/') }}
+          replace
+          shallow
+        >
+          <a className="align-middle">
+            <ArrowNarrowLeftIcon className="inline h-6 w-6" />
+          </a>
+        </Link>
+      </div>
     ),
-    [levels, router]
+    [levels]
   )
 
   return (

@@ -41,7 +41,7 @@ export default function ToothDetail({ content, title, type }) {
             getScene={getScene}
           />
         </div>
-        <div className="flex flex-1 flex-col justify-center py-4 gap-2">
+        <div className="flex flex-1 flex-col justify-center gap-2 py-4">
           {allToothTypes.map((e) => (
             <Link key={e} type="button" href={'/toothDetail/' + e}>
               <a
@@ -60,9 +60,9 @@ export default function ToothDetail({ content, title, type }) {
           ))}
         </div>
       </div>
-      <div className="flex flex-col items-center px-8 py-4">
+      <div className="flex flex-col items-center px-4 py-4">
         <div
-          className="prose bg-slate-50 text-left"
+          className="prose bg-slate-50 px-4 text-left"
           dangerouslySetInnerHTML={{ __html: content || '' }}
         />
       </div>
