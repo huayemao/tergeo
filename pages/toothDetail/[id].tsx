@@ -16,7 +16,6 @@ const Scene = dynamic(() => import('../../components/Scenes/Main'), {
 
 export default function ToothDetail({ content, title, type }) {
   const dispatch = useTeethDispatch()
-
   const getScene = useMemo(() => partial(getScene4Home, Mode.permanent), [])
 
   useEffect(() => {
@@ -31,6 +30,7 @@ export default function ToothDetail({ content, title, type }) {
       >
         <div className="w-[70%] flex-[1.6]">
           <Scene
+            canSelect={false}
             canvasProps={{
               shadows: true,
               className: ' ',
