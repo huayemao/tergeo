@@ -15,6 +15,7 @@ import {
   ToothGrowthRecord,
   ToothGrowthStage,
 } from '../typings/Tooth'
+import { omit } from 'lodash'
 
 const teeth: Tooth[] = getAllTeeth()
 
@@ -117,7 +118,10 @@ const TeethProvider = ({ children }) => {
   )
 
   useEffect(() => {
-    localStorage.setItem('TEETH_STATE', JSON.stringify(state))
+    localStorage.setItem(
+      'TEETH_STATE',
+      JSON.stringify(omit(state, 'filters.type'))
+    )
   }, [state])
 
   return (

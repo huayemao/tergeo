@@ -41,12 +41,12 @@ export default function ToothDetail({ content, title, type }) {
             getScene={getScene}
           />
         </div>
-        <div className="flex flex-1 flex-col justify-center py-4">
+        <div className="flex flex-1 flex-col justify-center py-4 gap-2">
           {allToothTypes.map((e) => (
             <Link key={e} type="button" href={'/toothDetail/' + e}>
               <a
                 className={classnames(
-                  '"mr-2 " mb-2 rounded-lg border border-indigo-700 px-4 py-1.5 text-center text-sm font-medium text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300',
+                  'rounded-lg border border-indigo-700 px-3 py-1.5 text-center text-sm  text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300',
                   {
                     'bg-indigo-600 !text-white outline-none ring-4 ring-indigo-300':
                       type === e,
