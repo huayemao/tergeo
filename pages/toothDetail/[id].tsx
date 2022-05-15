@@ -26,10 +26,10 @@ export default function ToothDetail({ content, title, type }) {
   return (
     <Layout title={title}>
       <div
-        className="flex rounded-3xl rounded-t-none  bg-indigo-200/60 pr-4 align-middle shadow shadow-indigo-200"
+        className="flex rounded-3xl rounded-t-none  bg-indigo-200/60 align-middle shadow shadow-indigo-200"
         style={{ height: '25vh' }}
       >
-        <div className="flex-[2]">
+        <div className="w-[70%] flex-[1.6]">
           <Scene
             canvasProps={{
               shadows: true,
@@ -41,7 +41,7 @@ export default function ToothDetail({ content, title, type }) {
             getScene={getScene}
           />
         </div>
-        <div className="flex flex-1 flex-col justify-center gap-2 py-4">
+        <div className="flex flex-1 flex-col justify-center gap-2 py-4 pr-4">
           {allToothTypes.map((e) => (
             <Link key={e} type="button" href={'/toothDetail/' + e}>
               <a
