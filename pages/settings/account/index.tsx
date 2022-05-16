@@ -54,8 +54,6 @@ const items = [
     open: true,
     detail: <ChildForm />,
   },
-  { label: '日常任务', to: 'routine', subtitle: '开启' }, // 洁牙方式、是否提醒
-  { label: '提醒设置', to: 'notifications' },
 ]
 
 const Me: NextPage = ({ data }) => {
@@ -66,7 +64,6 @@ const Me: NextPage = ({ data }) => {
           <SettingItem key={e.label} {...e} />
         ))}
       </div>
-      <Form />
     </Layout>
   )
 }

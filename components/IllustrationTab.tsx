@@ -111,9 +111,8 @@ const Tip = ({ user }) =>
     <div className="space-y-2">
       <div className="p-4 text-left">
         <p>
-          选中上面模型中的一颗牙齿可以了解它的信息。
+          选中模型中的一颗牙齿可以了解它的信息。
           <br />
-          点击下面的按钮可以为你高亮一组牙齿
         </p>
       </div>
 
