@@ -11,7 +11,7 @@ import Link from 'next/link'
 import classnames from 'clsx'
 import { useRouter } from 'next/router'
 
-const Scene = dynamic(() => import('../../components/Scenes/Main'), {
+const Scene = dynamic(() => import('../../components/TeethScene'), {
   ssr: false,
 })
 

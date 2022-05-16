@@ -15,7 +15,7 @@ import { getFromRange } from '../../lib/getFromRange'
 import { partial } from 'lodash'
 import { getScene4HabitTimer } from '../../lib/getScene'
 
-const Scene = dynamic(() => import('../../components/Scenes/Main'), {
+const Scene = dynamic(() => import('../../components/TeethScene'), {
   ssr: false,
 })
 

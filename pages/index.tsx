@@ -18,10 +18,10 @@ import ModelProvider from '../contexts/modelContext'
 import { useUser, useUserDispatch } from '../contexts/userContext'
 import { getScene4Home } from '../lib/getScene'
 import { partial } from 'lodash'
-import ToothPreview from '../components/Scenes/ToothPreview'
+import ToothPreview from '../components/ToothPreview'
 import { allToothTypes } from '../lib/tooth'
 
-const Scene = dynamic(() => import('../components/Scenes/Main'), {
+const Scene = dynamic(() => import('../components/TeethScene'), {
   ssr: false,
 })
 

@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { Vector3 } from 'three'
 
-const Scene = dynamic(() => import('../Scenes/Main'), {
+const Scene = dynamic(() => import('./TeethScene'), {
   ssr: false,
 })
 

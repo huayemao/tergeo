@@ -1,14 +1,22 @@
 import { Canvas } from '@react-three/fiber'
-import React, { Suspense } from 'react'
+import React, { Suspense, memo } from 'react'
 import { useModel, useModelDispatch } from '../../contexts/modelContext'
 import { useTeeth, useTeethDispatch } from '../../contexts/teethContext'
 import Loader from './Loader'
+import { Tooth } from '../../typings/Tooth'
+import { Props as CanvasProps } from '@react-three/fiber/dist/declarations/src/'
+import { Model } from './Model'
 
 export function SceneWrapper({
-  children,
-  canvasProps = {},
-  modelComponent: Model,
+  canvasProps,
+  getScene,
+  diableSelect = false,
+  enableFilter = false,
   ...props
+}: {
+  diableSelect: boolean
+  canvasProps: CanvasProps
+  diableFilter: boolean
 }) {
   const teethContext = useTeeth()
   const dispatch = useModelDispatch()
@@ -22,12 +30,22 @@ export function SceneWrapper({
       {...canvasProps}
     >
       <Suspense fallback={<Loader />}>
-        {children}
         <Model
+          {...{
+            canvasProps,
+            getScene,
+            diableSelect,
+            enableFilter,
+            dispatch,
+            modelContext,
+            teethContext,
+            teethDispatch,
+          }}
           {...props}
-          {...{ dispatch, modelContext, teethContext, teethDispatch }}
         />
       </Suspense>
     </Canvas>
   )
 }
+
+export default memo(SceneWrapper)
