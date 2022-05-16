@@ -11,17 +11,17 @@ import { Props as CanvasProps } from '@react-three/fiber/dist/declarations/src/'
 export function TeethScene({
   canvasProps,
   getScene,
-  canSelect = true,
+  diableSelect = false,
+  enableFilter = false,
 }: {
-  canSelet: boolean
+  diableSelect: boolean
   canvasProps: CanvasProps
+  diableFilter: boolean
 }) {
   return (
     <SceneWrapper
-      canvasProps={canvasProps}
-      getScene={getScene}
+      {...{ canvasProps, getScene, diableSelect, enableFilter }}
       modelComponent={Model}
-      canSelet={canSelect}
     >
       <OrbitControls makeDefault />
       <Environment path="/" files="studio_small_03_1k.hdr" />
@@ -29,29 +29,47 @@ export function TeethScene({
   )
 }
 
-function Model({ dispatch, modelContext, teethContext, getScene, canSelet }) {
-  useFetchModel(dispatch, modelContext)
+function Model({
+  dispatch: modelDispatch,
+  teethDispatch,
+  modelContext,
+  teethContext,
+  getScene,
+  diableSelect,
+  enableFilter,
+}) {
+  useFetchModel(modelDispatch, modelContext)
 
   const handleSceneClick = useCallback(
     (e) => {
-      canSelet &&
-        dispatch({
+      !diableSelect &&
+        modelDispatch({
           type: 'SET_ACTIVE_TOOTH',
           payload: { toothName: e.object.name },
         })
     },
-    [canSelet, dispatch]
+    [diableSelect, modelDispatch]
   )
 
   const handleResetActiveTooth = useCallback(() => {
-    dispatch({
+    modelDispatch({
       type: 'RESET_ACTIVE_TOOTH',
     })
-  }, [dispatch])
+  }, [modelDispatch])
 
   useEffect(() => {
-    !canSelet && handleResetActiveTooth()
-  }, [canSelet, handleResetActiveTooth])
+    !enableFilter &&
+      teethDispatch({
+        type: 'RESET_FILTER_BY_TYPE',
+      })
+    diableSelect && handleResetActiveTooth()
+  }, [
+    diableSelect,
+    modelDispatch,
+    enableFilter,
+    handleResetActiveTooth,
+    teethDispatch,
+  ])
 
   const scene = useMemo(() => {
     return getScene(modelContext, teethContext)

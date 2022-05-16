@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import React, { Suspense } from 'react'
 import { useModel, useModelDispatch } from '../../contexts/modelContext'
-import { useTeeth } from '../../contexts/teethContext'
+import { useTeeth, useTeethDispatch } from '../../contexts/teethContext'
 import Loader from './Loader'
 
 export function SceneWrapper({
@@ -12,6 +12,7 @@ export function SceneWrapper({
 }) {
   const teethContext = useTeeth()
   const dispatch = useModelDispatch()
+  const teethDispatch = useTeethDispatch()
   const modelContext = useModel() || {}
   return (
     <Canvas
@@ -22,7 +23,10 @@ export function SceneWrapper({
     >
       <Suspense fallback={<Loader />}>
         {children}
-        <Model {...props} {...{ dispatch, modelContext, teethContext }} />
+        <Model
+          {...props}
+          {...{ dispatch, modelContext, teethContext, teethDispatch }}
+        />
       </Suspense>
     </Canvas>
   )

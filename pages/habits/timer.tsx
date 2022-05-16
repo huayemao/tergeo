@@ -65,7 +65,7 @@ const Content = () => {
             天，上次刷牙 今天 7：40
           </p>
         </div>
-        <Scene getScene={getScene} />
+        <Scene diableSelect getScene={getScene} />
       </div>
       <div className="relative  flex-1  bg-white  text-gray-500">
         <div className="absolute -top-[60px] bottom-16 flex flex-col items-center  justify-around">
