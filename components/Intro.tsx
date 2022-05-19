@@ -15,7 +15,7 @@ export const Intro = ({ tooth }: { tooth: Tooth }) => {
     <div className="text-left">
       <div className="prose">{mapping[tooth.name]?.content}</div>
       <br/>见
-      <Link href={'/toothDetail/' + toothType}>
+      <Link href={'/detail/' + toothType}>
         <a className="text-indigo-500 underline">
           {getToothTypeInfo(toothType).name}
         </a>

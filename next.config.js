@@ -23,7 +23,7 @@ module.exports = withPWA({
 
       },
       {
-        source: '/toothDetail',
+        source: '/detail',
         destination: '/',
       },
     ]

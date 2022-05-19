@@ -15,7 +15,7 @@ const Scene = dynamic(() => import('../../components/TeethScene'), {
   ssr: false,
 })
 
-export default function ToothDetail({ content, title, type }) {
+export default function Detail({ content, title, type }) {
   const dispatch = useTeethDispatch()
   const getScene = useMemo(() => partial(getScene4Home, Mode.permanent), [])
   const router = useRouter()
@@ -49,7 +49,7 @@ export default function ToothDetail({ content, title, type }) {
         </div>
         <div className="flex flex-1 flex-col justify-center gap-2 py-4 pr-4">
           {allToothTypes.map((e) => (
-            <Link key={e} type="button" href={'/toothDetail/' + e} replace>
+            <Link key={e} type="button" href={'/detail/' + e} replace>
               <a
                 className={classnames(
                   'rounded-lg border border-indigo-700 px-3 py-1.5 text-center text-sm  text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300',

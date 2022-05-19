@@ -1,9 +1,6 @@
 {
   "name": "编贝 | 牙齿健康助手 pwa",
   "short_name": "编贝",
-  "permissions": {
-    "desktop-notification": {}
-  },
   "icons": [
     {
       "src": "/icons/android-icon-36x36.png",
