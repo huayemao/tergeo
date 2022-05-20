@@ -8,40 +8,39 @@ import { useMessage } from '../contexts/messageContext'
 import { BottomTab } from './BottomTab'
 import { Toast } from './common/Toast'
 
-export default function Layout({ children, title = '编贝', className }) {
+export default function Layout({ children, title, className }) {
   const { message, duration } = useMessage()
   const router = useRouter()
-  const levels = router.pathname.split('/')
+  const seperatedPaths = router.pathname.split('/') // 路径名中按照下划线分隔得到的路径数组
 
-  const gobackButton = useMemo(
-    () => (
+  // 返回按钮组件
+  const gobackButton = useMemo(() => {
+    const targetPathName = seperatedPaths.slice(0, -1).join('/') //路径数组去掉最后一位后再拼接成字符串
+    return (
       <div className="absolute left-4">
-        <Link
-          href={{ pathname: levels.slice(0, -1).join('/') }}
-          replace
-          shallow
-        >
+        <Link href={{ pathname: targetPathName }} replace shallow>
           <a className="align-middle">
             <ArrowNarrowLeftIcon className="inline h-6 w-6" />
           </a>
         </Link>
       </div>
-    ),
-    [levels]
-  )
+    )
+  }, [seperatedPaths])
 
   return (
     <>
       <Head>
+        {/* html title 标签，用于在浏览器标签页展示标题，以及搜索引擎优化 */}
         <title>
           {APP_NAME} {(typeof title === 'string' && ' | ' + title) || ''}
         </title>
       </Head>
       <div className={'flex min-h-screen flex-col ' + className}>
         <header className="sticky top-0 z-20 bg-white py-2 text-center align-middle text-xl font-bold leading-10 text-indigo-400 shadow">
-          {levels.length > 2 && gobackButton} {title}
+          {seperatedPaths.length > 2 && gobackButton} {title}
         </header>
 
+        {/* 全局消息提示组件 */}
         {message && (
           <div className="relative w-full text-center">
             <Toast

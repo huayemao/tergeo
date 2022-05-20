@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const withPWA = require('next-pwa')
+const cacheConfig = require('./lib/cache')
 
 module.exports = withPWA({
   pwa: {
     dest: 'public',
-    importScripts: ['/worker.js']
+    importScripts: ['/worker.js'],
+    runtimeCaching: cacheConfig
   },
   reactStrictMode: false,
   concurrentFeatures: true,
