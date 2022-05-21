@@ -26,38 +26,48 @@ const Tips: NextPage = ({ data }) => {
 export default Tips
 
 export async function getStaticProps(context) {
-  const s = {
-    fields: {
-      hVY42yGwuwDbdH16AX2B4hS9gwRat7lG: 'content',
-      nu4p5o7olxq2y6bvaayky1mt87uq9dkg: 'seq',
-      zk7q9wcd9gqymm54ghmefgvcyr1h6dyc: 'type',
-    },
-    options: {
-      tadvo8: '普通人群',
-    },
+  const mapping = {
+    hVY42yGwuwDbdH16AX2B4hS9gwRat7lG: 'content',
+    nu4p5o7olxq2y6bvaayky1mt87uq9dkg: 'seq',
+    zk7q9wcd9gqymm54ghmefgvcyr1h6dyc: 'type',
   }
 
-  const { data: raw } = await fetch(
+  const optionsMapping = {
+    type: { tadvo8: '普通人群' },
+  }
+
+  const { data: json } = await fetch(
     'https://www.yuque.com/api/tables/records?doc_id=76550654&doc_type=Doc&limit=2000&offset=0&sheet_id=tcazgmf0969hhul5of50gskc29li5lwn'
   ).then((e) => e.json())
 
-  const toc = raw.map((e) => ({ ...omit(e, ['data']), ...JSON.parse(e.data) }))
-  const data = toc.map((obj) => {
+  const rawData = json.map((e) => ({
+    ...omit(e, ['data']),
+    ...JSON.parse(e.data),
+  })) // data 字段值为 JSON 字符串
+  const data = rawData.map((obj) => {
     return {
-      ...obj,
       ...chain(obj)
-        .mapValues((v, k) => (s.fields[k] ? v.value : v))
+        .mapValues((v, k) => {
+          const { value } = v
+          const trueKey = mapping[k]
+          if (!trueKey) return v
+          if (Array.isArray(value)) {
+            return value.map((e) => optionsMapping[trueKey][e])
+          }
+          return value
+        })
         .mapKeys(function (value, key) {
-          return s.fields[key] || key
+          return mapping[key] || key
         })
         .value(),
     }
   })
+  console.log(data)
 
   return {
     props: {
       data,
     },
-    revalidate: 30,
+    revalidate: 60 * 60 * 24,
   }
 }

@@ -17,7 +17,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function IllustrationTab() {
+export default function IllustrationTab({ metaInfo }) {
   const tooth = useSelectedTooth()
   const user = useUser()
 
@@ -75,7 +75,7 @@ export default function IllustrationTab() {
                 key={key}
                 className={classNames('rounded-xl bg-white p-3')}
               >
-                <Comp tooth={tooth} />
+                <Comp tooth={tooth} metaInfo={metaInfo} />
               </Tab.Panel>
             ))}
           </Tab.Panels>

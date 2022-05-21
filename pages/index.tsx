@@ -20,6 +20,8 @@ import { getScene4Home } from '../lib/getScene'
 import { partial } from 'lodash'
 import ToothPreview from '../components/ToothPreview'
 import { allToothTypes } from '../lib/tooth'
+import { chain, omit } from 'lodash'
+import { getYuqueTable } from '../lib/getYuqueTable'
 
 const Scene = dynamic(() => import('../components/TeethScene'), {
   ssr: false,
@@ -37,7 +39,7 @@ const IllustrationTab = dynamic(() => import('../components/IllustrationTab'), {
   ssr: false,
 })
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ data }) => {
   const dispatch = useUserDispatch()
   const user = useUser()
 
@@ -71,7 +73,7 @@ const Home: NextPage = () => {
           <Info />
         </div>
         <div className="h-[42vh] flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
-          <IllustrationTab />
+          <IllustrationTab metaInfo={data} />
         </div>
       </div>
     </Layout>
@@ -79,3 +81,28 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export async function getStaticProps(context) {
+  const mapping = {
+    wCgg1ypIUToF48dQ3hnw1gT4w3PIPpYC: 'name',
+    gw1uagme14ml65r4zkgkzt4og4us6avz: 'intro',
+    yxzkcss6mopga4gcc7qs93sg69x6llq6: 'id',
+  }
+
+  const optionsMapping = {
+    type: { tadvo8: '普通人群' },
+  }
+
+  const data = await getYuqueTable(
+    'https://www.yuque.com/api/tables/records?doc_id=77460663&doc_type=Doc&limit=2000&offset=0&sheet_id=cw4rydibd04im63ugyyshg3lh5sfvewt',
+    mapping,
+    optionsMapping
+  )
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 60 * 60 * 24,
+  }
+}
