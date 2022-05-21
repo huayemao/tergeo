@@ -7,6 +7,9 @@ const initialData = {
   model: null,
   activeToothName: null,
   defaultMaterial: null,
+  filters: {
+    type: null,
+  },
 }
 
 export const ModelContext = createContext(initialData)
@@ -28,6 +31,20 @@ const reducer = (state, action) => {
     case 'SET_DEFAULT_MATERIAL': {
       const { defaultMaterial } = action.payload
       return Object.assign({}, state, { defaultMaterial })
+    }
+    case 'FILTER_BY_TYPE': {
+      return Object.assign({}, state, {
+        filters: {
+          type: action.payload,
+        },
+      })
+    }
+    case 'RESET_FILTER_BY_TYPE': {
+      return Object.assign({}, state, {
+        filters: {
+          type: null,
+        },
+      })
     }
     default: {
       throw new Error('Unhandled action type.')

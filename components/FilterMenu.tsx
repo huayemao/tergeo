@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { useModel } from '../contexts/modelContext'
+import { useModel, useModelDispatch } from '../contexts/modelContext'
 import { useTeeth, useTeethDispatch, useTooth } from '../contexts/teethContext'
 import OperationModal from './OperationModal'
 import { allToothTypes, getToothBaseInfo, getToothTypeInfo } from '../lib/tooth'
@@ -16,11 +16,10 @@ import { useShowMessage } from '../contexts/messageContext'
 import useClickOutside from '../lib/hooks/useClickOutSide'
 
 export default function FilterMenu({ className }) {
-  const { activeToothName } = useModel()
-  const { filters } = useTeeth()
+  const { activeToothName, filters } = useModel()
   const wrapperRef = useRef()
 
-  const dispatch = useTeethDispatch()
+  const dispatch = useModelDispatch()
 
   const handleOnClick = useCallback((v: ToothGrowAction) => {
     setActiveOption(v)

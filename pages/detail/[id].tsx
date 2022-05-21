@@ -6,17 +6,17 @@ import { getScene4Home } from '../../lib/getScene'
 import { allToothTypes, getToothTypeInfo } from '../../lib/tooth'
 import { Mode } from '../../typings/user'
 import { partial } from 'lodash'
-import { useTeethDispatch } from '../../contexts/teethContext'
 import Link from 'next/link'
 import classnames from 'clsx'
 import { useRouter } from 'next/router'
+import { useModelDispatch } from '../../contexts/modelContext'
 
 const Scene = dynamic(() => import('../../components/TeethScene'), {
   ssr: false,
 })
 
 export default function Detail({ content, title, type }) {
-  const dispatch = useTeethDispatch()
+  const dispatch = useModelDispatch()
   const getScene = useMemo(() => partial(getScene4Home, Mode.permanent), [])
   const router = useRouter()
 

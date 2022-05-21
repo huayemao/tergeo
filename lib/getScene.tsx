@@ -24,8 +24,8 @@ export function getScene4Home(
   return clonedScene
 
   function getMaterials4tooth(tooth) {
-    const { defaultMaterial, activeToothName } = modelContext
-    const { teeth, filters } = teethContext
+    const { defaultMaterial, activeToothName, filters } = modelContext
+    const { teeth } = teethContext
 
     const presentTeeth = teeth
       .filter((v) => checkIsPresent(v.growthStage))
