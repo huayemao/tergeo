@@ -32,11 +32,7 @@ function Info() {
         {toothName || '请选择牙齿'}
       </h2>
       {isChildrenMode && tooth ? (
-        <div className="my-auto flex flex-wrap items-center justify-start space-x-1">
-          <div className="rounded-3xl border border-gray-300 px-2 py-1 text-sm text-gray-400">
-            {getToothTypeInfo(toothType).name}
-          </div>
-
+        <div className="my-auto flex flex-wrap items-center justify-center space-y-1 space-x-1">
           {stages.map(({ label, color }) => (
             <Badge key={label} color={color} size="sm">
               {label}
