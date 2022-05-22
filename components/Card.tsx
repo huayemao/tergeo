@@ -18,7 +18,7 @@ const Card: FC<CardProps> = ({
   imgSrc,
 }) => {
   return (
-    <Link href={'/tips/' + item.content.src.split('/').pop()}>
+    <Link href={'/articles/' + item.content.src.split('/').pop()}>
       <a
         className={
           'group grid grid-cols-3 overflow-hidden rounded-lg border border-gray-100 shadow-lg md:grid-cols-1 ' +
@@ -41,11 +41,7 @@ const Card: FC<CardProps> = ({
           <h5 className="mb-2 font-bold">{title}</h5>
           <ul className="flex space-x-1">
             <li className="inline-block rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white">
-              Notice
-            </li>
-
-            <li className="inline-block rounded-full bg-indigo-600 px-3 py-1 text-xs font-semibold text-white">
-              Information
+              {item.type}
             </li>
           </ul>
 
@@ -60,4 +56,3 @@ const Card: FC<CardProps> = ({
 }
 
 export default Card
-

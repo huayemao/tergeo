@@ -56,7 +56,7 @@ export const TimelineItem = ({
       </time>
       <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
         {child.name}
-        {record.ageDetail.label} 了。{record.remarkContent}
+        {record.ageDetail.label}。{record.remarkContent}
       </p>
     </li>
   )

@@ -1,5 +1,12 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import { ChevronDownIcon, PencilIcon } from '@heroicons/react/solid'
 import { useModel } from '../contexts/modelContext'
 import { useTeethDispatch, useTooth } from '../contexts/teethContext'
@@ -12,13 +19,16 @@ import {
 } from '../lib/getToothGrowStageInfo'
 import { Textarea } from './common/FormControls/Textarea'
 import { Label } from './common/FormControls/Label'
-import { getDefaultLocalDateTime } from '../lib/day'
+import { getAgeDetails, getDefaultLocalDateTime } from '../lib/day'
 import { useShowMessage } from '../contexts/messageContext'
+import { useUser } from '../contexts/userContext'
+import { useForm } from '../lib/hooks/useForm'
 
 export default function ActionMenu() {
   const { activeToothName } = useModel()
   const tooth = useTooth(activeToothName)
   const form = useRef<HTMLFormElement>()
+  const { child } = useUser()
 
   const actionOptions = tooth ? getAvailableToothAction(tooth) : []
 
@@ -36,14 +46,22 @@ export default function ActionMenu() {
 
   const show = useShowMessage()
 
+  const defaultValue = getDefaultLocalDateTime()
+
+  const initialState = { dateTime: defaultValue, remarkContent: null }
+  const [{ dateTime, remarkContent }, setValues] = useForm(initialState)
+
+  const { label } = useMemo(
+    () => getAgeDetails(dateTime, child.birthday),
+    [child.birthday, dateTime]
+  )
+
   const handleOnConfirm = useCallback(() => {
     const record = {
       type: activeOption.type,
       name: activeOption.name,
-      dateTime:
-        form.current?.elements['dateTime']?.value ||
-        new Date().toISOString().slice(0, -8),
-      remarkContent: form.current?.elements['remarkContent'].value || null,
+      dateTime,
+      remarkContent,
     }
     dispatch({
       type: activeOption.type,
@@ -54,7 +72,14 @@ export default function ActionMenu() {
     })
     show('操作成功')
     setIsOpen(false)
-  }, [activeOption.type, activeOption.name, dispatch, activeToothName])
+  }, [
+    activeOption.type,
+    activeOption.name,
+    dateTime,
+    remarkContent,
+    dispatch,
+    activeToothName,
+  ])
 
   return (
     <>
@@ -100,7 +125,7 @@ export default function ActionMenu() {
           <div>
             <form ref={form} className="space-y-6 pt-6">
               <div className="align-bottom">
-                确定花野猫的这颗牙
+                确定{child.name}的这颗牙
                 {activeOption.showTime && (
                   <>
                     在{' '}
@@ -110,10 +135,9 @@ export default function ActionMenu() {
                       sizing={'sm'}
                       id="dateTime"
                       type="datetime-local"
-                      name="partydate1"
-                      // defaultValue="2022/5/11 22:40:41"
-                      defaultValue={getDefaultLocalDateTime()}
-                      // defaultValue={new Date().toISOString().slice(0, -8)}
+                      name="dateTime"
+                      defaultValue={defaultValue}
+                      onChange={setValues}
                     />{' '}
                   </>
                 )}
@@ -129,7 +153,8 @@ export default function ActionMenu() {
                   name="remarkContent"
                   className="p-2"
                   rows={5}
-                  placeholder="花野猫 4 个月了，XXX"
+                  onChange={setValues}
+                  placeholder={`${child.name}${label}`}
                 />
               </div>
             </form>

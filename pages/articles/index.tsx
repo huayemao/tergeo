@@ -3,6 +3,7 @@ import type { NextPage } from 'next'
 import { chain, omit } from 'lodash'
 import Card from '../../components/Card'
 import Layout from '../../components/Layout'
+import { getYuqueTable } from '../../lib/getYuqueTable'
 
 const Tips: NextPage = ({ data }) => {
   return (
@@ -33,36 +34,14 @@ export async function getStaticProps(context) {
   }
 
   const optionsMapping = {
-    type: { tadvo8: '普通人群' },
+    type: { tadvo8: '普通人群', itmy0k: '孕产妇' },
   }
 
-  const { data: json } = await fetch(
-    'https://www.yuque.com/api/tables/records?doc_id=76550654&doc_type=Doc&limit=2000&offset=0&sheet_id=tcazgmf0969hhul5of50gskc29li5lwn'
-  ).then((e) => e.json())
-
-  const rawData = json.map((e) => ({
-    ...omit(e, ['data']),
-    ...JSON.parse(e.data),
-  })) // data 字段值为 JSON 字符串
-  const data = rawData.map((obj) => {
-    return {
-      ...chain(obj)
-        .mapValues((v, k) => {
-          const { value } = v
-          const trueKey = mapping[k]
-          if (!trueKey) return v
-          if (Array.isArray(value)) {
-            return value.map((e) => optionsMapping[trueKey][e])
-          }
-          return value
-        })
-        .mapKeys(function (value, key) {
-          return mapping[key] || key
-        })
-        .value(),
-    }
-  })
-  console.log(data)
+  const data = await getYuqueTable(
+    'https://www.yuque.com/api/tables/records?doc_id=76550654&doc_type=Doc&limit=2000&offset=0&sheet_id=tcazgmf0969hhul5of50gskc29li5lwn',
+    mapping,
+    optionsMapping
+  )
 
   return {
     props: {
