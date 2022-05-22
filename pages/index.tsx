@@ -35,7 +35,7 @@ const Info = dynamic(() => import('../components/ToothInfo'), {
   ssr: false,
 })
 
-const IllustrationTab = dynamic(() => import('../components/IllustrationTab'), {
+const Panel = dynamic(() => import('../components/Panel'), {
   ssr: false,
 })
 
@@ -73,7 +73,7 @@ const Home: NextPage = ({ data }) => {
           <Info />
         </div>
         <div className="h-[42vh] flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
-          <IllustrationTab metaInfo={data} />
+          <Panel metaInfo={data} />
         </div>
       </div>
     </Layout>
