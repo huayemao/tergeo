@@ -17,7 +17,7 @@ const items = [
     subtitle: '开启',
   }, // 洁牙方式、是否提醒
   { label: '提醒设置', icon: BellIcon, to: '/settings/notifications' },
-  { label: '音乐曲目', icon: MusicNoteIcon, to: '/settings/notifications' },
+  { label: '模型设置', icon: MusicNoteIcon, to: '/settings/notifications' }, // 是否显示智齿
 ]
 
 const Me: NextPage = ({ data }) => {
