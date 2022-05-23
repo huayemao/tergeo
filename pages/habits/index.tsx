@@ -48,9 +48,9 @@ const Card = ({ color, label, to, value }: HabitCategory) => (
           {'  '}<sub className="font-light text-gray-600">{value}</sub>
         </h5>
         <div className="mt-4 border-t-2 border-indigo-100 pt-2">
-          <p className="text-sm font-medium uppercase tracking-widest text-gray-500">
+          {/* <p className="text-sm font-medium uppercase tracking-widest text-gray-500">
             已完成 2/3
-          </p>
+          </p> */}
         </div>
       </div>
     </a>

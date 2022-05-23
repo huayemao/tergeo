@@ -65,25 +65,21 @@ const Content = () => {
         className="relative bg-indigo-200/60 backdrop-blur-lg backdrop-filter"
         style={{ height: '34vh' }}
       >
-        <div className="absolute top-0 right-0 left-0 bg-white bg-opacity-70 p-4 px-8 text-sm backdrop-blur-lg backdrop-filter">
-          <p suppressHydrationWarning className="leading-4  text-gray-500">
-            {playlist[index].text}
-          </p>
-        </div>
         <Scene diableSelect getScene={getScene} />
       </div>
       <div className="relative  flex-1  bg-white  text-gray-500">
         <div className="absolute -top-[60px] left-0 right-0 bottom-16 flex flex-col items-center  justify-around">
           <Timer duration={120} />
-          {/* <p
-            suppressHydrationWarning
-            className="mx-8 border-l-2 border-indigo-300 pl-2"
-          >
-            {title}{' '}
-            糖是人类的主要营养要素之一，是人体能量的主要来源，是许多食品及饮料的调味剂，同时也是公认的一种引起龋病发生的危险因素。
-          </p> */}
+          <div className="h-24">
+            <p
+              suppressHydrationWarning
+              className="mx-8 border-l-2 border-indigo-300 pl-2"
+            >
+              {playlist[index].text}
+            </p>
+          </div>
           <div className="h-8" suppressHydrationWarning>
-            {!isActive &&
+            {(!isActive &&
               historyRecords.length &&
               `上次刷牙时长：` +
                 toHHMMSS(
@@ -92,7 +88,8 @@ const Content = () => {
                       ...historyRecords[historyRecords.length - 1]
                     )
                   )
-                )}
+                )) ||
+              null}
           </div>
           <section className="self-stretch text-center">
             <div

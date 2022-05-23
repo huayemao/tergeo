@@ -60,16 +60,17 @@ const Tip = ({ user }) =>
           <br />
         </p>
       </div>
-
-      <Alert Icon={InformationCircleIcon} color="blue">
-        <div className="text-left">
-          如果您是正在长牙或换牙的孩子的家长，
-          <Link href={'/settings/account'}>
-            <a className="underline">完善您孩子的信息</a>
-          </Link>
-          之后，可以切换为【牙齿成长模式】
-          <br />
-        </div>
-      </Alert>
+      {!user.child && (
+        <Alert Icon={InformationCircleIcon} color="blue">
+          <div className="text-left">
+            如果您是正在长牙或换牙的孩子的家长，
+            <Link href={'/settings/account'}>
+              <a className="underline">完善您孩子的信息</a>
+            </Link>
+            之后，可以切换为【牙齿成长模式】
+            <br />
+          </div>
+        </Alert>
+      )}
     </div>
   )
