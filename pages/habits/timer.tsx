@@ -59,6 +59,8 @@ const Content = () => {
   }
   const index = timeMapping[highlightedPrefix]
 
+  const lastRecord = historyRecords[historyRecords.length - 1]
+
   return (
     <>
       <div
@@ -83,12 +85,8 @@ const Content = () => {
               historyRecords.length &&
               `上次刷牙时长：` +
                 toHHMMSS(
-                  Math.abs(
-                    getTimeDistance(
-                      ...historyRecords[historyRecords.length - 1]
-                    )
-                  )
-                )) ||
+                  Math.abs(getTimeDistance(lastRecord.start, lastRecord.end))
+                ).slice(3)) ||
               null}
           </div>
           <section className="self-stretch text-center">

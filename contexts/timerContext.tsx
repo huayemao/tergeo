@@ -1,6 +1,4 @@
 import React, { createContext, useReducer, useContext, useEffect } from 'react'
-export const TimerContext = createContext()
-export const TimerDispatch = createContext()
 
 const initialData = {
   seconds: 0,
@@ -9,7 +7,11 @@ const initialData = {
   message: null,
   playIndex: 0,
   reseted: false,
+  type: 'brush',
 }
+
+export const TimerContext = createContext(initialData)
+export const TimerDispatch = createContext()
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -72,13 +74,14 @@ const TimerProvider = ({ children }) => {
       ? localStorage.getItem('HITSTORY_RECORDS')
       : null
 
-  const [state, dispatch] = useReducer(
+  const [state, dispatch] = useReducer<typeof initialData>(
     reducer,
     Object.assign(initialData, JSON.parse(storageData))
   )
 
   useEffect(() => {
-    const payload = getHistoryRecord(state)
+    console.log(state.isActive)
+    const payload = getNewHistoryRecord(state)
     if (payload) {
       dispatch({ type: 'SET_RECORDS', payload })
       localStorage.setItem(
@@ -98,18 +101,21 @@ const TimerProvider = ({ children }) => {
   )
 }
 
-const getHistoryRecord = (state) => {
+const getNewHistoryRecord = (state) => {
+  // useEffect 中变化后的 state
   const timeStamp = new Date().toLocaleString()
-  const lastRecord = [...state.historyRecords].pop()
+  const lastRecord = [...state.historyRecords].pop() || {}
   if (!state.isActive) {
-    if (lastRecord?.length !== 1) {
+    if (lastRecord?.end) {
       return null
     }
     return state.historyRecords
       .slice(0, -1)
-      .concat([lastRecord.concat(timeStamp)])
+      .concat([Object.assign(lastRecord, { end: timeStamp })])
   } else {
-    return [...state.historyRecords].concat([[timeStamp]])
+    return [...state.historyRecords].concat([
+      Object.assign(lastRecord, { start: timeStamp, type: state.type }),
+    ])
   }
 }
 
