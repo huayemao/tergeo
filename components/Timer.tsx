@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useTimer, useTimerDispatch } from '../contexts/timerContext'
+import { toHHMMSS } from '../lib/day'
 
 export function Timer({ duration = 60, radius = 75, content = 'default' }) {
   const { seconds, isActive } = useTimer()
@@ -7,9 +8,7 @@ export function Timer({ duration = 60, radius = 75, content = 'default' }) {
   const dispatch = useTimerDispatch()
 
   useEffect(() => {
-    if (seconds + 1 > duration) {
-      dispatch({ type: 'STOP' })
-    }
+
     let interval = null
     if (isActive) {
       interval = setInterval(() => {
@@ -22,7 +21,8 @@ export function Timer({ duration = 60, radius = 75, content = 'default' }) {
   }, [isActive, seconds])
 
   const circumference = ((2 * 22) / 7) * radius
-  const offset = circumference * (1 - seconds / duration)
+  const offset =
+    circumference * (seconds < duration ? 1 - seconds / duration : 0)
 
   return (
     <div
@@ -55,7 +55,7 @@ export function Timer({ duration = 60, radius = 75, content = 'default' }) {
         />
       </svg>
       <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center text-center text-3xl font-semibold text-indigo-500">
-        {content === 'default' ? `0:${seconds}` : content}
+        {content === 'default' ? toHHMMSS(seconds).slice(3) : content}
       </div>
     </div>
   )

@@ -7,6 +7,8 @@ const initialData = {
   isActive: false,
   historyRecords: [],
   message: null,
+  playIndex: 0,
+  reseted: false,
 }
 
 const reducer = (state, action) => {
@@ -40,8 +42,10 @@ const reducer = (state, action) => {
     }
     case 'CONFIRM_END': {
       return Object.assign({}, state, {
+        seconds: 0,
         isActive: false,
         message: null,
+        reseted: true,
       })
     }
     case 'CANCEL_END': {
@@ -82,6 +86,7 @@ const TimerProvider = ({ children }) => {
         JSON.stringify({ historyRecords: payload })
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.isActive])
 
   return (

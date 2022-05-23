@@ -11,9 +11,14 @@ import TimerProvider, {
   useTimerDispatch,
   useTimer,
 } from '../../contexts/timerContext'
-import { getFromRange } from '../../lib/getFromRange'
 import { partial } from 'lodash'
 import { getScene4HabitTimer } from '../../lib/getScene'
+
+import 'react-h5-audio-player/lib/styles.css'
+import { Player } from '../../components/Player'
+import { getActiveZone } from '../../lib/getActiveZone'
+import { playlist } from '../../constants/playlist'
+import { toHHMMSS } from '../../lib/day'
 
 const Scene = dynamic(() => import('../../components/TeethScene'), {
   ssr: false,
@@ -31,13 +36,7 @@ const Content = () => {
   // 切换洁牙方式
 
   const [highlightedPrefix, title] = useMemo(() => {
-    const timeMapping = {
-      0: ['tr', '左上'],
-      30: ['br', '左下'],
-      60: ['bl', '右下'],
-      90: ['tl', '右上'],
-    }
-    return getFromRange(timeMapping, seconds)
+    return getActiveZone(seconds)
   }, [seconds])
 
   const toggleActive = useCallback(() => {
@@ -50,44 +49,57 @@ const Content = () => {
     [highlightedPrefix]
   )
 
+  const timeMapping = {
+    prepare: 0,
+    tr: 1,
+    br: 2,
+    bl: 3,
+    tl: 4,
+    over: 5,
+  }
+  const index = timeMapping[highlightedPrefix]
+
   return (
     <>
       <div
         className="relative bg-indigo-200/60 backdrop-blur-lg backdrop-filter"
         style={{ height: '34vh' }}
       >
-        <div className="absolute top-0 right-0 w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter">
-          <p className="leading-3 text-gray-500">
-            已连续刷牙{' '}
-            <span className="text-base font-semibold text-indigo-400 underline">
-              12{' '}
-            </span>
-            天，上次刷牙 今天 7：40
+        <div className="absolute top-0 right-0 left-0 bg-white bg-opacity-70 p-4 px-8 text-sm backdrop-blur-lg backdrop-filter">
+          <p suppressHydrationWarning className="leading-4  text-gray-500">
+            {playlist[index].text}
           </p>
         </div>
         <Scene diableSelect getScene={getScene} />
       </div>
       <div className="relative  flex-1  bg-white  text-gray-500">
-        <div className="absolute -top-[60px] bottom-16 flex flex-col items-center  justify-around">
+        <div className="absolute -top-[60px] left-0 right-0 bottom-16 flex flex-col items-center  justify-around">
           <Timer duration={120} />
-          <p
+          {/* <p
             suppressHydrationWarning
             className="mx-8 border-l-2 border-indigo-300 pl-2"
           >
             {title}{' '}
             糖是人类的主要营养要素之一，是人体能量的主要来源，是许多食品及饮料的调味剂，同时也是公认的一种引起龋病发生的危险因素。
-          </p>
-          <section className="text-center">
+          </p> */}
+          <div className="h-8" suppressHydrationWarning>
+            {!isActive &&
+              historyRecords.length &&
+              `上次刷牙时长：` +
+                toHHMMSS(
+                  Math.abs(
+                    getTimeDistance(
+                      ...historyRecords[historyRecords.length - 1]
+                    )
+                  )
+                )}
+          </div>
+          <section className="self-stretch text-center">
             <div
               suppressHydrationWarning
               className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8"
             >
-              todo:音乐功能 上次刷牙时间：
-              {!isActive &&
-                historyRecords.length &&
-                Math.abs(
-                  getTimeDistance(...historyRecords[historyRecords.length - 1])
-                )}
+              <Player />
             </div>
           </section>
           <button
