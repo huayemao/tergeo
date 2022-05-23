@@ -26,8 +26,8 @@ export function IllustrationTab({ categories, tooth, metaInfo }) {
           ))}
         </Tab.List>
         <Tab.Panels
-          className="mt-2 overflow-auto"
-          style={{ height: 'calc(42vh - 3.5rem)' }}
+          className="mt-2 overflow-auto pb-12"
+          style={{ height: 'calc(44vh - 5rem)' }}
         >
           {categories.map(({ component: Comp, key, label }) => (
             <Tab.Panel

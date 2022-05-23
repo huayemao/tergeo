@@ -16,6 +16,7 @@ export type BadgeProps = PropsWithChildren<{
   size?: 'xs' | 'sm'
   href?: string
   icon?: FC<ComponentProps<'svg'>>
+  className?: string
 }>
 
 const colorClasses: Record<BadgeProps['color'] & string, string> = {
@@ -49,6 +50,7 @@ export const Badge: FC<BadgeProps> = ({
   size = 'xs',
   href,
   icon: Icon,
+  className,
 }) => {
   const span = (
     <>
@@ -61,7 +63,8 @@ export const Badge: FC<BadgeProps> = ({
             'rounded px-2 py-0.5': !!children,
             'rounded-full p-1': !children && size === 'xs',
             'rounded-full p-1.5': !children && size === 'sm',
-          }
+          },
+          className
         )}
       >
         {Icon && <Icon className={classNames(iconSizeClasses[size])} />}

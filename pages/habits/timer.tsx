@@ -54,7 +54,7 @@ const Content = () => {
     <>
       <div
         className="relative bg-indigo-200/60 backdrop-blur-lg backdrop-filter"
-        style={{ height: '36vh' }}
+        style={{ height: '34vh' }}
       >
         <div className="absolute top-0 right-0 w-48 bg-white bg-opacity-70 p-2 text-sm backdrop-blur-lg backdrop-filter">
           <p className="leading-3 text-gray-500">

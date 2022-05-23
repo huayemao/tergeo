@@ -36,7 +36,7 @@ export default function Layout({ children, title, className }) {
         </title>
       </Head>
       <div className={'flex min-h-screen flex-col ' + className}>
-        <header className="sticky top-0 z-20 bg-white py-2 text-center align-middle text-xl font-bold leading-10 text-indigo-400 shadow">
+        <header className="sticky top-0 z-20 flex h-12 max-h-[6vh] flex-shrink-0 items-center justify-center bg-white text-xl font-bold text-indigo-400 shadow">
           {seperatedPaths.length > 2 && gobackButton} {title}
         </header>
 

@@ -32,9 +32,9 @@ function Info() {
         {toothName || '请选择牙齿'}
       </h2>
       {isChildrenMode && tooth ? (
-        <div className="my-auto flex flex-wrap items-center justify-center space-y-1 space-x-1">
+        <div className="my-auto flex flex-wrap items-center   space-x-1">
           {stages.map(({ label, color }) => (
-            <Badge key={label} color={color} size="sm">
+            <Badge className='m-0.5' key={label} color={color} size="sm">
               {label}
             </Badge>
           ))}

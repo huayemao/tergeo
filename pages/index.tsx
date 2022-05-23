@@ -52,27 +52,24 @@ const Home: NextPage = ({ data }) => {
     >
       <div
         className="relative bg-indigo-200/60  backdrop-blur-lg backdrop-filter"
-        style={{ height: '36vh' }}
+        style={{ height: '34vh' }}
       >
         <Scene
           canvasProps={{
             shadows: true,
             dpr: [1, 2],
-            style: { height: '36vh' },
-            camera: { position: [0, 8, 72], fov: 70, near: 10 },
+            style: { height: '34vh' },
+            camera: { position: [0, -8, 66], fov: 70, near: 10 },
           }}
           getScene={getScene}
         />
       </div>
-      <div className="flex h-[60vh] flex-col rounded-t-3xl">
-        <div
-          className="z-10 -mt-4 flex items-center rounded-t-3xl bg-white"
-          style={{ height: '18vh' }}
-        >
+      <div className="flex h-[60vh] flex-1 flex-col rounded-t-3xl">
+        <div className="z-10 -mt-4 flex h-[18vh] items-center rounded-t-3xl bg-white">
           <ToothPreview />
           <Info />
         </div>
-        <div className="h-[42vh] flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
+        <div className="h-[44vh] flex-1 space-y-4 bg-white bg-opacity-50 px-4 pt-4 text-center">
           <Panel metaInfo={data} />
         </div>
       </div>
