@@ -111,10 +111,10 @@ const getNewHistoryRecord = (state) => {
     }
     return state.historyRecords
       .slice(0, -1)
-      .concat([Object.assign(lastRecord, { end: timeStamp })])
+      .concat([Object.assign({}, lastRecord, { end: timeStamp })])
   } else {
     return [...state.historyRecords].concat([
-      Object.assign(lastRecord, { start: timeStamp, type: state.type }),
+      { start: timeStamp, type: state.type },
     ])
   }
 }

@@ -15,20 +15,31 @@ const Scene = dynamic(() => import('../../components/TeethScene'), {
   ssr: false,
 })
 
-export default function Detail({ content, title, type }) {
+export default function Detail({ content, title, typeOrId }) {
   const dispatch = useModelDispatch()
-  const getScene = useMemo(() => partial(getScene4Home, Mode.permanent), [])
-  const router = useRouter()
+  const isType = allToothTypes.includes(typeOrId)
 
   useEffect(() => {
-    dispatch({
-      type: 'FILTER_BY_TYPE',
-      payload: type,
-    })
-  }, [dispatch, type])
+    isType &&
+      dispatch({
+        type: 'FILTER_BY_TYPE',
+        payload: typeOrId,
+      })
+  }, [dispatch, isType, typeOrId])
 
   return (
     <Layout title={title}>
+      {isType ? <TypeDetail {...{ content, title, typeOrId }} /> : null}
+    </Layout>
+  )
+}
+
+function TypeDetail({ content, typeOrId }) {
+  const getScene = useMemo(() => partial(getScene4Home, Mode.permanent), [])
+  const router = useRouter()
+
+  return (
+    <>
       <div
         className="flex rounded-3xl rounded-t-none  bg-indigo-200/60 align-middle shadow shadow-indigo-200"
         style={{ height: '25vh' }}
@@ -55,7 +66,7 @@ export default function Detail({ content, title, type }) {
                   'rounded-lg border border-indigo-700 px-3 py-1.5 text-center text-sm  text-indigo-700 hover:bg-indigo-600 hover:text-white focus:outline-none focus:ring-4 focus:ring-indigo-300',
                   {
                     'bg-indigo-600 !text-white outline-none ring-4 ring-indigo-300':
-                      router.isReady ? router.query.id === e : type === e,
+                      router.isReady ? router.query.id === e : typeOrId === e,
                   }
                 )}
               >
@@ -72,7 +83,7 @@ export default function Detail({ content, title, type }) {
           dangerouslySetInnerHTML={{ __html: content || '' }}
         />
       </div>
-    </Layout>
+    </>
   )
 }
 
@@ -117,7 +128,7 @@ export async function getStaticProps(context) {
     props: {
       title,
       content,
-      type: id,
+      typeOrId: id,
     },
     revalidate: 60 * 60 * 48,
   }
