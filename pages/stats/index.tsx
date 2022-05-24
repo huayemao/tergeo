@@ -10,6 +10,8 @@ import { useUser } from '../../contexts/userContext'
 import classNames from 'clsx'
 import { BriefStats } from '../../components/BriefStats'
 import { useTimer } from '../../contexts/timerContext'
+import { AllTeethGrowthTimeLine } from '../../components/GrowtTimeLine'
+import { useTeeth } from '../../contexts/teethContext'
 
 const Stats: NextPage = ({ data }) => {
   const user = useUser()
@@ -41,10 +43,12 @@ const Stats: NextPage = ({ data }) => {
 export default Stats
 
 const Grow = (props) => {
+  const { teeth } = useTeeth()
   return (
     <>
       <BriefStats {...props} />
       <div>全部成长记录</div>
+      <AllTeethGrowthTimeLine teeth={teeth} />
     </>
   )
 }

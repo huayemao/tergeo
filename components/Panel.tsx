@@ -6,7 +6,7 @@ import {
   ToothGrowthActionType,
   ToothGrowthRecord,
 } from '../typings/Tooth'
-import { GrowtTimeLine } from './GrowtTimeLine'
+import { GrowthTimeLine } from './GrowtTimeLine'
 import { useUser } from '../contexts/userContext'
 import { compact } from 'lodash'
 import Link from 'next/link'
@@ -36,7 +36,7 @@ export default function Panel({ metaInfo }) {
           tooth && {
             key: 'record',
             label: '成长记录',
-            component: GrowtTimeLine,
+            component: GrowthTimeLine,
           },
       ]),
     [isChildrenMode, tooth]

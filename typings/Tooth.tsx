@@ -8,7 +8,8 @@ export enum ToothGrowthStage {
 
 export type ToothGrowthRecord = {
   type: ToothGrowthActionType
-  name: string
+  eventName: string
+  toothName: string
   dateTime: string
   remarkContent?: string
 }

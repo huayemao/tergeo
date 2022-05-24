@@ -23,6 +23,7 @@ import { getAgeDetails, getDefaultLocalDateTime } from '../lib/day'
 import { useShowMessage } from '../contexts/messageContext'
 import { useUser } from '../contexts/userContext'
 import { useForm } from '../lib/hooks/useForm'
+import { ToothGrowthRecord } from '../typings/Tooth'
 
 export default function ActionMenu() {
   const { activeToothName } = useModel()
@@ -57,9 +58,10 @@ export default function ActionMenu() {
   )
 
   const handleOnConfirm = useCallback(() => {
-    const record = {
+    const record: ToothGrowthRecord = {
       type: activeOption.type,
-      name: activeOption.name,
+      eventName: activeOption.name,
+      toothName: activeToothName,
       dateTime,
       remarkContent,
     }
@@ -72,14 +74,7 @@ export default function ActionMenu() {
     })
     show('操作成功')
     setIsOpen(false)
-  }, [
-    activeOption.type,
-    activeOption.name,
-    dateTime,
-    remarkContent,
-    dispatch,
-    activeToothName,
-  ])
+  }, [activeOption.type, activeOption.name, activeToothName, dateTime, remarkContent, dispatch, show])
 
   return (
     <>

@@ -38,7 +38,7 @@ export function BriefStats({ user }) {
     user.child.birthday
   )
   return (
-    <div className="bg-white bg-opacity-70 p-2">
+    <div className="bg-white bg-opacity-70 p-2 text-center">
       <p className="text-gray-500">
         {user.child.name}
         <span className="font-semibold text-indigo-400 ">{label}</span>
