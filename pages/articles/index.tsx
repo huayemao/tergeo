@@ -34,7 +34,7 @@ export async function getStaticProps(context) {
   }
 
   const optionsMapping = {
-    type: { tadvo8: '普通人群', itmy0k: '孕产妇' },
+    type: { tadvo8: '普通人群', itmy0k: '孕产妇', uQNgnZ: '学龄儿童' },
   }
 
   const data = await getYuqueTable(

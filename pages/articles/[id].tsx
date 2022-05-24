@@ -7,7 +7,7 @@ const Article: NextPage = ({ html }) => {
     <Layout>
       <div className="flex w-full justify-center px-8">
         <div
-          className="prose bg-slate-50 text-left"
+          className="prose text-left"
           dangerouslySetInnerHTML={{ __html: data?.note?.doclet?.body || '' }}
         />
       </div>

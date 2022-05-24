@@ -80,7 +80,6 @@ const TimerProvider = ({ children }) => {
   )
 
   useEffect(() => {
-    console.log(state.isActive)
     const payload = getNewHistoryRecord(state)
     if (payload) {
       dispatch({ type: 'SET_RECORDS', payload })

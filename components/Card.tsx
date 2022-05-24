@@ -46,8 +46,7 @@ const Card: FC<CardProps> = ({
           </ul>
 
           <p className="mt-2 text-sm text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem,
-            adipisci!
+            文章来源：《中国居民口腔健康指南》
           </p>
         </div>
       </a>

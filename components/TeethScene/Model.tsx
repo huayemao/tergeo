@@ -3,40 +3,39 @@ import { useFetchModel } from '../../lib/hooks/useFetchModel'
 import { Environment, OrbitControls } from '@react-three/drei'
 
 export function Model({
-  dispatch: modelDispatch,
-  teethDispatch,
+  dispatch,
   modelContext,
   teethContext,
   getScene,
   diableSelect,
   enableFilter,
 }) {
-  useFetchModel(modelDispatch, modelContext)
+  useFetchModel(dispatch, modelContext)
 
   const handleSceneClick = useCallback(
     (e) => {
       !diableSelect &&
-        modelDispatch({
+        dispatch({
           type: 'SET_ACTIVE_TOOTH',
           payload: { toothName: e.object.name },
         })
     },
-    [diableSelect, modelDispatch]
+    [diableSelect, dispatch]
   )
 
   const handleResetActiveTooth = useCallback(() => {
-    modelDispatch({
+    dispatch({
       type: 'RESET_ACTIVE_TOOTH',
     })
-  }, [modelDispatch])
+  }, [dispatch])
 
   useEffect(() => {
     !enableFilter &&
-      modelDispatch({
+      dispatch({
         type: 'RESET_FILTER_BY_TYPE',
       })
     diableSelect && handleResetActiveTooth()
-  }, [diableSelect, modelDispatch, enableFilter, handleResetActiveTooth])
+  }, [diableSelect, dispatch, enableFilter, handleResetActiveTooth])
 
   const scene = useMemo(() => {
     return getScene(modelContext, teethContext)
