@@ -16,19 +16,19 @@ export function BriefStats({ user }) {
       key: 'primaryPresent',
       label: '乳牙已萌出',
       count: countByFn(isPresentPrimaryTooth),
-      suffix: '/20',
+      suffix: ' / 20',
     },
     {
       key: 'primaryShed',
       label: '乳牙已脱落',
       count: countByFn(isShedPrimaryTooth),
-      suffix: '/20',
+      suffix: ' / 20',
     },
     {
       key: 'permanentPresent',
       label: '恒牙已萌出',
       count: countByFn(isPresentPermanentTooth),
-      suffix: '/28',
+      suffix: ' / 28',
     },
   ]
 
@@ -45,14 +45,16 @@ export function BriefStats({ user }) {
         啦。
       </p>
       <section className="text-center">
-        <div className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
-          <ul className="grid grid-cols-2 gap-4 rounded-xl border-2 border-indigo-600 lg:grid-cols-4 p-4">
+        <div className="mx-auto max-w-screen-xl rounded-xl px-4 py-2 shadow-lg shadow-indigo-200 sm:px-6 lg:px-8">
+          <ul className="grid grid-cols-2 gap-4  p-4 lg:grid-cols-4">
             {items.map((e) => (
               <div key={e.key}>
-                <h5>{e.label}</h5>
-                <p className="text-2xl font-extrabold text-indigo-500">
-                  {e.count}
-                  <span className="text-slate-300">{e.suffix}</span>
+                <h5 className="font-semibold">{e.label}</h5>
+                <p className="text-2xl font-thin text-gray-400">
+                  <span className=" text-3xl font-extrabold text-indigo-500">
+                    {e.count}
+                  </span>
+                  {e.suffix}
                 </p>
               </div>
             ))}

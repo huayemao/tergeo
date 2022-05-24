@@ -55,10 +55,13 @@ const Grow = (props) => {
 
 const X = () => {
   const { historyRecords } = useTimer()
+  // 连续刷牙 XX 天
+  // 平均刷牙时长 XX
+  // 作为目录卡片，点击后进入刷牙详细记录
   return (
     <section className="text-center">
-      <div className="mx-auto max-w-screen-xl px-4 py-2 sm:px-6 lg:px-8">
-        <ul className="grid grid-cols-2 gap-4 rounded-xl border-2 border-indigo-600 lg:grid-cols-4">
+      <div className="mx-auto  rounded-xl  border-2  px-4 py-2 shadow-lg shadow-indigo-300 sm:px-6 lg:px-8">
+        <ul className="grid grid-cols-2 gap-4  lg:grid-cols-4">
           <li className="p-4">
             <p className="text-2xl font-extrabold text-indigo-500">12</p>
             <p suppressHydrationWarning className="mt-1 text-lg font-medium">
